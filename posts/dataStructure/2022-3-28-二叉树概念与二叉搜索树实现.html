@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="VuePress 2.0.0-beta.35">
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+      html.dark {
+        --c-bg: #22272e;
+      }
+      html, body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme');
+			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+				document.documentElement.classList.toggle('dark', true);
+			}
+    </script>
+    <link rel="icon" href="/images/wand-magic-sparkles-solid.svg"><title>二叉树与二叉搜索树(BST) | 议题引擎</title><meta name="description" content="二叉树的特征&什么是二叉搜索树(Binary Search Tree),BST的封装与常用操作函数的实现。">
+    <link rel="modulepreload" href="/issues-engine/assets/app.0702af34.js"><link rel="modulepreload" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.fb6c5fd3.js"><link rel="modulepreload" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.92514416.js"><link rel="prefetch" href="/issues-engine/assets/index.html.0aa8fa78.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.6b596ec1.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.d7111f6b.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.524f0667.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.07655d45.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.9db14317.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.bb2e73e7.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.fc86c67e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.52cb4ae8.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.b9649331.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.05a7a10f.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.456b654e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.269028e1.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.7ca8f5a6.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.35638141.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.7e5b8603.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.701524b1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.8ed45c60.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.46d5c700.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.6d3b7251.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.621c9baa.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.234934ac.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.a0332d3e.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.0bb8d26c.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.e4014bd4.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.1c24b009.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.46a0a8b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.7b051d6e.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.03334d67.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.39822dda.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.f8fc5f30.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.fb531f0b.js"><link rel="prefetch" href="/issues-engine/assets/404.html.34ce071f.js"><link rel="prefetch" href="/issues-engine/assets/index.html.72de904a.js"><link rel="prefetch" href="/issues-engine/assets/index.html.c8a29f07.js"><link rel="prefetch" href="/issues-engine/assets/index.html.451ae1fc.js"><link rel="prefetch" href="/issues-engine/assets/index.html.da1ad6b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.28d49f6a.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.8c042f83.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.cd3983a5.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.6f42bb75.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.0f373aff.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.4b8dbcb0.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.f63b1e9a.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.62537066.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.73d4c34d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.c7360084.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.472eff52.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.3eeddf8c.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.d35fe93d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.b4d307f3.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.344c83f2.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.9b0ac2e9.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.a060da88.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.0f1ea1d7.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.b71b64ff.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.b00bd9ed.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.649ddd57.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.9240adc3.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.3d9e52ee.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.d7c53e39.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.0488e0f1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.70979456.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.bb212273.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.4ce8d141.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.b2589b01.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.4533d370.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.aaca1edc.js"><link rel="prefetch" href="/issues-engine/assets/404.html.93146c89.js"><link rel="prefetch" href="/issues-engine/assets/index.html.97f4289c.js"><link rel="prefetch" href="/issues-engine/assets/index.html.7c8b0471.js"><link rel="prefetch" href="/issues-engine/assets/index.html.71497e48.js"><link rel="prefetch" href="/issues-engine/assets/404.194390d5.js"><link rel="prefetch" href="/issues-engine/assets/Timeline.af9d2264.js"><link rel="prefetch" href="/issues-engine/assets/Comment.7ee3c986.js"><link rel="prefetch" href="/issues-engine/assets/Tags.0e52b73f.js"><link rel="prefetch" href="/issues-engine/assets/Favorites.9a6967ac.js"><link rel="prefetch" href="/issues-engine/assets/vanilla-tilt.es2015.23c0b18e.js"><link rel="prefetch" href="/issues-engine/assets/lightgallery.es5.a2f185c8.js">
+    <link rel="stylesheet" href="/issues-engine/assets/style.f947f55a.css">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="dog"><!--[--><!--[--><header class="header"><div class="header-main"><div class="logo">buuoltwo的博客</div><form class="search-box" role="search"><input type="search" autocomplete="off" spellcheck="false" value><!----></form><nav class="nav"><!--[--><a href="/issues-engine/" class="link" target="_self">Home</a><a href="/issues-engine/timeline" class="link" target="_self">Timeline</a><a href="/issues-engine/tag" class="link" target="_self">Tags</a><!--]--></nav></div></header><div class="header-mobile"><div class="logo">buuoltwo的博客</div><div class="menu-btn"><i class="iconfont icon-hanbaocaidan"></i></div></div><nav class="nav-mobile" style="display:none;"><!--[--><a href="/issues-engine/" class="link">Home</a><a href="/issues-engine/timeline" class="link">Timeline</a><a href="/issues-engine/tag" class="link">Tags</a><!--]--></nav><!--]--><!--]--><div class="body"><!--[--><!--[--><div class="sidebar-box"><div class="con"><aside class="dog-sidebar"><!--[--><!--]--><ul class="sidebar-items"><!--[--><li><p tabindex="0" class="sidebar-item sidebar-heading">二叉树与二叉搜索树(BST) <!----></p><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-28-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%AE%9E%E7%8E%B0.html#前瞻" class="router-link-active router-link-exact-active sidebar-item" aria-label="前瞻"><!--[--><!--]--> 前瞻 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-28-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%AE%9E%E7%8E%B0.html#二叉树基本概念" class="router-link-active router-link-exact-active sidebar-item" aria-label="二叉树基本概念"><!--[--><!--]--> 二叉树基本概念 <!--[--><!--]--></a><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-28-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%AE%9E%E7%8E%B0.html#特征" class="router-link-active router-link-exact-active sidebar-item" aria-label="特征"><!--[--><!--]--> 特征 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-28-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%AE%9E%E7%8E%B0.html#小结" class="router-link-active router-link-exact-active sidebar-item" aria-label="小结"><!--[--><!--]--> 小结 <!--[--><!--]--></a><!----></li><!--]--></ul><!--]--></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-28-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%AE%9E%E7%8E%B0.html#bst特点-封装与实现" class="router-link-active router-link-exact-active sidebar-item" aria-label="BST特点，封装与实现"><!--[--><!--]--> BST特点，封装与实现 <!--[--><!--]--></a><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-28-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%AE%9E%E7%8E%B0.html#二叉搜索树的定义" class="router-link-active router-link-exact-active sidebar-item" aria-label="二叉搜索树的定义"><!--[--><!--]--> 二叉搜索树的定义 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-28-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%AE%9E%E7%8E%B0.html#向树中插入数据" class="router-link-active router-link-exact-active sidebar-item" aria-label="向树中插入数据"><!--[--><!--]--> 向树中插入数据 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-28-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%AE%9E%E7%8E%B0.html#bst-遍历" class="router-link-active router-link-exact-active sidebar-item" aria-label="BST-遍历"><!--[--><!--]--> BST-遍历 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-28-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%AE%9E%E7%8E%B0.html#最大值-最小值" class="router-link-active router-link-exact-active sidebar-item" aria-label="最大值&amp;最小值"><!--[--><!--]--> 最大值&amp;最小值 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-28-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%AE%9E%E7%8E%B0.html#搜索特定的值" class="router-link-active router-link-exact-active sidebar-item" aria-label="搜索特定的值"><!--[--><!--]--> 搜索特定的值 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-28-%E4%BA%8C%E5%8F%89%E6%A0%91%E6%A6%82%E5%BF%B5%E4%B8%8E%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%AE%9E%E7%8E%B0.html#bst-删除" class="router-link-active router-link-exact-active sidebar-item" aria-label="BST-删除"><!--[--><!--]--> BST-删除 <!--[--><!--]--></a><!----></li><!--]--></ul><!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><!--[--><!--]--></aside></div></div><div class="md-body sino sino-kai"><div class="default-content"><!--[--><h1 id="二叉树与二叉搜索树-bst" tabindex="-1"><a class="header-anchor" href="#二叉树与二叉搜索树-bst">¶</a> <span class="prefix"></span><span class="content" id="二叉树与二叉搜索树-bst"><a class="header-anchor" href="#二叉树与二叉搜索树-bst" aria-hidden="true">#</a> 二叉树与二叉搜索树(BST)</span><span class="suffix"></span></h1><h2 id="前瞻" tabindex="-1"><a class="header-anchor" href="#前瞻">¶</a> <span class="prefix"></span><span class="content" id="前瞻"><a class="header-anchor" href="#前瞻" aria-hidden="true">#</a> 前瞻</span><span class="suffix"></span></h2><ul><li>二叉树的特征 <ul><li>[题]节点数计算；</li><li>满二叉树/完美二叉树的定义；</li><li>完全二叉树的定义；</li></ul></li><li>什么是二叉搜索树(Binary Search Tree) <ul><li>BST的查找是很快的</li><li>BST的删除是非常麻烦的</li><li>BST的功能实现</li></ul></li></ul><h2 id="二叉树基本概念" tabindex="-1"><a class="header-anchor" href="#二叉树基本概念">¶</a> <span class="prefix"></span><span class="content" id="二叉树基本概念"><a class="header-anchor" href="#二叉树基本概念" aria-hidden="true">#</a> 二叉树基本概念</span><span class="suffix"></span></h2><h3 id="特征" tabindex="-1"><a class="header-anchor" href="#特征">¶</a> <span class="prefix"></span><span class="content" id="特征"><a class="header-anchor" href="#特征" aria-hidden="true">#</a> 特征</span><span class="suffix"></span></h3><details><summary>暂缺</summary> - [题]节点数计算； - 满二叉树/完美二叉树的定义； - 完全二叉树的定义； </details><h3 id="小结" tabindex="-1"><a class="header-anchor" href="#小结">¶</a> <span class="prefix"></span><span class="content" id="小结"><a class="header-anchor" href="#小结" aria-hidden="true">#</a> 小结</span><span class="suffix"></span></h3><ol><li>最底部没有延展任何节点的是叶节点</li><li><strong>度为2</strong>的非叶节点：节点有2个向下延展的节点</li><li>满二叉树：即 所有的非叶节点度为2</li></ol><h2 id="bst特点-封装与实现" tabindex="-1"><a class="header-anchor" href="#bst特点-封装与实现">¶</a> <span class="prefix"></span><span class="content" id="bst特点-封装与实现"><a class="header-anchor" href="#bst特点-封装与实现" aria-hidden="true">#</a> BST特点，封装与实现</span><span class="suffix"></span></h2><h3 id="二叉搜索树的定义" tabindex="-1"><a class="header-anchor" href="#二叉搜索树的定义">¶</a> <span class="prefix"></span><span class="content" id="二叉搜索树的定义"><a class="header-anchor" href="#二叉搜索树的定义" aria-hidden="true">#</a> 二叉搜索树的定义</span><span class="suffix"></span></h3><p>二叉搜索树是一颗二叉树, 可以为空；如果不为空，满足以下性质：</p><ul><li>非空左子树的所有键值小于其根结点的键值。</li><li>非空右子树的所有键值大于其根结点的键值。</li><li>左、右子树本身也都是二叉搜索树。</li></ul><h4 id="bst用链表实现是较佳实践" tabindex="-1"><a class="header-anchor" href="#bst用链表实现是较佳实践">¶</a> <span class="prefix"></span><span class="content" id="bst用链表实现是较佳实践"><a class="header-anchor" href="#bst用链表实现是较佳实践" aria-hidden="true">#</a> BST用链表实现是较佳实践</span><span class="suffix"></span></h4><ul><li>BST的组成 <ul><li>Node : { left:Node, key:any, right:Node }</li><li>root : Node</li></ul></li></ul><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code>
+<span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 创建结点构造函数</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>key <span class="token operator">=</span> key
+    <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">null</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">BinarySearchTree</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 保存根的属性</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> <span class="token keyword">null</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432855-47265">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="
+class Node {
+  constructor(key) {
+    // 创建结点构造函数
+    this.key = key
+    this.left = null
+    this.right = null
+  }
+}
+class BinarySearchTree {
+  // 保存根的属性
+    this.root = null
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432855-47265" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><ul><li>BST的查找是很快的</li><li>BST的删除是非常麻烦的</li></ul><h3 id="向树中插入数据" tabindex="-1"><a class="header-anchor" href="#向树中插入数据">¶</a> <span class="prefix"></span><span class="content" id="向树中插入数据"><a class="header-anchor" href="#向树中插入数据" aria-hidden="true">#</a> 向树中插入数据</span><span class="suffix"></span></h3><ul><li>使用递归插入数据是最方便的方法</li></ul><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>key <span class="token operator">=</span> key
+    <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">null</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">BinarySearchTree</span> <span class="token punctuation">{</span>
+  root <span class="token operator">=</span> <span class="token keyword">null</span>
+  
+  <span class="token comment">//插入数据，对外暴露的方法</span>
+  <span class="token function">insert</span><span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> newNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    
+    <span class="token comment">//this.root存在？</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> newNode
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 递归开始</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">insertNode</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">,</span> newNode<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+    <span class="token comment">//在递归的过程中，插入的数据要么往左走，要么往右走。总能插入中作叶子元素的</span>
+  <span class="token function">insertNode</span><span class="token punctuation">(</span><span class="token parameter">node<span class="token punctuation">,</span> newNode</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> <span class="token punctuation">{</span> key<span class="token punctuation">,</span> left<span class="token punctuation">,</span>right <span class="token punctuation">}</span> <span class="token operator">=</span> node
+    
+    <span class="token keyword">if</span><span class="token punctuation">(</span>newNode<span class="token punctuation">.</span>key <span class="token operator">&lt;</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">//向左查找</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 递归结束</span>
+        node<span class="token punctuation">.</span>left <span class="token operator">=</span> newNode
+      <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 递归继续</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">insertNode</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">,</span> newNode<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>newNode<span class="token punctuation">.</span>key <span class="token operator">&gt;</span> key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token comment">//向右查找</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        node<span class="token punctuation">.</span>right <span class="token operator">=</span> newNode
+      <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">insertNode</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">,</span> newNode<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">键值相等</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432856-67439">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="class Node {
+  constructor(key) {
+    this.key = key
+    this.left = null
+    this.right = null
+  }
+}
+class BinarySearchTree {
+  root = null
+  
+  //插入数据，对外暴露的方法
+  insert(key) {
+    let newNode = new Node(key)
+    
+    //this.root存在？
+    if(!this.root) {
+      this.root = newNode
+    }else {
+      // 递归开始
+      this.insertNode(this.root, newNode)
+    }
+  }
+    //在递归的过程中，插入的数据要么往左走，要么往右走。总能插入中作叶子元素的
+  insertNode(node, newNode) {
+    let { key, left,right } = node
+    
+    if(newNode.key &lt; key) {
+      //向左查找
+      if(node.left === null) {
+        // 递归结束
+        node.left = newNode
+      }else {
+        // 递归继续
+        this.insertNode(node.left, newNode)
+      }
+    }else if(newNode.key &gt; key){
+      //向右查找
+      if(node.right === null) {
+        node.right = newNode
+      }else {
+        this.insertNode(node.right, newNode)
+      }
+    }else {
+      console.error(`键值相等`)
+    }
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432856-67439" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br></div></div><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 测试代码</span>
+<span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>key <span class="token operator">=</span> key
+    <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">null</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">BinarySearchTree</span> <span class="token punctuation">{</span>
+  root <span class="token operator">=</span> <span class="token keyword">null</span>
+  
+  <span class="token comment">//插入数据，对外暴露的方法</span>
+  <span class="token function">insert</span><span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> newNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span>
+    
+    <span class="token comment">//this.root存在？</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> newNode
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 递归开始</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">insertNode</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">,</span> newNode<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+    <span class="token comment">//在递归的过程中，插入的数据要么往左走，要么往右走。总能插入中作叶子元素的</span>
+  <span class="token function">insertNode</span><span class="token punctuation">(</span><span class="token parameter">node<span class="token punctuation">,</span> newNode</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> <span class="token punctuation">{</span> key<span class="token punctuation">,</span> left<span class="token punctuation">,</span>right <span class="token punctuation">}</span> <span class="token operator">=</span> node
+    
+    <span class="token keyword">if</span><span class="token punctuation">(</span>newNode<span class="token punctuation">.</span>key <span class="token operator">&lt;</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">//向左查找</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 递归结束</span>
+        node<span class="token punctuation">.</span>left <span class="token operator">=</span> newNode
+      <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 递归继续</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">insertNode</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">,</span> newNode<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>newNode<span class="token punctuation">.</span>key <span class="token operator">&gt;</span> key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token comment">//向右查找</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        node<span class="token punctuation">.</span>right <span class="token operator">=</span> newNode
+      <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">insertNode</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">,</span> newNode<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">键值相等</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432857-69333">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 测试代码
+class Node {
+  constructor(key) {
+    this.key = key
+    this.left = null
+    this.right = null
+  }
+}
+class BinarySearchTree {
+  root = null
+  
+  //插入数据，对外暴露的方法
+  insert(key) {
+    let newNode = new Node(key)
+    
+    //this.root存在？
+    if(!this.root) {
+      this.root = newNode
+    }else {
+      // 递归开始
+      this.insertNode(this.root, newNode)
+    }
+  }
+    //在递归的过程中，插入的数据要么往左走，要么往右走。总能插入中作叶子元素的
+  insertNode(node, newNode) {
+    let { key, left,right } = node
+    
+    if(newNode.key &lt; key) {
+      //向左查找
+      if(node.left === null) {
+        // 递归结束
+        node.left = newNode
+      }else {
+        // 递归继续
+        this.insertNode(node.left, newNode)
+      }
+    }else if(newNode.key &gt; key){
+      //向右查找
+      if(node.right === null) {
+        node.right = newNode
+      }else {
+        this.insertNode(node.right, newNode)
+      }
+    }else {
+      console.error(`键值相等`)
+    }
+  }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432857-69333" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br></div></div><h3 id="bst-遍历" tabindex="-1"><a class="header-anchor" href="#bst-遍历">¶</a> <span class="prefix"></span><span class="content" id="bst-遍历"><a class="header-anchor" href="#bst-遍历" aria-hidden="true">#</a> BST-遍历</span><span class="suffix"></span></h3><p>三种遍历方式：</p><img src="https://img.ukx.cn/abcdocker/2022/04/14/7591b0adb1dd9/7591b0adb1dd9.png" alt="image-20220414113416333" style="zoom:50%;"><details><summary><b>中序遍历</b>的中是啥含义： </summary><ol><li>实现层面上-handler在递归代码中的位置；</li><li>结果层面上-根节点在遍历之后会在什么位置出现</li></ol><iframe width="80%" height="420px" src="//player.bilibili.com/player.html?aid=89972618&amp;bvid=BV1x7411L7Q7&amp;cid=153660353&amp;page=90" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe></details><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 先序遍历</span>
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">preOrderTraversal</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">handler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">preOrderTranversalNode</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">,</span> handler<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">preOrderTranversalNode</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">node<span class="token punctuation">,</span> handler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>node <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 1.打印当前经过的节点</span>
+        <span class="token function">handler</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>key<span class="token punctuation">)</span>
+        <span class="token comment">// 2.遍历所有的左子树</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">preOrderTranversalNode</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">,</span> handler<span class="token punctuation">)</span>
+        <span class="token comment">// 3.遍历所有的右子树</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">preOrderTranversalNode</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">,</span> handler<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 中序遍历</span>
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">inOrderTraversal</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">handler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">inOrderTraversalNode</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">,</span> handler<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">inOrderTraversalNode</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">node<span class="token punctuation">,</span> handler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>node <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">inOrderTraversalNode</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">,</span> handler<span class="token punctuation">)</span>
+        <span class="token comment">// 2.打印当前经过的节点</span>
+        <span class="token function">handler</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>key<span class="token punctuation">)</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">inOrderTraversalNode</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">,</span> handler<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 后序遍历</span>
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">postOrderTraversal</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">handler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">postOrderTraversalNode</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">,</span> handler<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">postOrderTraversalNode</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">node<span class="token punctuation">,</span> handler</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>node <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">postOrderTraversalNode</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">,</span> handler<span class="token punctuation">)</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">postOrderTraversalNode</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">,</span> handler<span class="token punctuation">)</span>
+        <span class="token function">handler</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>key<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432859-87197">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 先序遍历
+BinarySerachTree.prototype.preOrderTraversal = function (handler) {
+    this.preOrderTranversalNode(this.root, handler)
+}
+
+BinarySerachTree.prototype.preOrderTranversalNode = function (node, handler) {
+    if (node !== null) {
+        // 1.打印当前经过的节点
+        handler(node.key)
+        // 2.遍历所有的左子树
+        this.preOrderTranversalNode(node.left, handler)
+        // 3.遍历所有的右子树
+        this.preOrderTranversalNode(node.right, handler)
+    }
+}
+
+// 中序遍历
+BinarySerachTree.prototype.inOrderTraversal = function (handler) {
+    this.inOrderTraversalNode(this.root, handler)
+}
+
+BinarySerachTree.prototype.inOrderTraversalNode = function (node, handler) {
+    if (node !== null) {
+        this.inOrderTraversalNode(node.left, handler)
+        // 2.打印当前经过的节点
+        handler(node.key)
+        this.inOrderTraversalNode(node.right, handler)
+    }
+}
+
+// 后序遍历
+BinarySerachTree.prototype.postOrderTraversal = function (handler) {
+    this.postOrderTraversalNode(this.root, handler)
+}
+
+BinarySerachTree.prototype.postOrderTraversalNode = function (node, handler) {
+    if (node !== null) {
+        this.postOrderTraversalNode(node.left, handler)
+        this.postOrderTraversalNode(node.right, handler)
+        handler(node.key)
+    }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432859-87197" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br></div></div><h3 id="最大值-最小值" tabindex="-1"><a class="header-anchor" href="#最大值-最小值">¶</a> <span class="prefix"></span><span class="content" id="最大值-最小值"><a class="header-anchor" href="#最大值-最小值" aria-hidden="true">#</a> 最大值&amp;最小值</span><span class="suffix"></span></h3><p>二叉搜索树的最左边的值和最右边的值。用循环，一直向左找，一直向右找。</p><ul><li>代码依次向左找到最左边的结点就是最小值,</li><li>代码依次向右找到最右边的结点就是最大值.</li></ul><img src="https://img.ukx.cn/abcdocker/2022/04/14/da3b8200e61bf/da3b8200e61bf.png" alt="image-20220414114151090" style="zoom:50%;"><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 获取最大值和最小值</span>
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">min</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> node <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>node<span class="token punctuation">.</span>left <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        node <span class="token operator">=</span> node<span class="token punctuation">.</span>left
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> node<span class="token punctuation">.</span>key
+<span class="token punctuation">}</span>
+
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">max</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> node <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>node<span class="token punctuation">.</span>right <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        node <span class="token operator">=</span> node<span class="token punctuation">.</span>right
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> node<span class="token punctuation">.</span>key
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432860-1751">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 获取最大值和最小值
+BinarySerachTree.prototype.min = function () {
+    var node = this.root
+    while (node.left !== null) {
+        node = node.left
+    }
+    return node.key
+}
+
+BinarySerachTree.prototype.max = function () {
+    var node = this.root
+    while (node.right !== null) {
+        node = node.right
+    }
+    return node.key
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432860-1751" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h3 id="搜索特定的值" tabindex="-1"><a class="header-anchor" href="#搜索特定的值">¶</a> <span class="prefix"></span><span class="content" id="搜索特定的值"><a class="header-anchor" href="#搜索特定的值" aria-hidden="true">#</a> 搜索特定的值</span><span class="suffix"></span></h3><ul><li>二叉搜索树不仅仅获取最值效率非常高, 搜索特定的值效率也非常高.</li><li><strong>特定的值</strong>不断与新的current节点比较，值比较小则往左。</li></ul><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 搜索特定的值-递归</span>
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">search</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">searchNode</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">,</span> key<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">searchNode</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">node<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 1.如果传入的node为null那么, 那么就退出递归</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>node <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 2.判断node节点的值和传入的key大小</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>node<span class="token punctuation">.</span>key <span class="token operator">&gt;</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 2.1.传入的key较小, 向左边继续查找</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">searchNode</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">,</span> key<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>node<span class="token punctuation">.</span>key <span class="token operator">&lt;</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 2.2.传入的key较大, 向右边继续查找</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">searchNode</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">,</span> key<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span> <span class="token comment">// 2.3.相同, 说明找到了key</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432861-66400">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 搜索特定的值-递归
+BinarySerachTree.prototype.search = function (key) {
+    return this.searchNode(this.root, key)
+}
+
+BinarySerachTree.prototype.searchNode = function (node, key) {
+    // 1.如果传入的node为null那么, 那么就退出递归
+    if (node === null) {
+        return false
+    }
+
+    // 2.判断node节点的值和传入的key大小
+    if (node.key &gt; key) { // 2.1.传入的key较小, 向左边继续查找
+        return this.searchNode(node.left, key)
+    } else if (node.key &lt; key) { // 2.2.传入的key较大, 向右边继续查找
+        return this.searchNode(node.right, key)
+    } else { // 2.3.相同, 说明找到了key
+        return true
+    }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432861-66400" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 搜索特定的值-循环</span>
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">search</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> node <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>node <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>node<span class="token punctuation">.</span>key <span class="token operator">&gt;</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            node <span class="token operator">=</span> node<span class="token punctuation">.</span>left
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>node<span class="token punctuation">.</span>key <span class="token operator">&lt;</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            node <span class="token operator">=</span> node<span class="token punctuation">.</span>right
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 找到了匹配的叶节点</span>
+            <span class="token keyword">return</span> <span class="token boolean">true</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 找到某一个叶节点,仍未找到特定的值</span>
+    <span class="token keyword">return</span> <span class="token boolean">false</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432861-25777">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 搜索特定的值-循环
+BinarySerachTree.prototype.search = function (key) {
+    var node = this.root
+    while (node !== null) {
+        if (node.key &gt; key) {
+            node = node.left
+        } else if (node.key &lt; key) {
+            node = node.right
+        } else {
+            // 找到了匹配的叶节点
+            return true
+        }
+    }
+    // 找到某一个叶节点,仍未找到特定的值
+    return false
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432861-25777" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h3 id="bst-删除" tabindex="-1"><a class="header-anchor" href="#bst-删除">¶</a> <span class="prefix"></span><span class="content" id="bst-删除"><a class="header-anchor" href="#bst-删除" aria-hidden="true">#</a> BST-删除</span><span class="suffix"></span></h3><ol><li>查找要删除的节点</li><li>分类讨论(if..else if..else if...else) <ol><li>目标节点没有子节点</li><li>目标节点仅1个子节点</li><li>目标节点有2个子节点（度为2的非叶节点）</li></ol></li></ol><h4 id="_1-查找要删除的节点" tabindex="-1"><a class="header-anchor" href="#_1-查找要删除的节点">¶</a> <span class="prefix"></span><span class="content" id="_1-查找要删除的节点"><a class="header-anchor" href="#_1-查找要删除的节点" aria-hidden="true">#</a> 1. 查找要删除的节点</span><span class="suffix"></span></h4><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// BinarySerachTree.prototype.remove</span>
+<span class="token comment">// 希望删除，需要用三个变量</span>
+<span class="token keyword">var</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
+<span class="token keyword">var</span> parent <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
+<span class="token keyword">var</span> isLeftChild <span class="token operator">=</span> <span class="token boolean">true</span>
+<span class="token comment">// 循环</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>key <span class="token operator">!==</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    parent <span class="token operator">=</span> current
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>key <span class="token operator">&lt;</span> current<span class="token punctuation">.</span>key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        isLeftChild <span class="token operator">=</span> <span class="token boolean">true</span>
+        current <span class="token operator">=</span> current<span class="token punctuation">.</span>left
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        isLeftChild <span class="token operator">=</span> <span class="token boolean">false</span>
+        current <span class="token operator">=</span> current<span class="token punctuation">.</span>right
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 如果发现current已经指向null, 那么说明没有找到要删除的数据</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+    
+    <span class="token comment">// 得到三个变量，已查出目标current节点。...</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432862-51797">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// BinarySerachTree.prototype.remove
+// 希望删除，需要用三个变量
+var current = this.root
+var parent = this.root
+var isLeftChild = true
+// 循环
+while (current.key !== key) {
+    parent = current
+    if (key &lt; current.key) {
+        isLeftChild = true
+        current = current.left
+    } else {
+        isLeftChild = false
+        current = current.right
+    }
+
+    // 如果发现current已经指向null, 那么说明没有找到要删除的数据
+    if (current === null) return false
+    
+    // 得到三个变量，已查出目标current节点。...
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432862-51797" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h4 id="_2-1-删除的结点是叶结点" tabindex="-1"><a class="header-anchor" href="#_2-1-删除的结点是叶结点">¶</a> <span class="prefix"></span><span class="content" id="_2-1-删除的结点是叶结点"><a class="header-anchor" href="#_2-1-删除的结点是叶结点" aria-hidden="true">#</a> 2.1.删除的结点是叶结点</span><span class="suffix"></span></h4><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 2.1.删除的结点是叶结点</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>left <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> current<span class="token punctuation">.</span>right <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">==</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">==</span> <span class="token keyword">null</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>isLeftChild<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        parent<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        parent<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432862-11746">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 2.1.删除的结点是叶结点
+if (current.left === null &amp;&amp; current.right === null) {
+    if (current == this.root) {
+        this.root == null
+    } else if (isLeftChild) {
+        parent.left = null
+    } else {
+        parent.right = null
+    }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432862-11746" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><h4 id="_2-2-删除有一个子节点的节点" tabindex="-1"><a class="header-anchor" href="#_2-2-删除有一个子节点的节点">¶</a> <span class="prefix"></span><span class="content" id="_2-2-删除有一个子节点的节点"><a class="header-anchor" href="#_2-2-删除有一个子节点的节点" aria-hidden="true">#</a> 2.2.删除有一个子节点的节点</span><span class="suffix"></span></h4><img src="https://upload-images.jianshu.io/upload_images/1102036-354ce2d1dd7bd572?imageMogr2/auto-orient/strip|imageView2/2/w/1090/format/webp" alt="img" style="zoom:33%;"><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 2.2.删除有一个子节点的节点</span>
+<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>right <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">==</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> current<span class="token punctuation">.</span>left
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>isLeftChild<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        parent<span class="token punctuation">.</span>left <span class="token operator">=</span> current<span class="token punctuation">.</span>left
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        parent<span class="token punctuation">.</span>right <span class="token operator">=</span> current<span class="token punctuation">.</span>left
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span> 
+<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>left <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">==</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> current<span class="token punctuation">.</span>right
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>isLeftChild<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        parent<span class="token punctuation">.</span>left <span class="token operator">=</span> current<span class="token punctuation">.</span>right
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        parent<span class="token punctuation">.</span>right <span class="token operator">=</span> current<span class="token punctuation">.</span>right
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432863-55357">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 2.2.删除有一个子节点的节点
+else if (current.right === null) {
+    if (current == this.root) {
+        this.root = current.left
+    } else if (isLeftChild) {
+        parent.left = current.left
+    } else {
+        parent.right = current.left
+    }
+} 
+else if (current.left === null) {
+    if (current == this.root) {
+        this.root = current.right
+    } else if (isLeftChild) {
+        parent.left = current.right
+    } else {
+        parent.right = current.right
+    }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432863-55357" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><h4 id="_2-3-删除目标节点有2个子节点-寻找前驱-后继" tabindex="-1"><a class="header-anchor" href="#_2-3-删除目标节点有2个子节点-寻找前驱-后继">¶</a> <span class="prefix"></span><span class="content" id="_2-3-删除目标节点有2个子节点-寻找前驱-后继"><a class="header-anchor" href="#_2-3-删除目标节点有2个子节点-寻找前驱-后继" aria-hidden="true">#</a> 2.3. 删除目标节点有2个子节点：寻找前驱 | 后继</span><span class="suffix"></span></h4><p><strong>规律总结</strong>：如果要删除的节点有两个子节点，甚至子节点还有子节点，这种情况下需要从要删除节点下面的子节点中找到一个合适的节点，来替换当前的节点。</p><p>若用 current 表示需要删除的节点，则合适的节点指的是：</p><ul><li><strong>current 节点的前驱:</strong> current 左子树中比 current 小一点点的节点，即 current 左子树中的最大值；</li><li>**current 节点的后继: **current 右子树中比 current 大一点点的节点，即 current 右子树中的最小值；</li></ul><p>删除这个节点的<strong>思路：</strong></p><figure><img src="https://img.ukx.cn/abcdocker/2022/04/14/455dc7920e7fd/455dc7920e7fd.png" alt=""><figcaption>image-20220414105816382</figcaption></figure><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 2.3.删除有两个节点的节点</span>
+<span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 1.获取后继节点</span>
+    <span class="token keyword">var</span> successor <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getSuccessor</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span>
+    
+    <span class="token comment">// 2.判断是否是根节点</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">==</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> successor
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>isLeftChild<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        parent<span class="token punctuation">.</span>left <span class="token operator">=</span> successor
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        parent<span class="token punctuation">.</span>right <span class="token operator">=</span> successor
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">// 3.将删除节点的左子树赋值给successor</span>
+    successor<span class="token punctuation">.</span>left <span class="token operator">=</span> current<span class="token punctuation">.</span>left
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432864-76028">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 2.3.删除有两个节点的节点
+else {
+    // 1.获取后继节点
+    var successor = this.getSuccessor(current)
+    
+    // 2.判断是否是根节点
+    if (current == this.root) {
+        this.root = successor
+    } else if (isLeftChild) {
+        parent.left = successor
+    } else {
+        parent.right = successor
+    }
+    
+    // 3.将删除节点的左子树赋值给successor
+    successor.left = current.left
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432864-76028" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 找后继的方法</span>
+<span class="token comment">// (循环,从current.right开始一直迭代current/successor等三个变量,一直往左找最小值)</span>
+
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">getSuccessor</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">delNode</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 1.使用变量保存临时的节点</span>
+    <span class="token keyword">var</span> successorParent <span class="token operator">=</span> 
+    <span class="token keyword">var</span> successor <span class="token operator">=</span> delNode
+    <span class="token keyword">var</span> current <span class="token operator">=</span> delNode<span class="token punctuation">.</span>right <span class="token comment">// 要从右子树开始找</span>
+
+    <span class="token comment">// 2.寻找节点</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>current <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        successorParent <span class="token operator">=</span> successor
+        successor <span class="token operator">=</span> current
+        current <span class="token operator">=</span> current<span class="token punctuation">.</span>left
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 3.如果是删除图中15的情况, 还需要如下代码</span>
+    	<span class="token comment">// ps:此时后继节点是18</span>
+    	<span class="token comment">// 18!=20</span>
+    	<span class="token comment">// 后继节点父亲的left指针不再指向后继节点，指向 后继节点.right(图中的19)</span>
+    	<span class="token comment">// 后继节点的right指针数据已存好，改为指向 delNode.right(图中的20)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>successor <span class="token operator">!=</span> delNode<span class="token punctuation">.</span>right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        successorParent<span class="token punctuation">.</span>left <span class="token operator">=</span> successor<span class="token punctuation">.</span>right
+        successor<span class="token punctuation">.</span>right <span class="token operator">=</span> delNode<span class="token punctuation">.</span>right
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">return</span> successor
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432864-16318">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 找后继的方法
+// (循环,从current.right开始一直迭代current/successor等三个变量,一直往左找最小值)
+
+BinarySerachTree.prototype.getSuccessor = function (delNode) {
+    // 1.使用变量保存临时的节点
+    var successorParent = 
+    var successor = delNode
+    var current = delNode.right // 要从右子树开始找
+
+    // 2.寻找节点
+    while (current != null) {
+        successorParent = successor
+        successor = current
+        current = current.left
+    }
+
+    // 3.如果是删除图中15的情况, 还需要如下代码
+    	// ps:此时后继节点是18
+    	// 18!=20
+    	// 后继节点父亲的left指针不再指向后继节点，指向 后继节点.right(图中的19)
+    	// 后继节点的right指针数据已存好，改为指向 delNode.right(图中的20)
+    if (successor != delNode.right) {
+        successorParent.left = successor.right
+        successor.right = delNode.right
+    }
+    
+    return successor
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432864-16318" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><p><strong><code>getSuccessor()</code>后继节点图注：</strong></p><img src="https://img.ukx.cn/abcdocker/2022/04/14/420a1affc83a5/420a1affc83a5.png" alt="image-20220414110737833" style="zoom:50%;"><img src="https://img.ukx.cn/abcdocker/2022/04/14/1262e047db765/1262e047db765.svg" alt="Untitled-1" style="zoom:25%;"><h4 id="删除节点完整代码" tabindex="-1"><a class="header-anchor" href="#删除节点完整代码">¶</a> <span class="prefix"></span><span class="content" id="删除节点完整代码"><a class="header-anchor" href="#删除节点完整代码" aria-hidden="true">#</a> 删除节点完整代码</span><span class="suffix"></span></h4><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 删除结点</span>
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">remove</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 1.定义临时保存的变量</span>
+    <span class="token keyword">var</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
+    <span class="token keyword">var</span> parent <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
+    <span class="token keyword">var</span> isLeftChild <span class="token operator">=</span> <span class="token boolean">true</span>
+
+    <span class="token comment">// 2.开始查找节点</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>key <span class="token operator">!==</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        parent <span class="token operator">=</span> current
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>key <span class="token operator">&lt;</span> current<span class="token punctuation">.</span>key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            isLeftChild <span class="token operator">=</span> <span class="token boolean">true</span>
+            current <span class="token operator">=</span> current<span class="token punctuation">.</span>left
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            isLeftChild <span class="token operator">=</span> <span class="token boolean">false</span>
+            current <span class="token operator">=</span> current<span class="token punctuation">.</span>right
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 如果发现current已经指向null, 那么说明没有找到要删除的数据</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 3.删除的结点是叶结点</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>left <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> current<span class="token punctuation">.</span>right <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">==</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">==</span> <span class="token keyword">null</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>isLeftChild<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            parent<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            parent<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 4.删除有一个子节点的节点</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>right <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">==</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> current<span class="token punctuation">.</span>left
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>isLeftChild<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            parent<span class="token punctuation">.</span>left <span class="token operator">=</span> current<span class="token punctuation">.</span>left
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            parent<span class="token punctuation">.</span>right <span class="token operator">=</span> current<span class="token punctuation">.</span>left
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>left <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">==</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> current<span class="token punctuation">.</span>right
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>isLeftChild<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            parent<span class="token punctuation">.</span>left <span class="token operator">=</span> current<span class="token punctuation">.</span>right
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            parent<span class="token punctuation">.</span>right <span class="token operator">=</span> current<span class="token punctuation">.</span>right
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 5.删除有两个节点的节点</span>
+    <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 1.获取后继节点</span>
+        <span class="token keyword">var</span> successor <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getSuccessor</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span>
+
+        <span class="token comment">// 2.判断是否是根节点</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">==</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> successor
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>isLeftChild<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            parent<span class="token punctuation">.</span>left <span class="token operator">=</span> successor
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            parent<span class="token punctuation">.</span>right <span class="token operator">=</span> successor
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 3.将删除节点的左子树赋值给successor</span>
+        successor<span class="token punctuation">.</span>left <span class="token operator">=</span> current<span class="token punctuation">.</span>left
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 找后继的方法</span>
+<span class="token class-name">BinarySerachTree</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">getSuccessor</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">delNode</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 1.使用变量保存临时的节点</span>
+    <span class="token keyword">var</span> successorParent <span class="token operator">=</span> delNode
+    <span class="token keyword">var</span> successor <span class="token operator">=</span> delNode
+    <span class="token keyword">var</span> current <span class="token operator">=</span> delNode<span class="token punctuation">.</span>right <span class="token comment">// 要从右子树开始找</span>
+
+    <span class="token comment">// 2.寻找节点</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>current <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        successorParent <span class="token operator">=</span> successor
+        successor <span class="token operator">=</span> current
+        current <span class="token operator">=</span> current<span class="token punctuation">.</span>left
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 3.如果是删除图中15的情况, 还需要如下代码</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>successor <span class="token operator">!=</span> delNode<span class="token punctuation">.</span>right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        successorParent<span class="token punctuation">.</span>left <span class="token operator">=</span> successor<span class="token punctuation">.</span>right
+        successor<span class="token punctuation">.</span>right <span class="token operator">=</span> delNode<span class="token punctuation">.</span>right
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">return</span> successor
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432865-69103">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 删除结点
+BinarySerachTree.prototype.remove = function (key) {
+    // 1.定义临时保存的变量
+    var current = this.root
+    var parent = this.root
+    var isLeftChild = true
+
+    // 2.开始查找节点
+    while (current.key !== key) {
+        parent = current
+        if (key &lt; current.key) {
+            isLeftChild = true
+            current = current.left
+        } else {
+            isLeftChild = false
+            current = current.right
+        }
+
+        // 如果发现current已经指向null, 那么说明没有找到要删除的数据
+        if (current === null) return false
+    }
+
+    // 3.删除的结点是叶结点
+    if (current.left === null &amp;&amp; current.right === null) {
+        if (current == this.root) {
+            this.root == null
+        } else if (isLeftChild) {
+            parent.left = null
+        } else {
+            parent.right = null
+        }
+    }
+
+    // 4.删除有一个子节点的节点
+    else if (current.right === null) {
+        if (current == this.root) {
+            this.root = current.left
+        } else if (isLeftChild) {
+            parent.left = current.left
+        } else {
+            parent.right = current.left
+        }
+    } else if (current.left === null) {
+        if (current == this.root) {
+            this.root = current.right
+        } else if (isLeftChild) {
+            parent.left = current.right
+        } else {
+            parent.right = current.right
+        }
+    }
+
+    // 5.删除有两个节点的节点
+    else {
+        // 1.获取后继节点
+        var successor = this.getSuccessor(current)
+
+        // 2.判断是否是根节点
+        if (current == this.root) {
+            this.root = successor
+        } else if (isLeftChild) {
+            parent.left = successor
+        } else {
+            parent.right = successor
+        }
+
+        // 3.将删除节点的左子树赋值给successor
+        successor.left = current.left
+    }
+
+    return true
+}
+
+// 找后继的方法
+BinarySerachTree.prototype.getSuccessor = function (delNode) {
+    // 1.使用变量保存临时的节点
+    var successorParent = delNode
+    var successor = delNode
+    var current = delNode.right // 要从右子树开始找
+
+    // 2.寻找节点
+    while (current != null) {
+        successorParent = successor
+        successor = current
+        current = current.left
+    }
+
+    // 3.如果是删除图中15的情况, 还需要如下代码
+    if (successor != delNode.right) {
+        successorParent.left = successor.right
+        successor.right = delNode.right
+    }
+    
+    return successor
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432865-69103" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br></div></div><!--]--></div></div><!----><div class="bottom reading-progress" data-v-e132c114><div style="" class="progress" data-v-e132c114></div></div><!--]--><!--]--></div><!--[--><footer class="footer"> powered by <a target="_blank" href="https://github.com/artiely"> Artiely</a></footer><!--]--><div class="theme-box"><div class="theme-btn-box"><span class="active theme-btn">晓露</span><span class="theme-btn">寝安</span><span class="theme-btn">浅云</span><span class="theme-btn">逍遥</span><span class="theme-btn">十漾</span><span class="theme-btn">轻拟</span></div><div class="trigger"><i class="iconfont icon-pifu"></i></div></div></div><!----><!--]--></div>
+    <script type="module" src="/issues-engine/assets/app.0702af34.js" defer></script>
+  </body>
+</html>

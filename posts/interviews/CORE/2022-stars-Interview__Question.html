@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="VuePress 2.0.0-beta.35">
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+      html.dark {
+        --c-bg: #22272e;
+      }
+      html, body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme');
+			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+				document.documentElement.classList.toggle('dark', true);
+			}
+    </script>
+    <link rel="icon" href="/images/wand-magic-sparkles-solid.svg"><title>一份扎实的前端笔试题 | 议题引擎</title><meta name="description" content="原文转载">
+    <link rel="modulepreload" href="/issues-engine/assets/app.0702af34.js"><link rel="modulepreload" href="/issues-engine/assets/2022-stars-Interview__Question.html.3d9e52ee.js"><link rel="modulepreload" href="/issues-engine/assets/2022-stars-Interview__Question.html.0bb8d26c.js"><link rel="prefetch" href="/issues-engine/assets/index.html.0aa8fa78.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.6b596ec1.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.d7111f6b.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.524f0667.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.07655d45.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.92514416.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.9db14317.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.bb2e73e7.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.fc86c67e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.52cb4ae8.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.b9649331.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.05a7a10f.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.456b654e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.269028e1.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.7ca8f5a6.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.35638141.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.7e5b8603.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.701524b1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.8ed45c60.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.46d5c700.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.6d3b7251.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.621c9baa.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.234934ac.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.a0332d3e.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.e4014bd4.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.1c24b009.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.46a0a8b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.7b051d6e.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.03334d67.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.39822dda.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.f8fc5f30.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.fb531f0b.js"><link rel="prefetch" href="/issues-engine/assets/404.html.34ce071f.js"><link rel="prefetch" href="/issues-engine/assets/index.html.72de904a.js"><link rel="prefetch" href="/issues-engine/assets/index.html.c8a29f07.js"><link rel="prefetch" href="/issues-engine/assets/index.html.451ae1fc.js"><link rel="prefetch" href="/issues-engine/assets/index.html.da1ad6b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.28d49f6a.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.8c042f83.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.cd3983a5.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.6f42bb75.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.fb6c5fd3.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.0f373aff.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.4b8dbcb0.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.f63b1e9a.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.62537066.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.73d4c34d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.c7360084.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.472eff52.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.3eeddf8c.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.d35fe93d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.b4d307f3.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.344c83f2.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.9b0ac2e9.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.a060da88.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.0f1ea1d7.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.b71b64ff.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.b00bd9ed.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.649ddd57.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.9240adc3.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.d7c53e39.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.0488e0f1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.70979456.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.bb212273.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.4ce8d141.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.b2589b01.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.4533d370.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.aaca1edc.js"><link rel="prefetch" href="/issues-engine/assets/404.html.93146c89.js"><link rel="prefetch" href="/issues-engine/assets/index.html.97f4289c.js"><link rel="prefetch" href="/issues-engine/assets/index.html.7c8b0471.js"><link rel="prefetch" href="/issues-engine/assets/index.html.71497e48.js"><link rel="prefetch" href="/issues-engine/assets/404.194390d5.js"><link rel="prefetch" href="/issues-engine/assets/Timeline.af9d2264.js"><link rel="prefetch" href="/issues-engine/assets/Comment.7ee3c986.js"><link rel="prefetch" href="/issues-engine/assets/Tags.0e52b73f.js"><link rel="prefetch" href="/issues-engine/assets/Favorites.9a6967ac.js"><link rel="prefetch" href="/issues-engine/assets/vanilla-tilt.es2015.23c0b18e.js"><link rel="prefetch" href="/issues-engine/assets/lightgallery.es5.a2f185c8.js">
+    <link rel="stylesheet" href="/issues-engine/assets/style.f947f55a.css">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="dog"><!--[--><!--[--><header class="header"><div class="header-main"><div class="logo">buuoltwo的博客</div><form class="search-box" role="search"><input type="search" autocomplete="off" spellcheck="false" value><!----></form><nav class="nav"><!--[--><a href="/issues-engine/" class="link" target="_self">Home</a><a href="/issues-engine/timeline" class="link" target="_self">Timeline</a><a href="/issues-engine/tag" class="link" target="_self">Tags</a><!--]--></nav></div></header><div class="header-mobile"><div class="logo">buuoltwo的博客</div><div class="menu-btn"><i class="iconfont icon-hanbaocaidan"></i></div></div><nav class="nav-mobile" style="display:none;"><!--[--><a href="/issues-engine/" class="link">Home</a><a href="/issues-engine/timeline" class="link">Timeline</a><a href="/issues-engine/tag" class="link">Tags</a><!--]--></nav><!--]--><!--]--><div class="body"><!--[--><!--[--><div class="sidebar-box"><div class="con"><aside class="dog-sidebar"><!--[--><!--]--><ul class="sidebar-items"><!--[--><li><p tabindex="0" class="sidebar-item sidebar-heading">一份扎实的前端笔试题 <!----></p><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/interviews/CORE/2022-stars-Interview__Question.html#前端笔试题-—-question" class="router-link-active router-link-exact-active sidebar-item" aria-label="前端笔试题 — Question"><!--[--><!--]--> 前端笔试题 — Question <!--[--><!--]--></a><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/interviews/CORE/2022-stars-Interview__Question.html#前端基础知识" class="router-link-active router-link-exact-active sidebar-item" aria-label="前端基础知识"><!--[--><!--]--> 前端基础知识 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/interviews/CORE/2022-stars-Interview__Question.html#编程题" class="router-link-active router-link-exact-active sidebar-item" aria-label="编程题"><!--[--><!--]--> 编程题 <!--[--><!--]--></a><!----></li><!--]--></ul><!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><!--[--><!--]--></aside></div></div><div class="md-body sino sino-kai"><div class="default-content"><!--[--><h2 id="前端笔试题-—-question" tabindex="-1"><a class="header-anchor" href="#前端笔试题-—-question">¶</a> <span class="prefix"></span><span class="content" id="前端笔试题-—-question"><a class="header-anchor" href="#前端笔试题-—-question" aria-hidden="true">#</a> 前端笔试题 — Question</span><span class="suffix"></span></h2><p>本文原文转载自：</p><p><a href="https://www.bilibili.com/video/BV1Sa41167Ri" target="_blank" rel="noopener noreferrer">技术痞瑞/视频链接<span><svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewbox="0 0 100 100" width="15" height="15"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg><span class="external-link-icon-sr-only">open in new window</span></span></a></p><p><a href="https://gitee.com/sinerry1314/written-test-18k/blob/master/Interview__Question.md#" target="_blank" rel="noopener noreferrer">技术痞瑞/原文md<span><svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewbox="0 0 100 100" width="15" height="15"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg><span class="external-link-icon-sr-only">open in new window</span></span></a></p><h3 id="前端基础知识" tabindex="-1"><a class="header-anchor" href="#前端基础知识">¶</a> <span class="prefix"></span><span class="content" id="前端基础知识"><a class="header-anchor" href="#前端基础知识" aria-hidden="true">#</a> 前端基础知识</span><span class="suffix"></span></h3><ol><li>介绍⼀ 下CSS盒模型</li></ol><p>content + padding + border + margin</p><p>正常盒模型：box-sizing: content-box</p><p>怪异盒模型：box-sizing: border-box</p><ol start="2"><li><p>display: none 和 visibility: hidden 的区别</p></li><li><p>写出以下代码的输出结果</p><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token parameter">resolve</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433179-27502">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="console.log(1);
+setTimeout(function () { 
+  console.log(2); 
+}, 0);
+new Promise(resolve =&gt; {
+  console.log(3);
+  resolve();
+  console.log(4);
+}).then(() =&gt; {
+  console.log(5);
+})
+console.log(6);
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433179-27502" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div></li><li><p>写出以下代码的输出结果</p><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> name <span class="token operator">=</span> <span class="token number">2</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> <span class="token keyword">function</span> <span class="token function">inner</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">// 1</span>
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">// 1 2</span>
+<span class="token keyword">var</span> b <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token number">3</span>
+<span class="token punctuation">}</span>
+b<span class="token punctuation">.</span>test <span class="token operator">=</span> test
+b<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">// 3</span>
+
+<span class="token keyword">var</span> c <span class="token operator">=</span> b<span class="token punctuation">.</span>test
+<span class="token function">c</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">// 1</span>
+<span class="token keyword">new</span> <span class="token class-name">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433179-11406">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="var name = 1
+function test() {
+  var name = 2
+  console.log(this.name)
+  return function inner() {
+    console.log(name)
+  }
+}
+test()// 1
+test()()// 1 2
+var b = {
+  name: 3
+}
+b.test = test
+b.test()// 3
+
+var c = b.test
+c()// 1
+new test()
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433179-11406" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div></li><li><p>实现⼀个栈数据结构，接⼝如下，请实现该类的 in、out、top、size 函数</p><p>FILO</p><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">class</span> <span class="token class-name">Stack</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token keyword">in</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//你的代码</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">out</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//你的代码</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//你的代码</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">//你的代码</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 要求当执⾏下列代码时，能输出预期的结果</span>
+<span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+stack<span class="token punctuation">.</span><span class="token function">in</span><span class="token punctuation">(</span><span class="token string">&#39;x&#39;</span><span class="token punctuation">)</span>
+stack<span class="token punctuation">.</span><span class="token function">in</span><span class="token punctuation">(</span><span class="token string">&#39;y&#39;</span><span class="token punctuation">)</span>
+stack<span class="token punctuation">.</span><span class="token function">in</span><span class="token punctuation">(</span><span class="token string">&#39;z&#39;</span><span class="token punctuation">)</span>
+stack<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//  输出  &#39;z&#39;</span>
+stack<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//  输出   3 </span>
+stack<span class="token punctuation">.</span><span class="token function">out</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//  输出  &#39;z&#39;</span>
+stack<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//  输出  &#39;y&#39;</span>
+stack<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// 输出   2</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433179-96817">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="class Stack {
+  constructor() {}
+  in(value) {
+    //你的代码
+  }
+  out() {
+    //你的代码
+  }
+  top() {
+    //你的代码
+  }
+  size() {
+    //你的代码
+  }
+}
+
+// 要求当执⾏下列代码时，能输出预期的结果
+const stack = new Stack()
+stack.in(&#39;x&#39;)
+stack.in(&#39;y&#39;)
+stack.in(&#39;z&#39;)
+stack.top() //  输出  &#39;z&#39;
+stack.size()//  输出   3 
+stack.out() //  输出  &#39;z&#39;
+stack.top() //  输出  &#39;y&#39;
+stack.size() // 输出   2
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433179-96817" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br></div></div></li></ol><h3 id="编程题" tabindex="-1"><a class="header-anchor" href="#编程题">¶</a> <span class="prefix"></span><span class="content" id="编程题"><a class="header-anchor" href="#编程题" aria-hidden="true">#</a> 编程题</span><span class="suffix"></span></h3><ol start="6"><li><p>任选框架 （React、 Vue、 Angular） 实现 ⼀个Message组件， 满⾜</p><p>弹出消息通知、 关闭消息通知 即可</p></li><li><p>实现 ⼀个能对数组去重的⽅法</p></li></ol><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 输⼊ array = [1,5,2,3,2,5,4] 输出 [1, 5, 2, 3, 4] </span>
+<span class="token keyword">function</span> <span class="token function">unique</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+  <span class="token comment">// 在这⾥实现 </span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433179-7126">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 输⼊ array = [1,5,2,3,2,5,4] 输出 [1, 5, 2, 3, 4] 
+function unique(array) { 
+  // 在这⾥实现 
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433179-7126" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><ol start="8"><li><p>⽤Promise对fetchData进⾏包装，将回调的设计封装成then的形式</p><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">fetchData</span><span class="token punctuation">(</span><span class="token parameter">callback</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+  <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> 
+    <span class="token function">callback</span><span class="token punctuation">(</span><span class="token string">&quot;我是返回的数据&quot;</span><span class="token punctuation">)</span> 
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">5000</span><span class="token punctuation">)</span> 
+<span class="token punctuation">}</span>
+<span class="token comment">// 实现下⾯的函数 </span>
+<span class="token keyword">function</span> <span class="token function">promiseFecth</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 你的代码</span>
+<span class="token punctuation">}</span>
+<span class="token function">promiseFecth</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> 
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span> <span class="token comment">// 我是返回的数据 </span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433180-16793">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="function fetchData(callback) { 
+  setTimeout(() =&gt; { 
+    callback(&quot;我是返回的数据&quot;) 
+  }, 5000) 
+}
+// 实现下⾯的函数 
+function promiseFecth() {
+  // 你的代码
+}
+promiseFecth().then((res) =&gt; { 
+  console.log(res) // 我是返回的数据 
+})
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433180-16793" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div></li><li><p>给出如下地址数据格式，实现函数 getNameById ,</p><p>输⼊address 和 id ，输出 id 对应的地址的 name</p><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">const</span> address <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&#39;北京市&#39;</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&#39;海淀区&#39;</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">children</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+          <span class="token punctuation">{</span>
+            <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">111</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&#39;中关村&#39;</span><span class="token punctuation">,</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">12</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&#39;朝阳区&#39;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&#39;天津市&#39;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token comment">// 请实现该函数 </span>
+<span class="token comment">// 输⼊：getNameById(address, 2)，输出：&quot;天津市&quot; </span>
+<span class="token comment">// 输⼊：getNameById(address, 111)，输出：&quot;中关村&quot; </span>
+<span class="token comment">// 输⼊：getNameById(address, 32)，输出：&quot;&quot; （未查找到，输出空字符串） </span>
+<span class="token keyword">function</span> <span class="token function">getNameById</span><span class="token punctuation">(</span><span class="token parameter">address<span class="token punctuation">,</span> id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+  <span class="token comment">// 在这⾥实现你的代码 </span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433180-10442">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const address = [
+  {
+    id: 1,
+    name: &#39;北京市&#39;,
+    children: [
+      {
+        id: 11,
+        name: &#39;海淀区&#39;,
+        children: [
+          {
+            id: 111,
+            name: &#39;中关村&#39;,
+          }
+        ]
+      }, {
+        id: 12,
+        name: &#39;朝阳区&#39;,
+      }
+    ],
+  }, {
+    id: 2, name: &#39;天津市&#39;
+  }]
+// 请实现该函数 
+// 输⼊：getNameById(address, 2)，输出：&quot;天津市&quot; 
+// 输⼊：getNameById(address, 111)，输出：&quot;中关村&quot; 
+// 输⼊：getNameById(address, 32)，输出：&quot;&quot; （未查找到，输出空字符串） 
+function getNameById(address, id) { 
+  // 在这⾥实现你的代码 
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433180-10442" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br></div></div></li><li><p>⼩ A 实现了⼀个合并两个数组的函数，假如你来 review 他实现的代码，</p><p>请从 代码实现、代码⻛格、代码规范 等⻆度给出你对下列代码的意⻅</p><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// ⼩A created at 2021-12-30 </span>
+<span class="token keyword">let</span> <span class="token function-variable function">mergeTwoarr</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token parameter">a1<span class="token punctuation">,</span>a2</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span> 
+  a2<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">item</span><span class="token operator">=&gt;</span> <span class="token punctuation">{</span> 
+    a1<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span> 
+  <span class="token punctuation">}</span><span class="token punctuation">)</span> 
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&#39;结果是&#39;</span><span class="token punctuation">,</span>a1<span class="token punctuation">)</span> 
+  <span class="token keyword">return</span> a1 
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">merge</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr1<span class="token punctuation">,</span> arr2</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">[</span><span class="token operator">...</span>arr1<span class="token punctuation">,</span> <span class="token operator">...</span>arr2<span class="token punctuation">]</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433180-62831">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// ⼩A created at 2021-12-30 
+let mergeTwoarr=(a1,a2) =&gt;{ 
+  a2.map(item=&gt; { 
+    a1.push(item) 
+  }) 
+  console.log(&#39;结果是&#39;,a1) 
+  return a1 
+}
+
+const merge = (arr1, arr2) =&gt; [...arr1, ...arr2]
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433180-62831" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div></li></ol><!--]--></div></div><!----><div class="bottom reading-progress" data-v-e132c114><div style="" class="progress" data-v-e132c114></div></div><!--]--><!--]--></div><!--[--><footer class="footer"> powered by <a target="_blank" href="https://github.com/artiely"> Artiely</a></footer><!--]--><div class="theme-box"><div class="theme-btn-box"><span class="active theme-btn">晓露</span><span class="theme-btn">寝安</span><span class="theme-btn">浅云</span><span class="theme-btn">逍遥</span><span class="theme-btn">十漾</span><span class="theme-btn">轻拟</span></div><div class="trigger"><i class="iconfont icon-pifu"></i></div></div></div><!----><!--]--></div>
+    <script type="module" src="/issues-engine/assets/app.0702af34.js" defer></script>
+  </body>
+</html>

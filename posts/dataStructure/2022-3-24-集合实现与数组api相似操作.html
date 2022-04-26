@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="VuePress 2.0.0-beta.35">
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+      html.dark {
+        --c-bg: #22272e;
+      }
+      html, body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme');
+			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+				document.documentElement.classList.toggle('dark', true);
+			}
+    </script>
+    <link rel="icon" href="/images/wand-magic-sparkles-solid.svg"><title>集合实现与数组api相似操作 | 议题引擎</title><meta name="description" content="集合的元素有两个特征，一是无序，二是不可重复。实现了集合这一数据结构的crud功能，集合之间的操作，求交并集在数组中也有体现，文章最后也一并提及，利用了Array.filter等API进行实现。...">
+    <link rel="modulepreload" href="/issues-engine/assets/app.0702af34.js"><link rel="modulepreload" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.6f42bb75.js"><link rel="modulepreload" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.07655d45.js"><link rel="prefetch" href="/issues-engine/assets/index.html.0aa8fa78.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.6b596ec1.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.d7111f6b.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.524f0667.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.92514416.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.9db14317.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.bb2e73e7.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.fc86c67e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.52cb4ae8.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.b9649331.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.05a7a10f.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.456b654e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.269028e1.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.7ca8f5a6.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.35638141.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.7e5b8603.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.701524b1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.8ed45c60.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.46d5c700.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.6d3b7251.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.621c9baa.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.234934ac.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.a0332d3e.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.0bb8d26c.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.e4014bd4.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.1c24b009.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.46a0a8b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.7b051d6e.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.03334d67.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.39822dda.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.f8fc5f30.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.fb531f0b.js"><link rel="prefetch" href="/issues-engine/assets/404.html.34ce071f.js"><link rel="prefetch" href="/issues-engine/assets/index.html.72de904a.js"><link rel="prefetch" href="/issues-engine/assets/index.html.c8a29f07.js"><link rel="prefetch" href="/issues-engine/assets/index.html.451ae1fc.js"><link rel="prefetch" href="/issues-engine/assets/index.html.da1ad6b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.28d49f6a.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.8c042f83.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.cd3983a5.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.fb6c5fd3.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.0f373aff.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.4b8dbcb0.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.f63b1e9a.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.62537066.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.73d4c34d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.c7360084.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.472eff52.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.3eeddf8c.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.d35fe93d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.b4d307f3.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.344c83f2.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.9b0ac2e9.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.a060da88.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.0f1ea1d7.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.b71b64ff.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.b00bd9ed.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.649ddd57.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.9240adc3.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.3d9e52ee.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.d7c53e39.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.0488e0f1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.70979456.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.bb212273.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.4ce8d141.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.b2589b01.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.4533d370.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.aaca1edc.js"><link rel="prefetch" href="/issues-engine/assets/404.html.93146c89.js"><link rel="prefetch" href="/issues-engine/assets/index.html.97f4289c.js"><link rel="prefetch" href="/issues-engine/assets/index.html.7c8b0471.js"><link rel="prefetch" href="/issues-engine/assets/index.html.71497e48.js"><link rel="prefetch" href="/issues-engine/assets/404.194390d5.js"><link rel="prefetch" href="/issues-engine/assets/Timeline.af9d2264.js"><link rel="prefetch" href="/issues-engine/assets/Comment.7ee3c986.js"><link rel="prefetch" href="/issues-engine/assets/Tags.0e52b73f.js"><link rel="prefetch" href="/issues-engine/assets/Favorites.9a6967ac.js"><link rel="prefetch" href="/issues-engine/assets/vanilla-tilt.es2015.23c0b18e.js"><link rel="prefetch" href="/issues-engine/assets/lightgallery.es5.a2f185c8.js">
+    <link rel="stylesheet" href="/issues-engine/assets/style.f947f55a.css">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="dog"><!--[--><!--[--><header class="header"><div class="header-main"><div class="logo">buuoltwo的博客</div><form class="search-box" role="search"><input type="search" autocomplete="off" spellcheck="false" value><!----></form><nav class="nav"><!--[--><a href="/issues-engine/" class="link" target="_self">Home</a><a href="/issues-engine/timeline" class="link" target="_self">Timeline</a><a href="/issues-engine/tag" class="link" target="_self">Tags</a><!--]--></nav></div></header><div class="header-mobile"><div class="logo">buuoltwo的博客</div><div class="menu-btn"><i class="iconfont icon-hanbaocaidan"></i></div></div><nav class="nav-mobile" style="display:none;"><!--[--><a href="/issues-engine/" class="link">Home</a><a href="/issues-engine/timeline" class="link">Timeline</a><a href="/issues-engine/tag" class="link">Tags</a><!--]--></nav><!--]--><!--]--><div class="body"><!--[--><!--[--><div class="sidebar-box"><div class="con"><aside class="dog-sidebar"><!--[--><!--]--><ul class="sidebar-items"><!--[--><li><p tabindex="0" class="sidebar-item sidebar-heading">集合实现与数组api相似操作 <!----></p><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E9%9B%86%E5%90%88%E5%AE%9E%E7%8E%B0%E4%B8%8E%E6%95%B0%E7%BB%84api%E7%9B%B8%E4%BC%BC%E6%93%8D%E4%BD%9C.html#集合的封装与实现" class="router-link-active router-link-exact-active sidebar-item" aria-label="集合的封装与实现"><!--[--><!--]--> 集合的封装与实现 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E9%9B%86%E5%90%88%E5%AE%9E%E7%8E%B0%E4%B8%8E%E6%95%B0%E7%BB%84api%E7%9B%B8%E4%BC%BC%E6%93%8D%E4%BD%9C.html#集合间的操作" class="router-link-active router-link-exact-active sidebar-item" aria-label="集合间的操作"><!--[--><!--]--> 集合间的操作 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E9%9B%86%E5%90%88%E5%AE%9E%E7%8E%B0%E4%B8%8E%E6%95%B0%E7%BB%84api%E7%9B%B8%E4%BC%BC%E6%93%8D%E4%BD%9C.html#数组的api-两个数组间的交集-补集-并集。" class="router-link-active router-link-exact-active sidebar-item" aria-label="数组的API-两个数组间的交集,补集,并集。"><!--[--><!--]--> 数组的API-两个数组间的交集,补集,并集。 <!--[--><!--]--></a><!----></li><!--]--></ul><!--]--></li><!--]--></ul><!--[--><!--]--></aside></div></div><div class="md-body sino sino-kai"><div class="default-content"><!--[--><h3 id="集合的封装与实现" tabindex="-1"><a class="header-anchor" href="#集合的封装与实现">¶</a> <span class="prefix"></span><span class="content" id="集合的封装与实现"><a class="header-anchor" href="#集合的封装与实现" aria-hidden="true">#</a> 集合的封装与实现</span><span class="suffix"></span></h3><p>集合的元素有两个特征，一是无序，二是不可重复。</p><p>JavaScript内置集合对象。 new Set(Array [])</p><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">const</span> log <span class="token operator">=</span> console<span class="token punctuation">.</span>log
+<span class="token comment">//集合 -元素无序，不可重复。</span>
+<span class="token keyword">class</span> <span class="token class-name">MySet</span> <span class="token punctuation">{</span>
+   items <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+   
+  <span class="token function">add</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+    <span class="token keyword">let</span> keyName <span class="token operator">=</span> value <span class="token operator">+</span> <span class="token string">&#39;&#39;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">[</span>keyName<span class="token punctuation">]</span> <span class="token operator">=</span> value
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">has</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">hasOwnProperty</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">remove</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+<span class="token comment">//     log(this.items[value],this.items.value)</span>
+    <span class="token keyword">delete</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">[</span>value<span class="token punctuation">]</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>items <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">)</span><span class="token punctuation">.</span>length
+  <span class="token punctuation">}</span>
+
+  <span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+   
+<span class="token punctuation">}</span>
+
+<span class="token keyword">let</span> newset <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+newset<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+newset<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+newset<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">&quot;2&quot;</span><span class="token punctuation">)</span>
+newset<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+newset<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+newset<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">&#39;4599&#39;</span><span class="token punctuation">)</span>
+<span class="token function">log</span><span class="token punctuation">(</span>newset<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span><span class="token number">4599</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token function">log</span><span class="token punctuation">(</span>newset<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">// newset.clear()</span>
+<span class="token function">log</span><span class="token punctuation">(</span>newset<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432839-87184">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const log = console.log
+//集合 -元素无序，不可重复。
+class MySet {
+   items = {}
+   
+  add(value) {
+    if(this.has(value)) return false
+    let keyName = value + &#39;&#39;
+    this.items[keyName] = value
+    return true
+  }
+
+  has(value) {
+    return this.items.hasOwnProperty(value)
+  }
+
+  remove(value) {
+    if(!this.has(value)) return false
+//     log(this.items[value],this.items.value)
+    delete this.items[value]
+    return true
+  }
+
+  clear() {
+    this.items = {}
+  }
+
+  size() {
+    return Object.keys(this.items).length
+  }
+
+  values() {
+    return Object.keys(this.items)
+  }
+   
+}
+
+let newset = new MySet()
+newset.add(1)
+newset.add(2)
+newset.add(&quot;2&quot;)
+newset.add(3)
+newset.remove(3)
+newset.add(&#39;4599&#39;)
+log(newset.has(4599))
+log(newset.size())
+// newset.clear()
+log(newset.values())
+
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432839-87184" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br></div></div><h3 id="集合间的操作" tabindex="-1"><a class="header-anchor" href="#集合间的操作">¶</a> <span class="prefix"></span><span class="content" id="集合间的操作"><a class="header-anchor" href="#集合间的操作" aria-hidden="true">#</a> 集合间的操作</span><span class="suffix"></span></h3><p>求该集合与其他集合的并集，交集，验证是否为对方集合的子集</p><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">//集合间的并集</span>
+<span class="token keyword">const</span> log <span class="token operator">=</span> console<span class="token punctuation">.</span>log
+<span class="token comment">//集合 -元素无序，不可重复。</span>
+<span class="token keyword">class</span> <span class="token class-name">MySet</span> <span class="token punctuation">{</span>
+   items <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+   
+  <span class="token function">add</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+    <span class="token keyword">let</span> keyName <span class="token operator">=</span> value <span class="token operator">+</span> <span class="token string">&#39;&#39;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">[</span>keyName<span class="token punctuation">]</span> <span class="token operator">=</span> value
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">has</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">hasOwnProperty</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">remove</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+<span class="token comment">//     log(this.items[value],this.items.value)</span>
+    <span class="token keyword">delete</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">[</span>value<span class="token punctuation">]</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>items <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">)</span><span class="token punctuation">.</span>length
+  <span class="token punctuation">}</span>
+
+  <span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">union</span><span class="token punctuation">(</span><span class="token parameter">otherSet</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> isInstance <span class="token operator">=</span> otherSet <span class="token keyword">instanceof</span> <span class="token class-name">MySet</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>isInstance<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+    
+    <span class="token keyword">let</span> unionset <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">let</span> values <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> values<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      unionSet<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>values<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    values <span class="token operator">=</span> otherSet<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    values<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">item</span> <span class="token operator">=&gt;</span> unionSet<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">return</span> unionset
+  <span class="token punctuation">}</span>
+
+<span class="token comment">//交集</span>
+  <span class="token function">intersection</span><span class="token punctuation">(</span><span class="token parameter">otherSet</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> isInstance <span class="token operator">=</span> otherSet <span class="token keyword">instanceof</span> <span class="token class-name">MySet</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>isInstance<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+    
+    <span class="token keyword">let</span> intersectionSet <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">let</span> values <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> values<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>otherSet<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>values<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        intersectionSet<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>values<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> intersectionSet
+  <span class="token punctuation">}</span>
+
+<span class="token comment">//差集 A-B x属于A但是x不属于B</span>
+  <span class="token function">difference</span><span class="token punctuation">(</span><span class="token parameter">otherSet</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> isInstance <span class="token operator">=</span> otherSet <span class="token keyword">instanceof</span> <span class="token class-name">MySet</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>isInstance<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+    
+    <span class="token keyword">let</span> differenceSet <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">let</span> values <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> values<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>otherSet<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>values<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        differenceSet<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>values<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> differenceSet
+  <span class="token punctuation">}</span>
+
+<span class="token comment">//子集 A包含于B</span>
+  <span class="token function">isContained</span><span class="token punctuation">(</span><span class="token parameter">otherSet</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> isInstance <span class="token operator">=</span> otherSet <span class="token keyword">instanceof</span> <span class="token class-name">MySet</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>isInstance<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+    
+<span class="token comment">//     let isContained = true</span>
+    <span class="token keyword">let</span> values <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> values<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>otherSet<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>values<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token comment">//         isContained = false</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token comment">//     return isContained</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">let</span> newset <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">log</span><span class="token punctuation">(</span>newset<span class="token punctuation">.</span><span class="token function">union</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432840-15596">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="//集合间的并集
+const log = console.log
+//集合 -元素无序，不可重复。
+class MySet {
+   items = {}
+   
+  add(value) {
+    if(this.has(value)) return false
+    let keyName = value + &#39;&#39;
+    this.items[keyName] = value
+    return true
+  }
+
+  has(value) {
+    return this.items.hasOwnProperty(value)
+  }
+
+  remove(value) {
+    if(!this.has(value)) return false
+//     log(this.items[value],this.items.value)
+    delete this.items[value]
+    return true
+  }
+
+  clear() {
+    this.items = {}
+  }
+
+  size() {
+    return Object.keys(this.items).length
+  }
+
+  values() {
+    return Object.keys(this.items)
+  }
+
+  union(otherSet) {
+    let isInstance = otherSet instanceof MySet
+    if(!isInstance) return false
+    
+    let unionset = new Set()
+    let values = this.values()
+    for(let i = 0; i &lt; values.length; i++) {
+      unionSet.add(values[i])
+    }
+    values = otherSet.values()
+    values.forEach(item =&gt; unionSet.add(item))
+    
+    return unionset
+  }
+
+//交集
+  intersection(otherSet) {
+    let isInstance = otherSet instanceof MySet
+    if(!isInstance) return false
+    
+    let intersectionSet = new Set()
+    let values = this.values()
+    for(let i = 0; i &lt; values.length; i++) {
+      if(otherSet.has(values[i])) {
+        intersectionSet.add(values[i])
+      }
+    }
+    return intersectionSet
+  }
+
+//差集 A-B x属于A但是x不属于B
+  difference(otherSet) {
+    let isInstance = otherSet instanceof MySet
+    if(!isInstance) return false
+    
+    let differenceSet = new Set()
+    let values = this.values()
+    for(let i = 0; i &lt; values.length; i++) {
+      if(!otherSet.has(values[i])) {
+        differenceSet.add(values[i])
+      }
+    }
+    return differenceSet
+  }
+
+//子集 A包含于B
+  isContained(otherSet) {
+    let isInstance = otherSet instanceof MySet
+    if(!isInstance) return false
+    
+//     let isContained = true
+    let values = this.values()
+    for(let i = 0; i &lt; values.length; i++) {
+      if(!otherSet.has(values[i])) {
+//         isContained = false
+        return false
+      }
+    }
+//     return isContained
+    return true
+  }
+}
+
+let newset = new MySet()
+log(newset.union(2))
+
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432840-15596" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br></div></div><h3 id="数组的api-两个数组间的交集-补集-并集。" tabindex="-1"><a class="header-anchor" href="#数组的api-两个数组间的交集-补集-并集。">¶</a> <span class="prefix"></span><span class="content" id="数组的api-两个数组间的交集-补集-并集。"><a class="header-anchor" href="#数组的api-两个数组间的交集-补集-并集。" aria-hidden="true">#</a> 数组的API-两个数组间的交集,补集,并集。</span><span class="suffix"></span></h3><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">const</span> log <span class="token operator">=</span> console<span class="token punctuation">.</span>log
+<span class="token comment">//两个数组间的交集,补集,并集</span>
+<span class="token keyword">const</span> arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span>
+<span class="token keyword">const</span> arr2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">intersection</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr1<span class="token punctuation">,</span>arr2</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">//求交集，arr2用some.一旦两元素相等，filter就用真值</span>
+  <span class="token keyword">let</span> result <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token parameter">item1</span> <span class="token operator">=&gt;</span> arr2<span class="token punctuation">.</span><span class="token function">some</span><span class="token punctuation">(</span><span class="token parameter">item2</span> <span class="token operator">=&gt;</span> item2 <span class="token operator">===</span> item1<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">交集</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>result<span class="token punctuation">)</span> 
+  <span class="token keyword">return</span> result
+<span class="token punctuation">}</span> 
+<span class="token function">intersection</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span>arr2<span class="token punctuation">)</span> <span class="token comment">//[2,3,4]</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">difference</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr1<span class="token punctuation">,</span>arr2</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 求补集， arr2用every，一旦arr2从没有这个元素，filter就用真值</span>
+  <span class="token keyword">let</span> result <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token parameter">item1</span> <span class="token operator">=&gt;</span> arr2<span class="token punctuation">.</span><span class="token function">every</span><span class="token punctuation">(</span><span class="token parameter">item2</span> <span class="token operator">=&gt;</span> item1 <span class="token operator">!==</span> item2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">补集</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>result<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> result
+<span class="token punctuation">}</span>
+<span class="token function">difference</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> arr2<span class="token punctuation">)</span> <span class="token comment">//[1]</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">union</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">arr1<span class="token punctuation">,</span> arr2</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 求并集，拿补集出来再和数组2合并</span>
+   <span class="token comment">// let result = difference(arr1, arr2).concat(arr2)</span>
+  <span class="token keyword">let</span> result <span class="token operator">=</span> arr1<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token parameter">item1</span> <span class="token operator">=&gt;</span> arr2<span class="token punctuation">.</span><span class="token function">every</span><span class="token punctuation">(</span><span class="token parameter">item2</span> <span class="token operator">=&gt;</span> item1 <span class="token operator">!==</span> item2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>arr2<span class="token punctuation">)</span>
+  <span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">并集</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>result<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> result
+<span class="token punctuation">}</span>
+<span class="token function">union</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span>arr2<span class="token punctuation">)</span> <span class="token comment">//[1, 2, 3, 4, 5, 6]</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432842-73452">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const log = console.log
+//两个数组间的交集,补集,并集
+const arr1 = [1,2,3,4]
+const arr2 = [2,3,4,5,6]
+
+const intersection = (arr1,arr2) =&gt; {
+  //求交集，arr2用some.一旦两元素相等，filter就用真值
+  let result = arr1.filter(item1 =&gt; arr2.some(item2 =&gt; item2 === item1))
+  log(`交集`,result) 
+  return result
+} 
+intersection(arr1,arr2) //[2,3,4]
+
+const difference = (arr1,arr2) =&gt; {
+  // 求补集， arr2用every，一旦arr2从没有这个元素，filter就用真值
+  let result = arr1.filter(item1 =&gt; arr2.every(item2 =&gt; item1 !== item2))
+  log(`补集`,result)
+  return result
+}
+difference(arr1, arr2) //[1]
+
+const union = (arr1, arr2) =&gt; {
+  // 求并集，拿补集出来再和数组2合并
+   // let result = difference(arr1, arr2).concat(arr2)
+  let result = arr1.filter(item1 =&gt; arr2.every(item2 =&gt; item1 !== item2)).concat(arr2)
+  log(`并集`,result)
+  return result
+}
+union(arr1,arr2) //[1, 2, 3, 4, 5, 6]
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432842-73452" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br></div></div><!--]--></div></div><!----><div class="bottom reading-progress" data-v-e132c114><div style="" class="progress" data-v-e132c114></div></div><!--]--><!--]--></div><!--[--><footer class="footer"> powered by <a target="_blank" href="https://github.com/artiely"> Artiely</a></footer><!--]--><div class="theme-box"><div class="theme-btn-box"><span class="active theme-btn">晓露</span><span class="theme-btn">寝安</span><span class="theme-btn">浅云</span><span class="theme-btn">逍遥</span><span class="theme-btn">十漾</span><span class="theme-btn">轻拟</span></div><div class="trigger"><i class="iconfont icon-pifu"></i></div></div></div><!----><!--]--></div>
+    <script type="module" src="/issues-engine/assets/app.0702af34.js" defer></script>
+  </body>
+</html>

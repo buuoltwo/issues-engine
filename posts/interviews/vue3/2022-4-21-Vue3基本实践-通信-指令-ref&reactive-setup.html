@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="VuePress 2.0.0-beta.35">
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+      html.dark {
+        --c-bg: #22272e;
+      }
+      html, body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme');
+			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+				document.documentElement.classList.toggle('dark', true);
+			}
+    </script>
+    <link rel="icon" href="/images/wand-magic-sparkles-solid.svg"><title>Vue3基本实践 | 议题引擎</title><meta name="description" content="buuoltwo的博客">
+    <link rel="modulepreload" href="/issues-engine/assets/app.0702af34.js"><link rel="modulepreload" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.aaca1edc.js"><link rel="modulepreload" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.fb531f0b.js"><link rel="prefetch" href="/issues-engine/assets/index.html.0aa8fa78.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.6b596ec1.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.d7111f6b.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.524f0667.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.07655d45.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.92514416.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.9db14317.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.bb2e73e7.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.fc86c67e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.52cb4ae8.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.b9649331.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.05a7a10f.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.456b654e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.269028e1.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.7ca8f5a6.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.35638141.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.7e5b8603.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.701524b1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.8ed45c60.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.46d5c700.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.6d3b7251.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.621c9baa.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.234934ac.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.a0332d3e.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.0bb8d26c.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.e4014bd4.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.1c24b009.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.46a0a8b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.7b051d6e.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.03334d67.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.39822dda.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.f8fc5f30.js"><link rel="prefetch" href="/issues-engine/assets/404.html.34ce071f.js"><link rel="prefetch" href="/issues-engine/assets/index.html.72de904a.js"><link rel="prefetch" href="/issues-engine/assets/index.html.c8a29f07.js"><link rel="prefetch" href="/issues-engine/assets/index.html.451ae1fc.js"><link rel="prefetch" href="/issues-engine/assets/index.html.da1ad6b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.28d49f6a.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.8c042f83.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.cd3983a5.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.6f42bb75.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.fb6c5fd3.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.0f373aff.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.4b8dbcb0.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.f63b1e9a.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.62537066.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.73d4c34d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.c7360084.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.472eff52.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.3eeddf8c.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.d35fe93d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.b4d307f3.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.344c83f2.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.9b0ac2e9.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.a060da88.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.0f1ea1d7.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.b71b64ff.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.b00bd9ed.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.649ddd57.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.9240adc3.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.3d9e52ee.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.d7c53e39.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.0488e0f1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.70979456.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.bb212273.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.4ce8d141.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.b2589b01.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.4533d370.js"><link rel="prefetch" href="/issues-engine/assets/404.html.93146c89.js"><link rel="prefetch" href="/issues-engine/assets/index.html.97f4289c.js"><link rel="prefetch" href="/issues-engine/assets/index.html.7c8b0471.js"><link rel="prefetch" href="/issues-engine/assets/index.html.71497e48.js"><link rel="prefetch" href="/issues-engine/assets/404.194390d5.js"><link rel="prefetch" href="/issues-engine/assets/Timeline.af9d2264.js"><link rel="prefetch" href="/issues-engine/assets/Comment.7ee3c986.js"><link rel="prefetch" href="/issues-engine/assets/Tags.0e52b73f.js"><link rel="prefetch" href="/issues-engine/assets/Favorites.9a6967ac.js"><link rel="prefetch" href="/issues-engine/assets/vanilla-tilt.es2015.23c0b18e.js"><link rel="prefetch" href="/issues-engine/assets/lightgallery.es5.a2f185c8.js">
+    <link rel="stylesheet" href="/issues-engine/assets/style.f947f55a.css">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="dog"><!--[--><!--[--><header class="header"><div class="header-main"><div class="logo">buuoltwo的博客</div><form class="search-box" role="search"><input type="search" autocomplete="off" spellcheck="false" value><!----></form><nav class="nav"><!--[--><a href="/issues-engine/" class="link" target="_self">Home</a><a href="/issues-engine/timeline" class="link" target="_self">Timeline</a><a href="/issues-engine/tag" class="link" target="_self">Tags</a><!--]--></nav></div></header><div class="header-mobile"><div class="logo">buuoltwo的博客</div><div class="menu-btn"><i class="iconfont icon-hanbaocaidan"></i></div></div><nav class="nav-mobile" style="display:none;"><!--[--><a href="/issues-engine/" class="link">Home</a><a href="/issues-engine/timeline" class="link">Timeline</a><a href="/issues-engine/tag" class="link">Tags</a><!--]--></nav><!--]--><!--]--><div class="body"><!--[--><!--[--><div class="sidebar-box"><div class="con"><aside class="dog-sidebar"><!--[--><!--]--><ul class="sidebar-items"><!--[--><li><p tabindex="0" class="sidebar-item sidebar-heading">Vue3基本实践 <!----></p><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/interviews/vue3/2022-4-21-Vue3%E5%9F%BA%E6%9C%AC%E5%AE%9E%E8%B7%B5-%E9%80%9A%E4%BF%A1-%E6%8C%87%E4%BB%A4-ref&amp;reactive-setup.html#vue3子组件调用父组件的方法" class="router-link-active router-link-exact-active sidebar-item" aria-label="VUE3子组件调用父组件的方法"><!--[--><!--]--> VUE3子组件调用父组件的方法 <!--[--><!--]--></a><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/interviews/vue3/2022-4-21-Vue3%E5%9F%BA%E6%9C%AC%E5%AE%9E%E8%B7%B5-%E9%80%9A%E4%BF%A1-%E6%8C%87%E4%BB%A4-ref&amp;reactive-setup.html#v-bind-指令简写为" class="router-link-active router-link-exact-active sidebar-item" aria-label="v-bind (指令简写为:)"><!--[--><!--]--> v-bind (指令简写为:) <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/interviews/vue3/2022-4-21-Vue3%E5%9F%BA%E6%9C%AC%E5%AE%9E%E8%B7%B5-%E9%80%9A%E4%BF%A1-%E6%8C%87%E4%BB%A4-ref&amp;reactive-setup.html#v-on-指令简写为" class="router-link-active router-link-exact-active sidebar-item" aria-label="v-on (指令简写为@)"><!--[--><!--]--> v-on (指令简写为@) <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/interviews/vue3/2022-4-21-Vue3%E5%9F%BA%E6%9C%AC%E5%AE%9E%E8%B7%B5-%E9%80%9A%E4%BF%A1-%E6%8C%87%E4%BB%A4-ref&amp;reactive-setup.html#v-on-与编译器宏" class="router-link-active router-link-exact-active sidebar-item" aria-label="v-on 与编译器宏"><!--[--><!--]--> v-on 与编译器宏 <!--[--><!--]--></a><!----></li><!--]--></ul><!--]--></li><li><a aria-current="page" href="/issues-engine/posts/interviews/vue3/2022-4-21-Vue3%E5%9F%BA%E6%9C%AC%E5%AE%9E%E8%B7%B5-%E9%80%9A%E4%BF%A1-%E6%8C%87%E4%BB%A4-ref&amp;reactive-setup.html#vue3父组件调用子组件中的方法" class="router-link-active router-link-exact-active sidebar-item" aria-label="vue3父组件调用子组件中的方法"><!--[--><!--]--> vue3父组件调用子组件中的方法 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/interviews/vue3/2022-4-21-Vue3%E5%9F%BA%E6%9C%AC%E5%AE%9E%E8%B7%B5-%E9%80%9A%E4%BF%A1-%E6%8C%87%E4%BB%A4-ref&amp;reactive-setup.html#循环表示list-item" class="router-link-active router-link-exact-active sidebar-item" aria-label="循环表示list-item"><!--[--><!--]--> 循环表示list-item <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/interviews/vue3/2022-4-21-Vue3%E5%9F%BA%E6%9C%AC%E5%AE%9E%E8%B7%B5-%E9%80%9A%E4%BF%A1-%E6%8C%87%E4%BB%A4-ref&amp;reactive-setup.html#v-if指令" class="router-link-active router-link-exact-active sidebar-item" aria-label="v-if指令"><!--[--><!--]--> v-if指令 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/interviews/vue3/2022-4-21-Vue3%E5%9F%BA%E6%9C%AC%E5%AE%9E%E8%B7%B5-%E9%80%9A%E4%BF%A1-%E6%8C%87%E4%BB%A4-ref&amp;reactive-setup.html#vue3中定义变量-ref、reactive、torefs特性详解" class="router-link-active router-link-exact-active sidebar-item" aria-label="vue3中定义变量,ref、reactive、toRefs特性详解"><!--[--><!--]--> vue3中定义变量,ref、reactive、toRefs特性详解 <!--[--><!--]--></a><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/interviews/vue3/2022-4-21-Vue3%E5%9F%BA%E6%9C%AC%E5%AE%9E%E8%B7%B5-%E9%80%9A%E4%BF%A1-%E6%8C%87%E4%BB%A4-ref&amp;reactive-setup.html#_3、torefs-函数" class="router-link-active router-link-exact-active sidebar-item" aria-label="3、toRefs() 函数"><!--[--><!--]--> 3、toRefs() 函数 <!--[--><!--]--></a><!----></li><!--]--></ul><!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><!--[--><!--]--></aside></div></div><div class="md-body sino sino-kai"><div class="default-content"><!--[--><figure><img src="https://img.ukx.cn/abcdocker/2022/04/23/d6783959484c0/d6783959484c0.jpg" alt=""><figcaption>Vue3 Composition API如何替换Vue Mixins</figcaption></figure><h1 id="vue3基本实践-通信-指令-ref-reactive-setup" tabindex="-1"><a class="header-anchor" href="#vue3基本实践-通信-指令-ref-reactive-setup">¶</a> <span class="prefix"></span><span class="content" id="vue3基本实践-通信-指令-ref-reactive-setup"><a class="header-anchor" href="#vue3基本实践-通信-指令-ref-reactive-setup" aria-hidden="true">#</a> Vue3基本实践-通信/指令/ref&amp;reactive/setup</span><span class="suffix"></span></h1><h2 id="vue3子组件调用父组件的方法" tabindex="-1"><a class="header-anchor" href="#vue3子组件调用父组件的方法">¶</a> <span class="prefix"></span><span class="content" id="vue3子组件调用父组件的方法"><a class="header-anchor" href="#vue3子组件调用父组件的方法" aria-hidden="true">#</a> VUE3子组件调用父组件的方法</span><span class="suffix"></span></h2><h3 id="v-bind-指令简写为" tabindex="-1"><a class="header-anchor" href="#v-bind-指令简写为">¶</a> <span class="prefix"></span><span class="content" id="v-bind-指令简写为"><a class="header-anchor" href="#v-bind-指令简写为" aria-hidden="true">#</a> v-bind (指令简写为<code>:</code>)</span><span class="suffix"></span></h3><p>父组件</p><div class="language-tsx ext-tsx line-numbers-mode"><pre class="language-tsx"><code> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>navBar</span>  <span class="token attr-name">:onClickRight</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>onClickRight<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>navBar</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+ <span class="token keyword">let</span> <span class="token function-variable function">onClickRight</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;你好&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      onClickRight<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433299-4408">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content=" &lt;navBar  :onClickRight=&quot;onClickRight&quot;&gt;&lt;/navBar&gt;
+
+setup() {
+ let onClickRight = () =&gt; {
+      console.log(&quot;你好&quot;);
+    };
+    return {
+      onClickRight,
+    };
+
+  },
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433299-4408" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p>子组件</p><div class="language-tsx ext-tsx line-numbers-mode"><pre class="language-tsx"><code><span class="token operator">&lt;</span>van<span class="token operator">-</span>nav<span class="token operator">-</span>bar  <span class="token decorator"><span class="token at operator">@</span><span class="token function">click</span></span><span class="token operator">-</span>right<span class="token operator">=</span><span class="token string">&quot;onClickRight&quot;</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+
+props<span class="token operator">:</span> <span class="token punctuation">{</span>
+    onClickRight<span class="token operator">:</span> <span class="token punctuation">{</span>
+      type<span class="token operator">:</span> <span class="token builtin">Function</span><span class="token punctuation">,</span>
+      <span class="token function-variable function">default</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token builtin">Function</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+
+<span class="token function">setup</span><span class="token punctuation">(</span>props<span class="token punctuation">,</span> <span class="token punctuation">{</span> emit<span class="token punctuation">,</span> attrs<span class="token punctuation">,</span> slots <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> <span class="token punctuation">{</span> onClickRight <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">toRefs</span><span class="token punctuation">(</span>props<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 让props下的count保持活性</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433307-86698">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;van-nav-bar  @click-right=&quot;onClickRight&quot; /&gt;
+
+props: {
+    onClickRight: {
+      type: Function,
+      default: () =&gt; {
+        return Function;
+      },
+    },
+  },
+
+
+setup(props, { emit, attrs, slots }) {
+    let { onClickRight } = toRefs(props); // 让props下的count保持活性
+  },
+};
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433307-86698" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h3 id="v-on-指令简写为" tabindex="-1"><a class="header-anchor" href="#v-on-指令简写为">¶</a> <span class="prefix"></span><span class="content" id="v-on-指令简写为"><a class="header-anchor" href="#v-on-指令简写为" aria-hidden="true">#</a> v-on (指令简写为<code>@</code>)</span><span class="suffix"></span></h3><p>父组件</p><div class="language-vue ext-vue line-numbers-mode"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>MapFeatures</span>
+      <span class="token attr-name">@getGeolocation</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>getGeolocation<span class="token punctuation">&quot;</span></span>
+    <span class="token punctuation">/&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">getGeolocation</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+		console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&#39;call..&#39;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      getGeolocation<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433308-68300">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;template&gt;
+	&lt;MapFeatures
+      @getGeolocation=&quot;getGeolocation&quot;
+    /&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+setup() {
+    const getGeolocation = () =&gt; {
+		console.log(&#39;call..&#39;)
+    }
+    return {
+      getGeolocation,
+    }
+}
+&lt;/script&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433308-68300" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>子组件写法1</p><div class="language-vue ext-vue line-numbers-mode"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token comment">&lt;!-- Geolocation --&gt;</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span>
+      <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>$emit(<span class="token punctuation">&#39;</span>getGeolocation<span class="token punctuation">&#39;</span>)<span class="token punctuation">&quot;</span></span>
+    <span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>4399<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;MapfeaturesVue&quot;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433309-1976">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;template&gt;
+  &lt;div&gt;
+    &lt;!-- Geolocation --&gt;
+    &lt;div
+      @click=&quot;$emit(&#39;getGeolocation&#39;)&quot;
+    &gt;
+        &lt;p&gt;4399&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  name: &quot;MapfeaturesVue&quot;,
+  props: [],
+}
+&lt;/script&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433309-1976" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><p>子组件写法2</p><div class="language-vue ext-vue line-numbers-mode"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token comment">&lt;!-- Geolocation --&gt;</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span>
+      <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>getGeolocation<span class="token punctuation">&quot;</span></span>
+    <span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>4399<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;MapfeaturesVue&quot;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token function">setup</span><span class="token punctuation">(</span><span class="token parameter">props<span class="token punctuation">,</span> <span class="token punctuation">{</span> emit <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> <span class="token function-variable function">getGeolocation</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">result</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      	<span class="token function">emit</span><span class="token punctuation">(</span><span class="token string">&quot;plotResult&quot;</span><span class="token punctuation">,</span> result<span class="token punctuation">.</span>geometry<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+      
+      <span class="token keyword">return</span> <span class="token punctuation">{</span> getGeolocation <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433310-11292">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;template&gt;
+  &lt;div&gt;
+    &lt;!-- Geolocation --&gt;
+    &lt;div
+      @click=&quot;getGeolocation&quot;
+    &gt;
+        &lt;p&gt;4399&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  name: &quot;MapfeaturesVue&quot;,
+  props: [],
+  setup(props, { emit }) {
+      const getGeolocation = (result) =&gt; {
+      	emit(&quot;plotResult&quot;, result.geometry)
+      }
+      
+      return { getGeolocation }
+  }
+}
+&lt;/script&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433310-11292" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><h3 id="v-on-与编译器宏" tabindex="-1"><a class="header-anchor" href="#v-on-与编译器宏">¶</a> <span class="prefix"></span><span class="content" id="v-on-与编译器宏"><a class="header-anchor" href="#v-on-与编译器宏" aria-hidden="true">#</a> v-on 与编译器宏</span><span class="suffix"></span></h3><p>只需要在子组件改动</p><div class="language-vue ext-vue line-numbers-mode"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token comment">&lt;!-- Geolocation --&gt;</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span>
+      <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>emitMMM(<span class="token punctuation">&#39;</span>getGeolocation<span class="token punctuation">&#39;</span>)<span class="token punctuation">&quot;</span></span>
+         <span class="token attr-name">&lt;p</span><span class="token punctuation">&gt;</span></span>4399<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+    &gt;
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">setup</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token function">defineProps</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">geoErrorMsg</span><span class="token operator">:</span> Boolean<span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> emitMMMMM <span class="token operator">=</span> <span class="token function">defineEmits</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">&quot;closeGeoError&quot;</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433311-65576">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;template&gt;
+  &lt;div&gt;
+    &lt;!-- Geolocation --&gt;
+    &lt;div
+      @click=&quot;emitMMM(&#39;getGeolocation&#39;)&quot;
+         &lt;p&gt;4399&lt;/p&gt;
+    &gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+defineProps({
+  geoErrorMsg: Boolean,
+})
+const emitMMMMM = defineEmits([&quot;closeGeoError&quot;])
+&lt;/script&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433311-65576" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h2 id="vue3父组件调用子组件中的方法" tabindex="-1"><a class="header-anchor" href="#vue3父组件调用子组件中的方法">¶</a> <span class="prefix"></span><span class="content" id="vue3父组件调用子组件中的方法"><a class="header-anchor" href="#vue3父组件调用子组件中的方法" aria-hidden="true">#</a> vue3父组件调用子组件中的方法</span><span class="suffix"></span></h2><p><strong>父组件</strong> ParentComponents.vue</p><div class="language-vue ext-vue line-numbers-mode"><pre class="language-vue"><code><span class="token comment">&lt;!-- 1. 在子组件上绑定ref --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>children-component</span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>getChildList<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>children-component</span><span class="token punctuation">&gt;</span></span>
+...
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+  <span class="token keyword">import</span> <span class="token punctuation">{</span> ref <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&#39;vue&#39;</span>
+  <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">setup</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 2、父组件中定义和ref同名的变量</span>
+      <span class="token keyword">const</span> getChildList <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+      <span class="token function">onMounted</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 4、调用子组件中的getList()方法</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>getChildList<span class="token punctuation">.</span>value<span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 3、return出去</span>
+        getChildList
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433312-30852">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;!-- 1. 在子组件上绑定ref --&gt;
+&lt;children-component ref=&quot;getChildList&quot;&gt;&lt;/children-component&gt;
+...
+&lt;script&gt;
+  import { ref } from &#39;vue&#39;
+  export default {
+    setup () {
+      // 2、父组件中定义和ref同名的变量
+      const getChildList = ref(null)
+      onMounted (() =&gt; {
+        // 4、调用子组件中的getList()方法
+        console.log(getChildList.value.getList())
+      })
+      return {
+        // 3、return出去
+        getChildList
+      }
+    }
+  })
+
+&lt;/script&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433312-30852" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><p><strong>子组件</strong></p><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">setup</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 方法</span>
+        <span class="token keyword">const</span> <span class="token function-variable function">getList</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&#39;子组件中的方法&#39;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            getList
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433313-38182">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="export default {
+    setup () {
+        // 方法
+        const getList = () =&gt; {
+            console.log(&#39;子组件中的方法&#39;)
+        }
+        return {
+            getList
+        }
+    }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433313-38182" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h2 id="循环表示list-item" tabindex="-1"><a class="header-anchor" href="#循环表示list-item">¶</a> <span class="prefix"></span><span class="content" id="循环表示list-item"><a class="header-anchor" href="#循环表示list-item" aria-hidden="true">#</a> 循环表示list-item</span><span class="suffix"></span></h2><p>数据结构:</p><figure><img src="https://img.ukx.cn/abcdocker/2022/04/21/33a6addc766fe/33a6addc766fe.png" alt=""><figcaption>image-20220421163952769</figcaption></figure><p>v-for指令：</p><div class="language-vue ext-vue line-numbers-mode"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>h-[200px] overflow-scroll bg-white rounded-md<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span>
+             <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>px-4 py-2 flex gap-x-2 cursor-pointer hover:bg-slate-600 hover:text-white<span class="token punctuation">&quot;</span></span>
+             <span class="token attr-name">v-for</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>(result, index) in searchData<span class="token punctuation">&quot;</span></span>
+             <span class="token attr-name">:key</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>index<span class="token punctuation">&quot;</span></span>
+             <span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>i</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>fas fa-map-marker-alt<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>i</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text-[12px]<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>{{ result.place_name }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433314-55133">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;template&gt;
+    &lt;div class=&quot;h-[200px] overflow-scroll bg-white rounded-md&quot;&gt;
+        &lt;div
+             class=&quot;px-4 py-2 flex gap-x-2 cursor-pointer hover:bg-slate-600 hover:text-white&quot;
+             v-for=&quot;(result, index) in searchData&quot;
+             :key=&quot;index&quot;
+             &gt;
+            &lt;i class=&quot;fas fa-map-marker-alt&quot;&gt;&lt;/i&gt;
+            &lt;p class=&quot;text-[12px]&quot;&gt;{{ result.place_name }}&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433314-55133" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>效果：</p><figure><img src="https://img.ukx.cn/abcdocker/2022/04/21/3e96a90b39d5a/3e96a90b39d5a.png" alt=""><figcaption>效果</figcaption></figure><h2 id="v-if指令" tabindex="-1"><a class="header-anchor" href="#v-if指令">¶</a> <span class="prefix"></span><span class="content" id="v-if指令"><a class="header-anchor" href="#v-if指令" aria-hidden="true">#</a> v-if指令</span><span class="suffix"></span></h2><p>v-if -&gt; Loading</p><p>v-else-if -&gt; Boundary</p><p>v-else -&gt; Target</p><h2 id="vue3中定义变量-ref、reactive、torefs特性详解" tabindex="-1"><a class="header-anchor" href="#vue3中定义变量-ref、reactive、torefs特性详解">¶</a> <span class="prefix"></span><span class="content" id="vue3中定义变量-ref、reactive、torefs特性详解"><a class="header-anchor" href="#vue3中定义变量-ref、reactive、torefs特性详解" aria-hidden="true">#</a> vue3中定义变量,ref、reactive、toRefs特性详解</span><span class="suffix"></span></h2><h4 id="_1-ref-函数" tabindex="-1"><a class="header-anchor" href="#_1-ref-函数">¶</a> <span class="prefix"></span><span class="content" id="_1-ref-函数"><a class="header-anchor" href="#_1-ref-函数" aria-hidden="true">#</a> 1.ref() 函数</span><span class="suffix"></span></h4><p><strong>用来定义响应式变量。</strong></p><p>ref() 函数用来<strong>根据给定的值创建一个响应式的数据对象</strong>，传入的为基本数据类型，例如字符串、数字、boolean 等,返回值是一个对象，这个对象上只包含一个 value 属性</p><p>ref定义的变量，改变值要.value,而且在template中不用写.value</p><div class="language-vue ext-vue line-numbers-mode"><pre class="language-vue"><code>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>{{msg}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>changeMsg()<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>修改msg<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">import</span> <span class="token punctuation">{</span>reactive<span class="token punctuation">,</span>ref<span class="token punctuation">,</span>toRefs<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&#39;vue&#39;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token comment">//定义</span>
+    <span class="token keyword">const</span> msg <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span><span class="token string">&#39;你好&#39;</span><span class="token punctuation">)</span> 
+    <span class="token comment">//修改</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">changeMsg</span> <span class="token operator">=</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+      msg<span class="token punctuation">.</span>value <span class="token operator">=</span><span class="token string">&#39;msg被改了&#39;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">//导出</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span> 
+     msg<span class="token punctuation">,</span>
+     changeMsg
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433314-64212">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="
+&lt;template&gt;
+	&lt;div&gt;{{msg}}&lt;/div&gt;
+	&lt;button @click=&quot;changeMsg()&quot;&gt;修改msg&lt;/button&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import {reactive,ref,toRefs} from &#39;vue&#39;
+export default {
+    setup() {
+	//定义
+    const msg = ref(&#39;你好&#39;) 
+    //修改
+    const changeMsg =()=&gt;{
+      msg.value =&#39;msg被改了&#39;
+    }
+    //导出
+    return { 
+     msg,
+     changeMsg
+    }
+  }
+}
+&lt;/script&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433314-64212" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><h4 id="_2、reactive-函数" tabindex="-1"><a class="header-anchor" href="#_2、reactive-函数">¶</a> <span class="prefix"></span><span class="content" id="_2、reactive-函数"><a class="header-anchor" href="#_2、reactive-函数" aria-hidden="true">#</a> 2、reactive() 函数</span><span class="suffix"></span></h4><p><strong>reactive函数传入的为引用类型，例如数组、对象等</strong>，但不能代理基本类型值,返回一个响应式的数据对象, 想要使用创建的响应式数据也很简单，创建出来之后，在setup中return出去，直接在template中调用即可。</p><div class="language-vue ext-vue line-numbers-mode"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>{{state.msg}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>changeMsg()<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>修改msg<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">import</span> <span class="token punctuation">{</span> reactive<span class="token punctuation">,</span> ref<span class="token punctuation">,</span> toRefs <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&#39;vue&#39;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">//定义</span>
+        <span class="token keyword">const</span> state <span class="token operator">=</span> <span class="token function">reactive</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            <span class="token literal-property property">msg</span><span class="token operator">:</span> <span class="token string">&#39;你好&#39;</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">msg2</span><span class="token operator">:</span><span class="token string">&#39;hello&#39;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token comment">//修改</span>
+        <span class="token keyword">const</span> <span class="token function-variable function">changeMsg</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            state<span class="token punctuation">.</span>msg <span class="token operator">=</span> <span class="token string">&#39;msg被改了&#39;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">//导出</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            state<span class="token punctuation">,</span>
+            changeMsg
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433315-56871">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;template&gt;
+	&lt;div&gt;{{state.msg}}&lt;/div&gt;
+	&lt;button @click=&quot;changeMsg()&quot;&gt;修改msg&lt;/button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { reactive, ref, toRefs } from &#39;vue&#39;
+export default {
+    setup() {
+        //定义
+        const state = reactive({
+            msg: &#39;你好&#39;,
+            msg2:&#39;hello&#39;
+        })
+        //修改
+        const changeMsg = () =&gt; {
+            state.msg = &#39;msg被改了&#39;
+        }
+        //导出
+        return {
+            state,
+            changeMsg
+        }
+    }
+}
+&lt;/script&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433315-56871" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><h3 id="_3、torefs-函数" tabindex="-1"><a class="header-anchor" href="#_3、torefs-函数">¶</a> <span class="prefix"></span><span class="content" id="_3、torefs-函数"><a class="header-anchor" href="#_3、torefs-函数" aria-hidden="true">#</a> 3、toRefs() 函数</span><span class="suffix"></span></h3><p>toRefs() 函数可以将 reactive() 创建出来的响应式对象，转换为普通的对象，相当于变成一个个的ref(),类似使用拓展用算符…的方法返回数据data 使用toRefs和reactive()区别在于可以直接使用msg属性,不用state.</p><div class="language-vue ext-vue line-numbers-mode"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>{{msg}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>changeMsg()<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>修改msg<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">import</span> <span class="token punctuation">{</span> reactive<span class="token punctuation">,</span> ref<span class="token punctuation">,</span> toRefs <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&#39;vue&#39;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">//定义</span>
+        <span class="token keyword">const</span> state <span class="token operator">=</span> <span class="token function">reactive</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            <span class="token literal-property property">msg</span><span class="token operator">:</span> <span class="token string">&#39;你好&#39;</span><span class="token punctuation">,</span>
+            <span class="token literal-property property">msg2</span><span class="token operator">:</span><span class="token string">&#39;hello&#39;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token comment">//修改</span>
+        <span class="token keyword">const</span> <span class="token function-variable function">changeMsg</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            state<span class="token punctuation">.</span>msg <span class="token operator">=</span> <span class="token string">&#39;msg被改了&#39;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">//导出</span>
+        <span class="token keyword">return</span> <span class="token punctuation">{</span>
+            <span class="token operator">...</span><span class="token function">toRefs</span><span class="token punctuation">(</span>state<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            changeMsg
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433315-68170">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="&lt;template&gt;
+&lt;div&gt;{{msg}}&lt;/div&gt;
+&lt;button @click=&quot;changeMsg()&quot;&gt;修改msg&lt;/button&gt;
+&lt;/template&gt;
+&lt;script&gt;
+import { reactive, ref, toRefs } from &#39;vue&#39;
+export default {
+    setup() {
+        //定义
+        const state = reactive({
+            msg: &#39;你好&#39;,
+            msg2:&#39;hello&#39;
+        })
+        //修改
+        const changeMsg = () =&gt; {
+            state.msg = &#39;msg被改了&#39;
+        }
+        //导出
+        return {
+            ...toRefs(state),
+            changeMsg
+        }
+    }
+}
+&lt;/script&gt;
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433315-68170" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><!--]--></div></div><!----><div class="bottom reading-progress" data-v-e132c114><div style="" class="progress" data-v-e132c114></div></div><!--]--><!--]--></div><!--[--><footer class="footer"> powered by <a target="_blank" href="https://github.com/artiely"> Artiely</a></footer><!--]--><div class="theme-box"><div class="theme-btn-box"><span class="active theme-btn">晓露</span><span class="theme-btn">寝安</span><span class="theme-btn">浅云</span><span class="theme-btn">逍遥</span><span class="theme-btn">十漾</span><span class="theme-btn">轻拟</span></div><div class="trigger"><i class="iconfont icon-pifu"></i></div></div></div><!----><!--]--></div>
+    <script type="module" src="/issues-engine/assets/app.0702af34.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="VuePress 2.0.0-beta.35">
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+      html.dark {
+        --c-bg: #22272e;
+      }
+      html, body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme');
+			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+				document.documentElement.classList.toggle('dark', true);
+			}
+    </script>
+    <link rel="icon" href="/images/wand-magic-sparkles-solid.svg"><title>链表实现 | 议题引擎</title><meta name="description" content="数组和链表挺像的，数组利用索引找元素，链表利用引用建立元素间的联系  ...">
+    <link rel="modulepreload" href="/issues-engine/assets/app.0702af34.js"><link rel="modulepreload" href="/issues-engine/assets/2022-3-24-链表实现.html.cd3983a5.js"><link rel="modulepreload" href="/issues-engine/assets/2022-3-24-链表实现.html.524f0667.js"><link rel="prefetch" href="/issues-engine/assets/index.html.0aa8fa78.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.6b596ec1.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.d7111f6b.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.07655d45.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.92514416.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.9db14317.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.bb2e73e7.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.fc86c67e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.52cb4ae8.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.b9649331.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.05a7a10f.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.456b654e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.269028e1.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.7ca8f5a6.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.35638141.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.7e5b8603.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.701524b1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.8ed45c60.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.46d5c700.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.6d3b7251.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.621c9baa.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.234934ac.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.a0332d3e.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.0bb8d26c.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.e4014bd4.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.1c24b009.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.46a0a8b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.7b051d6e.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.03334d67.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.39822dda.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.f8fc5f30.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.fb531f0b.js"><link rel="prefetch" href="/issues-engine/assets/404.html.34ce071f.js"><link rel="prefetch" href="/issues-engine/assets/index.html.72de904a.js"><link rel="prefetch" href="/issues-engine/assets/index.html.c8a29f07.js"><link rel="prefetch" href="/issues-engine/assets/index.html.451ae1fc.js"><link rel="prefetch" href="/issues-engine/assets/index.html.da1ad6b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.28d49f6a.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.8c042f83.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.6f42bb75.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.fb6c5fd3.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.0f373aff.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.4b8dbcb0.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.f63b1e9a.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.62537066.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.73d4c34d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.c7360084.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.472eff52.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.3eeddf8c.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.d35fe93d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.b4d307f3.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.344c83f2.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.9b0ac2e9.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.a060da88.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.0f1ea1d7.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.b71b64ff.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.b00bd9ed.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.649ddd57.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.9240adc3.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.3d9e52ee.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.d7c53e39.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.0488e0f1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.70979456.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.bb212273.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.4ce8d141.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.b2589b01.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.4533d370.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.aaca1edc.js"><link rel="prefetch" href="/issues-engine/assets/404.html.93146c89.js"><link rel="prefetch" href="/issues-engine/assets/index.html.97f4289c.js"><link rel="prefetch" href="/issues-engine/assets/index.html.7c8b0471.js"><link rel="prefetch" href="/issues-engine/assets/index.html.71497e48.js"><link rel="prefetch" href="/issues-engine/assets/404.194390d5.js"><link rel="prefetch" href="/issues-engine/assets/Timeline.af9d2264.js"><link rel="prefetch" href="/issues-engine/assets/Comment.7ee3c986.js"><link rel="prefetch" href="/issues-engine/assets/Tags.0e52b73f.js"><link rel="prefetch" href="/issues-engine/assets/Favorites.9a6967ac.js"><link rel="prefetch" href="/issues-engine/assets/vanilla-tilt.es2015.23c0b18e.js"><link rel="prefetch" href="/issues-engine/assets/lightgallery.es5.a2f185c8.js">
+    <link rel="stylesheet" href="/issues-engine/assets/style.f947f55a.css">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="dog"><!--[--><!--[--><header class="header"><div class="header-main"><div class="logo">buuoltwo的博客</div><form class="search-box" role="search"><input type="search" autocomplete="off" spellcheck="false" value><!----></form><nav class="nav"><!--[--><a href="/issues-engine/" class="link" target="_self">Home</a><a href="/issues-engine/timeline" class="link" target="_self">Timeline</a><a href="/issues-engine/tag" class="link" target="_self">Tags</a><!--]--></nav></div></header><div class="header-mobile"><div class="logo">buuoltwo的博客</div><div class="menu-btn"><i class="iconfont icon-hanbaocaidan"></i></div></div><nav class="nav-mobile" style="display:none;"><!--[--><a href="/issues-engine/" class="link">Home</a><a href="/issues-engine/timeline" class="link">Timeline</a><a href="/issues-engine/tag" class="link">Tags</a><!--]--></nav><!--]--><!--]--><div class="body"><!--[--><!--[--><div class="sidebar-box"><div class="con"><aside class="dog-sidebar"><!--[--><!--]--><ul class="sidebar-items"><!--[--><li><p tabindex="0" class="sidebar-item sidebar-heading">链表实现 <!----></p><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0.html#链表" class="router-link-active router-link-exact-active sidebar-item" aria-label="链表"><!--[--><!--]--> 链表 <!--[--><!--]--></a><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0.html#组成" class="router-link-active router-link-exact-active sidebar-item" aria-label="组成"><!--[--><!--]--> 组成 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0.html#链表实现" class="router-link-active router-link-exact-active sidebar-item" aria-label="链表实现"><!--[--><!--]--> 链表实现 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0.html#双向链表实现" class="router-link-active router-link-exact-active sidebar-item" aria-label="双向链表实现"><!--[--><!--]--> 双向链表实现 <!--[--><!--]--></a><!----></li><!--]--></ul><!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><!--[--><!--]--></aside></div></div><div class="md-body sino sino-kai"><div class="default-content"><!--[--><h2 id="链表" tabindex="-1"><a class="header-anchor" href="#链表">¶</a> <span class="prefix"></span><span class="content" id="链表"><a class="header-anchor" href="#链表" aria-hidden="true">#</a> 链表</span><span class="suffix"></span></h2><h3 id="组成" tabindex="-1"><a class="header-anchor" href="#组成">¶</a> <span class="prefix"></span><span class="content" id="组成"><a class="header-anchor" href="#组成" aria-hidden="true">#</a> 组成</span><span class="suffix"></span></h3><p>链表封装组成：</p><p>head引用-&gt; 若干<strong>节点</strong> -&gt; ...</p><p>head引用 &lt;=&gt; 若干节点 &lt;=&gt;tail引用</p><p>节点封装组成:</p><ul><li>next指针</li><li>data节点数据</li><li>prev指针[optional]</li></ul><p>链表的方法：</p><p>增加，插入，修改；查询得到元素；查询根据某个值得到元素所处的链表下标position；根据元素的data删除；根据链表的下标position删除</p><h3 id="链表实现" tabindex="-1"><a class="header-anchor" href="#链表实现">¶</a> <span class="prefix"></span><span class="content" id="链表实现"><a class="header-anchor" href="#链表实现" aria-hidden="true">#</a> 链表实现</span><span class="suffix"></span></h3><h4 id="append-insert-get-indexof" tabindex="-1"><a class="header-anchor" href="#append-insert-get-indexof">¶</a> <span class="prefix"></span><span class="content" id="append-insert-get-indexof"><a class="header-anchor" href="#append-insert-get-indexof" aria-hidden="true">#</a> append, insert, get, indexOf</span><span class="suffix"></span></h4><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">//append, insert, get, indexOf</span>
+<span class="token comment">//单向链表</span>
+<span class="token keyword">const</span> log <span class="token operator">=</span> console<span class="token punctuation">.</span>log
+<span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>data <span class="token operator">=</span> data
+    <span class="token keyword">this</span><span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">null</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">LinkedList</span> <span class="token punctuation">{</span>
+  <span class="token comment">//属性</span>
+  head <span class="token operator">=</span> <span class="token keyword">null</span>
+  length <span class="token operator">=</span> <span class="token number">0</span>
+  
+  <span class="token comment">//一、实现append 方法</span>
+    <span class="token comment">//1.创建新节点</span>
+    <span class="token comment">//2.添加新节点</span>
+      <span class="token comment">//①节点数等于1</span>
+      <span class="token comment">//②节点数大于1</span>
+    <span class="token comment">//3.修改单向链表属性-长度</span>
+  <span class="token function-variable function">append</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> newNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+    
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>head <span class="token operator">=</span> newNode
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token keyword">let</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head
+      <span class="token keyword">while</span><span class="token punctuation">(</span>current<span class="token punctuation">.</span>next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        current <span class="token operator">=</span> current<span class="token punctuation">.</span>next
+      <span class="token punctuation">}</span>
+      <span class="token comment">//循环后，current为最后一个节点</span>
+      current<span class="token punctuation">.</span>next <span class="token operator">=</span> newNode
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">+=</span> <span class="token number">1</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">let</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head
+    <span class="token keyword">let</span> listString <span class="token operator">=</span> <span class="token string">&#39;&#39;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      listString <span class="token operator">+=</span> current<span class="token punctuation">.</span>data <span class="token operator">+</span> <span class="token string">&#39; &#39;</span>
+      current <span class="token operator">=</span> current<span class="token punctuation">.</span>next
+    <span class="token punctuation">}</span>
+    <span class="token comment">//循环后，current为最后一个节点</span>
+    <span class="token keyword">return</span> listString
+    
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">//二、insert</span>
+  <span class="token function">insert</span><span class="token punctuation">(</span><span class="token parameter">position<span class="token punctuation">,</span> data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    
+    <span class="token comment">//1. position越界</span>
+    <span class="token comment">//2. 创建节点</span>
+    <span class="token comment">//3. 插入新节点</span>
+      <span class="token comment">//① 新节点position=0</span>
+      <span class="token comment">//② 新节点position&gt;0</span>
+    
+    <span class="token keyword">if</span><span class="token punctuation">(</span>position <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> position <span class="token operator">&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">failed!!</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">let</span> newNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>position <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">//①</span>
+      newNode<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head
+      <span class="token keyword">this</span><span class="token punctuation">.</span>head <span class="token operator">=</span> newNode
+
+      <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">+=</span> <span class="token number">1</span>
+      <span class="token keyword">return</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">//②</span>
+    <span class="token keyword">let</span> index <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">let</span> previous <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token keyword">let</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head
+    
+    <span class="token keyword">while</span><span class="token punctuation">(</span>index<span class="token operator">++</span> <span class="token operator">&lt;</span> position<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      previous <span class="token operator">=</span> current
+      current <span class="token operator">=</span> current<span class="token punctuation">.</span>next
+    <span class="token punctuation">}</span>
+    <span class="token comment">//循环结束后 新节点应该被current的指向和previous的指向，夹住</span>
+    newNode<span class="token punctuation">.</span>next <span class="token operator">=</span> current
+    previous<span class="token punctuation">.</span>next <span class="token operator">=</span> newNode
+<span class="token comment">//     log(current,previous)</span>
+    
+    <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">+=</span> <span class="token number">1</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+    
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">//三、get</span>
+  <span class="token function">get</span><span class="token punctuation">(</span>position<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>position <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> position <span class="token operator">&gt;=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">null</span>
+    <span class="token keyword">let</span> index <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">let</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head
+    <span class="token keyword">while</span><span class="token punctuation">(</span>index<span class="token operator">++</span> <span class="token operator">&lt;</span> position<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      current <span class="token operator">=</span> current<span class="token punctuation">.</span>next
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> current<span class="token punctuation">.</span>data
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">//四、indexOf方法 给data返回下标值</span>
+  <span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head
+    <span class="token keyword">let</span> index <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token comment">//     while(index++ &lt; this.length) &lt;-- 错误写法</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>current<span class="token punctuation">.</span>data <span class="token operator">===</span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> index
+      <span class="token punctuation">}</span>
+      current <span class="token operator">=</span> current<span class="token punctuation">.</span>next
+      index <span class="token operator">+=</span> <span class="token number">1</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//append</span>
+<span class="token keyword">let</span> linkedList <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+linkedList<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">&#39;aaa&#39;</span><span class="token punctuation">)</span>
+linkedList<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">&#39;bbb&#39;</span><span class="token punctuation">)</span>
+linkedList<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">&#39;ccc&#39;</span><span class="token punctuation">)</span>
+<span class="token comment">// log(linkedList)</span>
+linkedList<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">&#39;ddd&#39;</span><span class="token punctuation">)</span>
+<span class="token function">log</span><span class="token punctuation">(</span>linkedList<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">位置1的元素为</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span> linkedList<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">aaa的位置下标是</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>linkedList<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">&#39;aaa&#39;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432819-76853">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="//append, insert, get, indexOf
+//单向链表
+const log = console.log
+class Node {
+  constructor(data){
+    this.data = data
+    this.next = null
+  }
+}
+class LinkedList {
+  //属性
+  head = null
+  length = 0
+  
+  //一、实现append 方法
+    //1.创建新节点
+    //2.添加新节点
+      //①节点数等于1
+      //②节点数大于1
+    //3.修改单向链表属性-长度
+  append = (data) =&gt; {
+    let newNode = new Node(data)
+    
+    if(this.length === 0) {
+      this.head = newNode
+    }else {
+      let current = this.head
+      while(current.next) {
+        current = current.next
+      }
+      //循环后，current为最后一个节点
+      current.next = newNode
+    }
+    
+    this.length += 1
+  }
+  toString(){
+    let current = this.head
+    let listString = &#39;&#39;
+    while(current) {
+      listString += current.data + &#39; &#39;
+      current = current.next
+    }
+    //循环后，current为最后一个节点
+    return listString
+    
+  }
+
+  //二、insert
+  insert(position, data) {
+    
+    //1. position越界
+    //2. 创建节点
+    //3. 插入新节点
+      //① 新节点position=0
+      //② 新节点position&gt;0
+    
+    if(position &lt; 0 || position &gt; this.length) {
+      log(`failed!!`)
+      return false
+    }
+    let newNode = new Node(data)
+    if(position === 0) {
+      //①
+      newNode.next = this.head
+      this.head = newNode
+
+      this.length += 1
+      return true
+    }
+    //②
+    let index = 0
+    let previous = null
+    let current = this.head
+    
+    while(index++ &lt; position) {
+      previous = current
+      current = current.next
+    }
+    //循环结束后 新节点应该被current的指向和previous的指向，夹住
+    newNode.next = current
+    previous.next = newNode
+//     log(current,previous)
+    
+    this.length += 1
+    return true
+    
+  }
+
+  //三、get
+  get(position){
+    if(position &lt; 0 || position &gt;= this.length) return null
+    let index = 0
+    let current = this.head
+    while(index++ &lt; position) {
+      current = current.next
+    }
+    return current.data
+  }
+
+  //四、indexOf方法 给data返回下标值
+  indexOf(data) {
+    let current = this.head
+    let index = 0
+//     while(index++ &lt; this.length) &lt;-- 错误写法
+    while(current) {
+      if(current.data === data) {
+        return index
+      }
+      current = current.next
+      index += 1
+    }
+    return -1
+  }
+}
+
+//append
+let linkedList = new LinkedList()
+linkedList.append(&#39;aaa&#39;)
+linkedList.append(&#39;bbb&#39;)
+linkedList.append(&#39;ccc&#39;)
+// log(linkedList)
+linkedList.insert(0, &#39;ddd&#39;)
+log(linkedList.toString())
+log(`位置1的元素为`, linkedList.get(1))
+log(`aaa的位置下标是`,linkedList.indexOf(&#39;aaa&#39;))
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432819-76853" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br></div></div><h4 id="update-removeat-remove" tabindex="-1"><a class="header-anchor" href="#update-removeat-remove">¶</a> <span class="prefix"></span><span class="content" id="update-removeat-remove"><a class="header-anchor" href="#update-removeat-remove" aria-hidden="true">#</a> update, removeAt, remove</span><span class="suffix"></span></h4><ul><li>update(position, newData)</li><li>removeAt(position)</li><li>remove(element)</li></ul><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">//update(position, newData). removeAt(position), remove(element)</span>
+<span class="token comment">//单向链表</span>
+<span class="token keyword">const</span> log <span class="token operator">=</span> console<span class="token punctuation">.</span>log
+<span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>data <span class="token operator">=</span> data
+    <span class="token keyword">this</span><span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">null</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">LinkedList</span> <span class="token punctuation">{</span>
+  <span class="token comment">//属性</span>
+  head <span class="token operator">=</span> <span class="token keyword">null</span>
+  length <span class="token operator">=</span> <span class="token number">0</span>
+  
+  <span class="token comment">//五、update</span>
+  <span class="token function">update</span><span class="token punctuation">(</span><span class="token parameter">position<span class="token punctuation">,</span> newData</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>position <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> position <span class="token operator">&gt;=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span>
+    <span class="token keyword">let</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head
+    <span class="token keyword">let</span> index <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>index<span class="token operator">++</span> <span class="token operator">&lt;</span> position<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      current <span class="token operator">=</span> current<span class="token punctuation">.</span>next
+    <span class="token punctuation">}</span>
+    current<span class="token punctuation">.</span>data <span class="token operator">=</span> newData
+    <span class="token function">log</span><span class="token punctuation">(</span>current<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">//六、removeAt(position)</span>
+  <span class="token function">removeAt</span><span class="token punctuation">(</span><span class="token parameter">position</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>position <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> position <span class="token operator">&gt;=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">null</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>position <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>head <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head<span class="token punctuation">.</span>next
+      <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">-=</span> <span class="token number">1</span>
+      <span class="token keyword">return</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">let</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head
+    <span class="token keyword">let</span> previous <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token keyword">let</span> index <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>index<span class="token operator">++</span> <span class="token operator">&lt;</span> position<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      previous <span class="token operator">=</span> current
+      current <span class="token operator">=</span> current<span class="token punctuation">.</span>next
+    <span class="token punctuation">}</span>
+    previous<span class="token punctuation">.</span>next <span class="token operator">=</span> current<span class="token punctuation">.</span>next
+<span class="token comment">//     delete current</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">-=</span> <span class="token number">1</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">//七、 remove(data)</span>
+  <span class="token function">remove</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">removeAt</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">//     let current = this.head</span>
+<span class="token comment">//     let previous = null</span>
+<span class="token comment">//     let isRemoved = false</span>
+<span class="token comment">//     while(current) {</span>
+<span class="token comment">//       if(current.data === data) {</span>
+<span class="token comment">//         if(!previous) {</span>
+<span class="token comment">//           this.head = this.head.next</span>
+<span class="token comment">//         }else {</span>
+<span class="token comment">//         previous.next = current.next</span>
+<span class="token comment">//         }</span>
+<span class="token comment">//         isRemoved = true</span>
+<span class="token comment">//       }</span>
+<span class="token comment">//       previous = current</span>
+<span class="token comment">//       current = current.next</span>
+<span class="token comment">//     }</span>
+<span class="token comment">//     if(!isRemoved) return -1</span>
+<span class="token comment">//     return true</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//append</span>
+<span class="token keyword">let</span> linkedList <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+linkedList<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">&#39;aaa&#39;</span><span class="token punctuation">)</span>
+linkedList<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">&#39;bbb&#39;</span><span class="token punctuation">)</span>
+linkedList<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">&#39;ccc&#39;</span><span class="token punctuation">)</span>
+<span class="token comment">// log(linkedList)</span>
+linkedList<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">&#39;ddd&#39;</span><span class="token punctuation">)</span>
+<span class="token function">log</span><span class="token punctuation">(</span>linkedList<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">// log(`位置1的元素为`, linkedList.get(1))</span>
+<span class="token comment">// log(`aaa的位置下标是`,linkedList.indexOf(&#39;aaa&#39;))</span>
+<span class="token function">log</span><span class="token punctuation">(</span>linkedList<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">&#39;mmm&#39;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token function">log</span><span class="token punctuation">(</span>linkedList<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">// log(linkedList.removeAt(0))</span>
+<span class="token function">log</span><span class="token punctuation">(</span>linkedList<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token string">&#39;mmm&#39;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token function">log</span><span class="token punctuation">(</span>linkedList<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432825-18430">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="//update(position, newData). removeAt(position), remove(element)
+//单向链表
+const log = console.log
+class Node {
+  constructor(data){
+    this.data = data
+    this.next = null
+  }
+}
+class LinkedList {
+  //属性
+  head = null
+  length = 0
+  
+  //五、update
+  update(position, newData) {
+    if(position &lt; 0 || position &gt;= this.length) return false
+    let current = this.head
+    let index = 0
+    while(index++ &lt; position) {
+      current = current.next
+    }
+    current.data = newData
+    log(current)
+    return true
+  }
+
+  //六、removeAt(position)
+  removeAt(position) {
+    if(position &lt; 0 || position &gt;= this.length) return null
+    if(position === 0) {
+      this.head = this.head.next
+      this.length -= 1
+      return true
+    }
+    let current = this.head
+    let previous = null
+    let index = 0
+    while(index++ &lt; position) {
+      previous = current
+      current = current.next
+    }
+    previous.next = current.next
+//     delete current
+    this.length -= 1
+    return true
+  }
+
+  //七、 remove(data)
+  remove(data) {
+    return this.removeAt(this.indexOf(data))
+//     let current = this.head
+//     let previous = null
+//     let isRemoved = false
+//     while(current) {
+//       if(current.data === data) {
+//         if(!previous) {
+//           this.head = this.head.next
+//         }else {
+//         previous.next = current.next
+//         }
+//         isRemoved = true
+//       }
+//       previous = current
+//       current = current.next
+//     }
+//     if(!isRemoved) return -1
+//     return true
+  }
+}
+
+//append
+let linkedList = new LinkedList()
+linkedList.append(&#39;aaa&#39;)
+linkedList.append(&#39;bbb&#39;)
+linkedList.append(&#39;ccc&#39;)
+// log(linkedList)
+linkedList.insert(0, &#39;ddd&#39;)
+log(linkedList.toString())
+// log(`位置1的元素为`, linkedList.get(1))
+// log(`aaa的位置下标是`,linkedList.indexOf(&#39;aaa&#39;))
+log(linkedList.update(3, &#39;mmm&#39;))
+log(linkedList.toString())
+// log(linkedList.removeAt(0))
+log(linkedList.remove(&#39;mmm&#39;))
+log(linkedList.toString())
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432825-18430" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br></div></div><h3 id="双向链表实现" tabindex="-1"><a class="header-anchor" href="#双向链表实现">¶</a> <span class="prefix"></span><span class="content" id="双向链表实现"><a class="header-anchor" href="#双向链表实现" aria-hidden="true">#</a> 双向链表实现</span><span class="suffix"></span></h3><p>实现<code>append</code>, <code>insert(position, data)</code></p><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 双向链表</span>
+<span class="token keyword">const</span> log <span class="token operator">=</span> console<span class="token punctuation">.</span>log
+<span class="token keyword">class</span> <span class="token class-name">DoublyNode</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>data <span class="token operator">=</span> data
+    <span class="token keyword">this</span><span class="token punctuation">.</span>prev <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">null</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">DoublyLinkedList</span> <span class="token punctuation">{</span>
+  head <span class="token operator">=</span> <span class="token keyword">null</span>
+  tail <span class="token operator">=</span> <span class="token keyword">null</span>
+  length <span class="token operator">=</span> <span class="token number">0</span>
+  
+  <span class="token function">append</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> newNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DoublyNode</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>head <span class="token operator">=</span> newNode
+      <span class="token keyword">this</span><span class="token punctuation">.</span>tail <span class="token operator">=</span> newNode
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      newNode<span class="token punctuation">.</span>prev <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>tail
+      <span class="token keyword">this</span><span class="token punctuation">.</span>tail<span class="token punctuation">.</span>next <span class="token operator">=</span> newNode
+      <span class="token keyword">this</span><span class="token punctuation">.</span>tail <span class="token operator">=</span> newNode
+    <span class="token punctuation">}</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">+=</span> <span class="token number">1</span>
+    <span class="token keyword">return</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">insert</span><span class="token punctuation">(</span><span class="token parameter">position<span class="token punctuation">,</span> data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>position <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> position <span class="token operator">&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">let</span> newNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DoublyNode</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>position <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>head <span class="token operator">=</span> newNode
+        <span class="token keyword">this</span><span class="token punctuation">.</span>tail <span class="token operator">=</span> newNode
+      <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+        newNode<span class="token punctuation">.</span>next <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head
+        <span class="token keyword">this</span><span class="token punctuation">.</span>head<span class="token punctuation">.</span>prev <span class="token operator">=</span> newNode
+        <span class="token keyword">this</span><span class="token punctuation">.</span>head <span class="token operator">=</span> newNode
+      <span class="token punctuation">}</span>
+      
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>position <span class="token operator">===</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>tail<span class="token punctuation">.</span>next <span class="token operator">=</span> newNode
+      newNode<span class="token punctuation">.</span>prev <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>tail
+      <span class="token keyword">this</span><span class="token punctuation">.</span>tail <span class="token operator">=</span> newNode
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token keyword">let</span> targetIndex <span class="token operator">=</span> <span class="token number">0</span>
+      <span class="token keyword">let</span> currentNode <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>head<span class="token punctuation">;</span>
+      <span class="token keyword">let</span> previousNode <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+      <span class="token keyword">while</span><span class="token punctuation">(</span>targetIndex<span class="token operator">++</span> <span class="token operator">&lt;</span> position<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        previousNode <span class="token operator">=</span> currentNode
+        currentNode <span class="token operator">=</span> currentNode<span class="token punctuation">.</span>next
+      <span class="token punctuation">}</span>
+      newNode<span class="token punctuation">.</span>prev <span class="token operator">=</span> previousNode
+      newNode<span class="token punctuation">.</span>next <span class="token operator">=</span> currentNode
+      currentNode<span class="token punctuation">.</span>prev <span class="token operator">=</span> newNode
+      previousNode<span class="token punctuation">.</span>next <span class="token operator">=</span> newNode
+    <span class="token punctuation">}</span>
+    
+    <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">+=</span> <span class="token number">1</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> dl <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DoublyLinkedList</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+dl<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token number">4399</span><span class="token punctuation">)</span>
+dl<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token number">8000</span><span class="token punctuation">)</span>
+dl<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">&quot;7k7k&quot;</span><span class="token punctuation">)</span>
+<span class="token function">log</span><span class="token punctuation">(</span>dl<span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432829-7229">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 双向链表
+const log = console.log
+class DoublyNode {
+  constructor(data){
+    this.data = data
+    this.prev = null
+    this.next = null
+  }
+}
+class DoublyLinkedList {
+  head = null
+  tail = null
+  length = 0
+  
+  append(data) {
+    let newNode = new DoublyNode(data)
+    if(this.length === 0) {
+      this.head = newNode
+      this.tail = newNode
+    } else {
+      newNode.prev = this.tail
+      this.tail.next = newNode
+      this.tail = newNode
+    }
+    this.length += 1
+    return
+  }
+  insert(position, data) {
+    if (position &lt; 0 || position &gt; this.length) return false;
+    
+    let newNode = new DoublyNode(data)
+    if(position === 0) {
+      if(this.length === 0) {
+        this.head = newNode
+        this.tail = newNode
+      }else {
+        newNode.next = this.head
+        this.head.prev = newNode
+        this.head = newNode
+      }
+      
+    }else if(position === this.length){
+      this.tail.next = newNode
+      newNode.prev = this.tail
+      this.tail = newNode
+    }else {
+      let targetIndex = 0
+      let currentNode = this.head;
+      let previousNode = null;
+      while(targetIndex++ &lt; position) {
+        previousNode = currentNode
+        currentNode = currentNode.next
+      }
+      newNode.prev = previousNode
+      newNode.next = currentNode
+      currentNode.prev = newNode
+      previousNode.next = newNode
+    }
+    
+    this.length += 1
+    return true
+  }
+}
+const dl = new DoublyLinkedList()
+dl.append(4399)
+dl.append(8000)
+dl.insert(1,&quot;7k7k&quot;)
+log(dl)
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432829-7229" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br></div></div><!--]--></div></div><!----><div class="bottom reading-progress" data-v-e132c114><div style="" class="progress" data-v-e132c114></div></div><!--]--><!--]--></div><!--[--><footer class="footer"> powered by <a target="_blank" href="https://github.com/artiely"> Artiely</a></footer><!--]--><div class="theme-box"><div class="theme-btn-box"><span class="active theme-btn">晓露</span><span class="theme-btn">寝安</span><span class="theme-btn">浅云</span><span class="theme-btn">逍遥</span><span class="theme-btn">十漾</span><span class="theme-btn">轻拟</span></div><div class="trigger"><i class="iconfont icon-pifu"></i></div></div></div><!----><!--]--></div>
+    <script type="module" src="/issues-engine/assets/app.0702af34.js" defer></script>
+  </body>
+</html>

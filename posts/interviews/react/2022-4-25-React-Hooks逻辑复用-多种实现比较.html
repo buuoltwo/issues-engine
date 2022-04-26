@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="VuePress 2.0.0-beta.35">
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+      html.dark {
+        --c-bg: #22272e;
+      }
+      html, body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme');
+			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+				document.documentElement.classList.toggle('dark', true);
+			}
+    </script>
+    <link rel="icon" href="/images/wand-magic-sparkles-solid.svg"><title>React逻辑复用方式比较 | 议题引擎</title><meta name="description" content="To reuse stateful logic in react， sharing non-visual logic， 创建与任何UI分离的自定义Hook">
+    <link rel="modulepreload" href="/issues-engine/assets/app.0702af34.js"><link rel="modulepreload" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.bb212273.js"><link rel="modulepreload" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.7b051d6e.js"><link rel="prefetch" href="/issues-engine/assets/index.html.0aa8fa78.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.6b596ec1.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.d7111f6b.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.524f0667.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.07655d45.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.92514416.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.9db14317.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.bb2e73e7.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.fc86c67e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.52cb4ae8.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.b9649331.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.05a7a10f.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.456b654e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.269028e1.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.7ca8f5a6.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.35638141.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.7e5b8603.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.701524b1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.8ed45c60.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.46d5c700.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.6d3b7251.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.621c9baa.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.234934ac.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.a0332d3e.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.0bb8d26c.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.e4014bd4.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.1c24b009.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.46a0a8b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.03334d67.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.39822dda.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.f8fc5f30.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.fb531f0b.js"><link rel="prefetch" href="/issues-engine/assets/404.html.34ce071f.js"><link rel="prefetch" href="/issues-engine/assets/index.html.72de904a.js"><link rel="prefetch" href="/issues-engine/assets/index.html.c8a29f07.js"><link rel="prefetch" href="/issues-engine/assets/index.html.451ae1fc.js"><link rel="prefetch" href="/issues-engine/assets/index.html.da1ad6b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.28d49f6a.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.8c042f83.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.cd3983a5.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.6f42bb75.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.fb6c5fd3.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.0f373aff.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.4b8dbcb0.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.f63b1e9a.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.62537066.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.73d4c34d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.c7360084.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.472eff52.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.3eeddf8c.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.d35fe93d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.b4d307f3.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.344c83f2.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.9b0ac2e9.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.a060da88.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.0f1ea1d7.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.b71b64ff.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.b00bd9ed.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.649ddd57.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.9240adc3.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.3d9e52ee.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.d7c53e39.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.0488e0f1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.70979456.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.4ce8d141.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.b2589b01.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.4533d370.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.aaca1edc.js"><link rel="prefetch" href="/issues-engine/assets/404.html.93146c89.js"><link rel="prefetch" href="/issues-engine/assets/index.html.97f4289c.js"><link rel="prefetch" href="/issues-engine/assets/index.html.7c8b0471.js"><link rel="prefetch" href="/issues-engine/assets/index.html.71497e48.js"><link rel="prefetch" href="/issues-engine/assets/404.194390d5.js"><link rel="prefetch" href="/issues-engine/assets/Timeline.af9d2264.js"><link rel="prefetch" href="/issues-engine/assets/Comment.7ee3c986.js"><link rel="prefetch" href="/issues-engine/assets/Tags.0e52b73f.js"><link rel="prefetch" href="/issues-engine/assets/Favorites.9a6967ac.js"><link rel="prefetch" href="/issues-engine/assets/vanilla-tilt.es2015.23c0b18e.js"><link rel="prefetch" href="/issues-engine/assets/lightgallery.es5.a2f185c8.js">
+    <link rel="stylesheet" href="/issues-engine/assets/style.f947f55a.css">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="dog"><!--[--><!--[--><header class="header"><div class="header-main"><div class="logo">buuoltwo的博客</div><form class="search-box" role="search"><input type="search" autocomplete="off" spellcheck="false" value><!----></form><nav class="nav"><!--[--><a href="/issues-engine/" class="link" target="_self">Home</a><a href="/issues-engine/timeline" class="link" target="_self">Timeline</a><a href="/issues-engine/tag" class="link" target="_self">Tags</a><!--]--></nav></div></header><div class="header-mobile"><div class="logo">buuoltwo的博客</div><div class="menu-btn"><i class="iconfont icon-hanbaocaidan"></i></div></div><nav class="nav-mobile" style="display:none;"><!--[--><a href="/issues-engine/" class="link">Home</a><a href="/issues-engine/timeline" class="link">Timeline</a><a href="/issues-engine/tag" class="link">Tags</a><!--]--></nav><!--]--><!--]--><div class="body"><!--[--><!--[--><div class="sidebar-box"><div class="con"><aside class="dog-sidebar"><!--[--><!--]--><ul class="sidebar-items"><!--[--><li><p tabindex="0" class="sidebar-item sidebar-heading">React逻辑复用方式比较 <!----></p><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/interviews/react/2022-4-25-React-Hooks%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8-%E5%A4%9A%E7%A7%8D%E5%AE%9E%E7%8E%B0%E6%AF%94%E8%BE%83.html#复制粘贴" class="router-link-active router-link-exact-active sidebar-item" aria-label="复制粘贴"><!--[--><!--]--> 复制粘贴 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/interviews/react/2022-4-25-React-Hooks%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8-%E5%A4%9A%E7%A7%8D%E5%AE%9E%E7%8E%B0%E6%AF%94%E8%BE%83.html#使用高阶组件" class="router-link-active router-link-exact-active sidebar-item" aria-label="使用高阶组件"><!--[--><!--]--> 使用高阶组件 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/interviews/react/2022-4-25-React-Hooks%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8-%E5%A4%9A%E7%A7%8D%E5%AE%9E%E7%8E%B0%E6%AF%94%E8%BE%83.html#使用render-props" class="router-link-active router-link-exact-active sidebar-item" aria-label="使用Render Props"><!--[--><!--]--> 使用Render Props <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/interviews/react/2022-4-25-React-Hooks%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8-%E5%A4%9A%E7%A7%8D%E5%AE%9E%E7%8E%B0%E6%AF%94%E8%BE%83.html#自定义hook" class="router-link-active router-link-exact-active sidebar-item" aria-label="自定义Hook"><!--[--><!--]--> 自定义Hook <!--[--><!--]--></a><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/interviews/react/2022-4-25-React-Hooks%E9%80%BB%E8%BE%91%E5%A4%8D%E7%94%A8-%E5%A4%9A%E7%A7%8D%E5%AE%9E%E7%8E%B0%E6%AF%94%E8%BE%83.html#比较小结-一些简单hook" class="router-link-active router-link-exact-active sidebar-item" aria-label="比较小结 &amp;一些简单hook"><!--[--><!--]--> 比较小结 &amp;一些简单hook <!--[--><!--]--></a><!----></li><!--]--></ul><!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><!--[--><!--]--></aside></div></div><div class="md-body sino sino-kai"><div class="default-content"><!--[--><h1 id="react-hooks逻辑复用-多种实现比较" tabindex="-1"><a class="header-anchor" href="#react-hooks逻辑复用-多种实现比较">¶</a> <span class="prefix"></span><span class="content" id="react-hooks逻辑复用-多种实现比较"><a class="header-anchor" href="#react-hooks逻辑复用-多种实现比较" aria-hidden="true">#</a> React-Hooks逻辑复用-多种实现比较</span><span class="suffix"></span></h1><p><strong>KEY: To reuse stateful logic in react， sharing non-visual logic， 创建与任何UI分离的自定义Hook</strong></p><p>复制粘贴是最粗暴的复用行为，其他两种比较不行的复用为：</p><ol><li>使用高阶组件</li><li>使用<code>Render Prop</code></li></ol><p>以下的例子是悬停添加Tooltip的实现：</p><ol><li>在HOC和Render Prop的例子中，两个事件已经被复用。 <ul><li>但是他们的<strong>缺陷</strong>在于，开发者将被迫修改DOM结构。</li></ul></li><li>React逻辑复用较佳实践：<strong>Tradeoffs概念</strong></li></ol><h2 id="复制粘贴" tabindex="-1"><a class="header-anchor" href="#复制粘贴">¶</a> <span class="prefix"></span><span class="content" id="复制粘贴"><a class="header-anchor" href="#复制粘贴" aria-hidden="true">#</a> 复制粘贴</span><span class="suffix"></span></h2><p>复制粘贴代码实现</p><div class="language-react ext-react line-numbers-mode"><pre class="language-react"><code>// Copy/Pasting
+//Info.js
+function Info({ id, size }) {
+    const [hovering, setHovering] = React.useState(false)
+
+    const mouseOver = () =&gt; setHovering(true)
+    const mouseOut = () =&gt; setHovering(false)
+    
+    return (&lt;div&gt;
+        &lt;&gt;
+            {hovering === true ?
+                &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+            &lt;svg
+                onMouseOver={mouseOver}
+                onMouseOut={mouseOut}
+                width={size}
+            &gt;&lt;path&gt;&lt;/path&gt;&lt;/svg&gt;
+        &lt;/&gt;
+    &lt;/div&gt;)
+}
+//TrendChart.js
+function TrendChart({ id, size }) {
+    const [hovering, setHovering] = React.useState(false)
+
+    const mouseOver = () =&gt; setHovering(true)
+    const mouseOut = () =&gt; setHovering(false)
+    
+    return (&lt;div&gt;
+        &lt;&gt;
+            {hovering === true ?
+                &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+            &lt;div
+                className=&quot;balabala...&quot;
+                onMouseOver={mouseOver}
+                onMouseOut={mouseOut}
+                width={size}&gt;&lt;/div&gt;
+        &lt;/&gt;
+    &lt;/div&gt;)
+}
+//DailyChart.js
+function DailyChart({ id, size }) {
+    const [hovering, setHovering] = React.useState(false)
+
+    const mouseOver = () =&gt; setHovering(true)
+    const mouseOut = () =&gt; setHovering(false)
+    
+    return (&lt;div&gt;
+        &lt;&gt;
+            {hovering === true ?
+                &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+            &lt;div
+                className=&quot;cilacila...&quot;
+                onMouseOver={mouseOver}
+                onMouseOut={mouseOut}
+                width={size}&gt;&lt;/div&gt;
+        &lt;/&gt;
+    &lt;/div&gt;)
+}
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433259-66921">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// Copy/Pasting
+//Info.js
+function Info({ id, size }) {
+    const [hovering, setHovering] = React.useState(false)
+
+    const mouseOver = () =&gt; setHovering(true)
+    const mouseOut = () =&gt; setHovering(false)
+    
+    return (&lt;div&gt;
+        &lt;&gt;
+            {hovering === true ?
+                &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+            &lt;svg
+                onMouseOver={mouseOver}
+                onMouseOut={mouseOut}
+                width={size}
+            &gt;&lt;path&gt;&lt;/path&gt;&lt;/svg&gt;
+        &lt;/&gt;
+    &lt;/div&gt;)
+}
+//TrendChart.js
+function TrendChart({ id, size }) {
+    const [hovering, setHovering] = React.useState(false)
+
+    const mouseOver = () =&gt; setHovering(true)
+    const mouseOut = () =&gt; setHovering(false)
+    
+    return (&lt;div&gt;
+        &lt;&gt;
+            {hovering === true ?
+                &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+            &lt;div
+                className=&quot;balabala...&quot;
+                onMouseOver={mouseOver}
+                onMouseOut={mouseOut}
+                width={size}&gt;&lt;/div&gt;
+        &lt;/&gt;
+    &lt;/div&gt;)
+}
+//DailyChart.js
+function DailyChart({ id, size }) {
+    const [hovering, setHovering] = React.useState(false)
+
+    const mouseOver = () =&gt; setHovering(true)
+    const mouseOut = () =&gt; setHovering(false)
+    
+    return (&lt;div&gt;
+        &lt;&gt;
+            {hovering === true ?
+                &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+            &lt;div
+                className=&quot;cilacila...&quot;
+                onMouseOver={mouseOver}
+                onMouseOut={mouseOut}
+                width={size}&gt;&lt;/div&gt;
+        &lt;/&gt;
+    &lt;/div&gt;)
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433259-66921" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br></div></div><h2 id="使用高阶组件" tabindex="-1"><a class="header-anchor" href="#使用高阶组件">¶</a> <span class="prefix"></span><span class="content" id="使用高阶组件"><a class="header-anchor" href="#使用高阶组件" aria-hidden="true">#</a> 使用高阶组件</span><span class="suffix"></span></h2><p>使用HOC，接受<code>arguments</code>。</p><div class="language-react ext-react line-numbers-mode"><pre class="language-react"><code>// HOC
+function WithHover(Component) {
+    return function (props) {
+        const [hovering, setHovering] = React.useState(false)
+
+        const mouseOver = () =&gt; setHovering(true)
+        const mouseOut = () =&gt; setHovering(false)
+        return (
+            &lt;div
+                onMouseOver={mouseOver}
+                onMouseOut={mouseOut}&gt;
+                {hovering === true ?
+                    &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+                &lt;Component {...props} hovering={hovering}&gt;&lt;/Component&gt;
+            &lt;/div&gt;
+        )
+    }
+}
+
+//调用
+const InfoWithHover = withHover(Info)
+const TrendChartWithHover = withHover(TrendChart)
+const DailyChartWithHover = withHover(DailyChart)
+function Info(hovering) {
+    return (&lt;&gt;
+        {hovering === true ?
+            &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+        &lt;svg&gt;&lt;/svg&gt;
+    &lt;/&gt;)
+}
+function TrendChart(hovering) {
+    return (&lt;&gt;
+        {hovering === true ?
+            &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+        &lt;div className=&quot;balabala...&quot;&gt;&lt;/div&gt;
+    &lt;/&gt;)
+}
+function DailyChart(hovering) {
+    return (&lt;&gt;
+        {hovering === true ?
+            &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+        &lt;div className=&quot;cilacila...&quot;&gt;&lt;/div&gt;
+    &lt;/&gt;)
+}
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433259-64038">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// HOC
+function WithHover(Component) {
+    return function (props) {
+        const [hovering, setHovering] = React.useState(false)
+
+        const mouseOver = () =&gt; setHovering(true)
+        const mouseOut = () =&gt; setHovering(false)
+        return (
+            &lt;div
+                onMouseOver={mouseOver}
+                onMouseOut={mouseOut}&gt;
+                {hovering === true ?
+                    &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+                &lt;Component {...props} hovering={hovering}&gt;&lt;/Component&gt;
+            &lt;/div&gt;
+        )
+    }
+}
+
+//调用
+const InfoWithHover = withHover(Info)
+const TrendChartWithHover = withHover(TrendChart)
+const DailyChartWithHover = withHover(DailyChart)
+function Info(hovering) {
+    return (&lt;&gt;
+        {hovering === true ?
+            &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+        &lt;svg&gt;&lt;/svg&gt;
+    &lt;/&gt;)
+}
+function TrendChart(hovering) {
+    return (&lt;&gt;
+        {hovering === true ?
+            &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+        &lt;div className=&quot;balabala...&quot;&gt;&lt;/div&gt;
+    &lt;/&gt;)
+}
+function DailyChart(hovering) {
+    return (&lt;&gt;
+        {hovering === true ?
+            &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+        &lt;div className=&quot;cilacila...&quot;&gt;&lt;/div&gt;
+    &lt;/&gt;)
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433259-64038" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br></div></div><h2 id="使用render-props" tabindex="-1"><a class="header-anchor" href="#使用render-props">¶</a> <span class="prefix"></span><span class="content" id="使用render-props"><a class="header-anchor" href="#使用render-props" aria-hidden="true">#</a> 使用<code>Render Props</code></span><span class="suffix"></span></h2><p>使用公共组件，并向公共组件传递render方法。</p><div class="language-react ext-react line-numbers-mode"><pre class="language-react"><code>// Render Props
+function Hover({ render }) {
+    const [hovering, setHovering] = React.useState(false)
+
+    const mouseOver = () =&gt; setHovering(true)
+    const mouseOut = () =&gt; setHovering(false)
+
+    return (
+        &lt;div onMouseOver={mouseOver}
+            onMouseOut={mouseOut}&gt;
+            {render(hovering)}
+        &lt;/div&gt;
+    )
+}
+
+//需传递render方法
+const InfoWithHover = &lt;Hover render={(hovering) =&gt; &lt;Info hovering={hovering} /&gt;}&gt;&lt;/Hover&gt;
+const TrendChartWithHover = &lt;Hover render={(hovering) =&gt; &lt;TrendChart hovering={hovering} /&gt;}&gt;&lt;/Hover&gt;
+const DailyChartWithHover = &lt;Hover render={(hovering) =&gt; &lt;DailyChart hovering={hovering} /&gt;}&gt;&lt;/Hover&gt;
+function Info(hovering) {
+    return (&lt;&gt;
+        {hovering === true ?
+            &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+        &lt;svg&gt;&lt;/svg&gt;
+    &lt;/&gt;)
+}
+function TrendChart(hovering) {
+    return (&lt;&gt;
+        {hovering === true ?
+            &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+        &lt;div className=&quot;balabala...&quot;&gt;&lt;/div&gt;
+    &lt;/&gt;)
+}
+function DailyChart(hovering) {
+    return (&lt;&gt;
+        {hovering === true ?
+            &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+        &lt;div className=&quot;cilacila...&quot;&gt;&lt;/div&gt;
+    &lt;/&gt;)
+}
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433261-76828">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// Render Props
+function Hover({ render }) {
+    const [hovering, setHovering] = React.useState(false)
+
+    const mouseOver = () =&gt; setHovering(true)
+    const mouseOut = () =&gt; setHovering(false)
+
+    return (
+        &lt;div onMouseOver={mouseOver}
+            onMouseOut={mouseOut}&gt;
+            {render(hovering)}
+        &lt;/div&gt;
+    )
+}
+
+//需传递render方法
+const InfoWithHover = &lt;Hover render={(hovering) =&gt; &lt;Info hovering={hovering} /&gt;}&gt;&lt;/Hover&gt;
+const TrendChartWithHover = &lt;Hover render={(hovering) =&gt; &lt;TrendChart hovering={hovering} /&gt;}&gt;&lt;/Hover&gt;
+const DailyChartWithHover = &lt;Hover render={(hovering) =&gt; &lt;DailyChart hovering={hovering} /&gt;}&gt;&lt;/Hover&gt;
+function Info(hovering) {
+    return (&lt;&gt;
+        {hovering === true ?
+            &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+        &lt;svg&gt;&lt;/svg&gt;
+    &lt;/&gt;)
+}
+function TrendChart(hovering) {
+    return (&lt;&gt;
+        {hovering === true ?
+            &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+        &lt;div className=&quot;balabala...&quot;&gt;&lt;/div&gt;
+    &lt;/&gt;)
+}
+function DailyChart(hovering) {
+    return (&lt;&gt;
+        {hovering === true ?
+            &lt;Tooltip id={id}&gt;&lt;/Tooltip&gt; : null}
+        &lt;div className=&quot;cilacila...&quot;&gt;&lt;/div&gt;
+    &lt;/&gt;)
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433261-76828" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br></div></div><h2 id="自定义hook" tabindex="-1"><a class="header-anchor" href="#自定义hook">¶</a> <span class="prefix"></span><span class="content" id="自定义hook"><a class="header-anchor" href="#自定义hook" aria-hidden="true">#</a> 自定义Hook</span><span class="suffix"></span></h2><ul><li><p>它不与任何UI耦合，可以返回任何它想要的东西。</p><ul><li>DOM树结构不再需要添加 <strong>不必要的包装组件</strong></li></ul></li><li><p>我们希望<code>useHover</code>的消费者有两条数据，<code>the hovering state</code> &amp; 要添加悬停状态的DOM节点的属性。</p></li></ul><div class="language-react ext-react line-numbers-mode"><pre class="language-react"><code>// Custom Hook
+const useHover = (initialValue) =&gt; {
+    const [hovering, setHovering] = useHover(!!initialValue)
+    const mouseOver = () =&gt; setHovering(true)
+    const mouseOut = () =&gt; setHovering(false)
+    const attrs = {
+        onMouseOver: mouseOver,
+        onMouseOut: mouseOut
+    }
+    return [hovering, attrs]
+}
+
+// UI
+function Info() {
+    const [hovering, attrs] = useHover(false)
+    return (
+        &lt;&gt;
+            {hovering ? &lt;Tooltip /&gt; : null}
+            &lt; svg {...attrs} /&gt;
+        &lt;/&gt;
+    )
+}
+function TrendChart() {
+    const [hovering, attrs] = useHover(false)
+    return (
+        &lt;&gt;
+            {hovering ? &lt;Tooltip /&gt; : null}
+            &lt;div className=&quot;balabala...&quot; {...attrs}&gt;&lt;/div&gt;
+        &lt;/&gt;
+    )
+}
+function DailyChart() {
+    const [hovering, attrs] = useHover(false)
+    return (
+        &lt;&gt;
+            {hovering ? &lt;Tooltip /&gt; : null}
+            &lt;div className=&quot;cilacila...&quot; {...attrs}&gt;&lt;/div&gt;
+        &lt;/&gt;
+    )
+}
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433261-86647">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// Custom Hook
+const useHover = (initialValue) =&gt; {
+    const [hovering, setHovering] = useHover(!!initialValue)
+    const mouseOver = () =&gt; setHovering(true)
+    const mouseOut = () =&gt; setHovering(false)
+    const attrs = {
+        onMouseOver: mouseOver,
+        onMouseOut: mouseOut
+    }
+    return [hovering, attrs]
+}
+
+// UI
+function Info() {
+    const [hovering, attrs] = useHover(false)
+    return (
+        &lt;&gt;
+            {hovering ? &lt;Tooltip /&gt; : null}
+            &lt; svg {...attrs} /&gt;
+        &lt;/&gt;
+    )
+}
+function TrendChart() {
+    const [hovering, attrs] = useHover(false)
+    return (
+        &lt;&gt;
+            {hovering ? &lt;Tooltip /&gt; : null}
+            &lt;div className=&quot;balabala...&quot; {...attrs}&gt;&lt;/div&gt;
+        &lt;/&gt;
+    )
+}
+function DailyChart() {
+    const [hovering, attrs] = useHover(false)
+    return (
+        &lt;&gt;
+            {hovering ? &lt;Tooltip /&gt; : null}
+            &lt;div className=&quot;cilacila...&quot; {...attrs}&gt;&lt;/div&gt;
+        &lt;/&gt;
+    )
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433261-86647" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br></div></div><h3 id="比较小结-一些简单hook" tabindex="-1"><a class="header-anchor" href="#比较小结-一些简单hook">¶</a> <span class="prefix"></span><span class="content" id="比较小结-一些简单hook"><a class="header-anchor" href="#比较小结-一些简单hook" aria-hidden="true">#</a> 比较小结 &amp;一些简单hook</span><span class="suffix"></span></h3><h4 id="比较小结" tabindex="-1"><a class="header-anchor" href="#比较小结">¶</a> <span class="prefix"></span><span class="content" id="比较小结"><a class="header-anchor" href="#比较小结" aria-hidden="true">#</a> 比较小结</span><span class="suffix"></span></h4><p>依图比较可见，开发者使用更多的自定义Hook，能够很好简化DOM树结构：</p><figure><img src="https://img.ukx.cn/abcdocker/2022/04/25/58386b9fb06f4/58386b9fb06f4.png" alt=""><figcaption>image-20220425180341585</figcaption></figure><h4 id="简单hook" tabindex="-1"><a class="header-anchor" href="#简单hook">¶</a> <span class="prefix"></span><span class="content" id="简单hook"><a class="header-anchor" href="#简单hook" aria-hidden="true">#</a> 简单hook:</span><span class="suffix"></span></h4><h5 id="usetimeout" tabindex="-1"><a class="header-anchor" href="#usetimeout">¶</a> <span class="prefix"></span><span class="content" id="usetimeout"><a class="header-anchor" href="#usetimeout" aria-hidden="true">#</a> <code>useTimeout</code></span><span class="suffix"></span></h5><p>IF your timer is ready ? say yes or no.</p><figure><img src="https://img.ukx.cn/abcdocker/2022/04/25/5361ec9bf0461/5361ec9bf0461.png" alt=""><figcaption>image-20220425180749362</figcaption></figure><h5 id="usesetstate" tabindex="-1"><a class="header-anchor" href="#usesetstate">¶</a> <span class="prefix"></span><span class="content" id="usesetstate"><a class="header-anchor" href="#usesetstate" aria-hidden="true">#</a> <code>useSetState</code></span><span class="suffix"></span></h5><p>实现古老的setState。</p><figure><img src="https://img.ukx.cn/abcdocker/2022/04/25/a7f1907ecfac1/a7f1907ecfac1.png" alt=""><figcaption>image-20220425180945003</figcaption></figure><h5 id="usestatecallback" tabindex="-1"><a class="header-anchor" href="#usestatecallback">¶</a> <span class="prefix"></span><span class="content" id="usestatecallback"><a class="header-anchor" href="#usestatecallback" aria-hidden="true">#</a> useStateCallback</span><span class="suffix"></span></h5><p>(想起了古老的setState是有一个callback的，stackoverflow是这样解决的：</p><ul><li><p><a href="https://stackoverflow.com/questions/56247433/how-to-use-setstate-callback-on-react-hooks" target="_blank" rel="noopener noreferrer">reactjs - How to use <code>setState</code> callback on react hooks - Stack Overflow<span><svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewbox="0 0 100 100" width="15" height="15"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg><span class="external-link-icon-sr-only">open in new window</span></span></a></p></li><li><p><a href="https://stackoverflow.com/questions/54954091/how-to-use-callback-with-usestate-hook-in-react/61842546#61842546" target="_blank" rel="noopener noreferrer">reactjs - How to use callback with useState hook in react - Stack Overflow<span><svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewbox="0 0 100 100" width="15" height="15"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg><span class="external-link-icon-sr-only">open in new window</span></span></a></p></li></ul><p><strong>Usage</strong></p><div class="language-react ext-react line-numbers-mode"><pre class="language-react"><code>const App = () =&gt; {
+  const [state, setState] = useStateCallback(0); // same API as useState
+
+  const handleClick = () =&gt; {
+    setState(
+      prev =&gt; prev + 1,
+      // second argument is callback, `s` being the *updated* state
+      s =&gt; console.log(&quot;I am called after setState, state:&quot;, s)
+    );
+  };
+
+  return &lt;button onClick={handleClick}&gt;Increment&lt;/button&gt;;
+}
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433262-53377">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const App = () =&gt; {
+  const [state, setState] = useStateCallback(0); // same API as useState
+
+  const handleClick = () =&gt; {
+    setState(
+      prev =&gt; prev + 1,
+      // second argument is callback, `s` being the *updated* state
+      s =&gt; console.log(&quot;I am called after setState, state:&quot;, s)
+    );
+  };
+
+  return &lt;button onClick={handleClick}&gt;Increment&lt;/button&gt;;
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433262-53377" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p><strong><code>useStateCallback</code></strong></p><div class="language-react ext-react line-numbers-mode"><pre class="language-react"><code>function useStateCallback(initialState) {
+  const [state, setState] = useState(initialState);
+  const cbRef = useRef(null); // init mutable ref container for callbacks
+
+  const setStateCallback = useCallback((state, cb) =&gt; {
+    cbRef.current = cb; // store current, passed callback in ref
+    setState(state);
+  }, []); // keep object reference stable, exactly like `useState`
+
+  useEffect(() =&gt; {
+    // cb.current is `null` on initial render, 
+    // so we only invoke callback on state *updates*
+    if (cbRef.current) {
+      cbRef.current(state);
+      cbRef.current = null; // reset callback after execution
+    }
+  }, [state]);
+
+  return [state, setStateCallback];
+}
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016433263-41323">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="function useStateCallback(initialState) {
+  const [state, setState] = useState(initialState);
+  const cbRef = useRef(null); // init mutable ref container for callbacks
+
+  const setStateCallback = useCallback((state, cb) =&gt; {
+    cbRef.current = cb; // store current, passed callback in ref
+    setState(state);
+  }, []); // keep object reference stable, exactly like `useState`
+
+  useEffect(() =&gt; {
+    // cb.current is `null` on initial render, 
+    // so we only invoke callback on state *updates*
+    if (cbRef.current) {
+      cbRef.current(state);
+      cbRef.current = null; // reset callback after execution
+    }
+  }, [state]);
+
+  return [state, setStateCallback];
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016433263-41323" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div><p>Further info: <a href="https://reactjs.org/docs/hooks-faq.html#is-there-something-like-instance-variables" target="_blank" rel="noopener noreferrer">React Hooks FAQ: Is there something like instance variables?<span><svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewbox="0 0 100 100" width="15" height="15"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg><span class="external-link-icon-sr-only">open in new window</span></span></a></p><h5 id="uselocalstorage" tabindex="-1"><a class="header-anchor" href="#uselocalstorage">¶</a> <span class="prefix"></span><span class="content" id="uselocalstorage"><a class="header-anchor" href="#uselocalstorage" aria-hidden="true">#</a> useLocalStorage</span><span class="suffix"></span></h5><figure><img src="https://img.ukx.cn/abcdocker/2022/04/25/c53a3b4274fb9/c53a3b4274fb9.png" alt=""><figcaption>image-20220425191412134</figcaption></figure><h4 id="最后。" tabindex="-1"><a class="header-anchor" href="#最后。">¶</a> <span class="prefix"></span><span class="content" id="最后。"><a class="header-anchor" href="#最后。" aria-hidden="true">#</a> 最后。</span><span class="suffix"></span></h4><figure><img src="https://img.ukx.cn/abcdocker/2022/04/25/945925c5c1bee/945925c5c1bee.png" alt=""><figcaption>image-20220425192128330</figcaption></figure><!--]--></div></div><!----><div class="bottom reading-progress" data-v-e132c114><div style="" class="progress" data-v-e132c114></div></div><!--]--><!--]--></div><!--[--><footer class="footer"> powered by <a target="_blank" href="https://github.com/artiely"> Artiely</a></footer><!--]--><div class="theme-box"><div class="theme-btn-box"><span class="active theme-btn">晓露</span><span class="theme-btn">寝安</span><span class="theme-btn">浅云</span><span class="theme-btn">逍遥</span><span class="theme-btn">十漾</span><span class="theme-btn">轻拟</span></div><div class="trigger"><i class="iconfont icon-pifu"></i></div></div></div><!----><!--]--></div>
+    <script type="module" src="/issues-engine/assets/app.0702af34.js" defer></script>
+  </body>
+</html>

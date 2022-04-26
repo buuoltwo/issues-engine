@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="VuePress 2.0.0-beta.35">
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+      html.dark {
+        --c-bg: #22272e;
+      }
+      html, body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme');
+			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+				document.documentElement.classList.toggle('dark', true);
+			}
+    </script>
+    <link rel="icon" href="/images/wand-magic-sparkles-solid.svg"><title>哈希表概念与实现 | 议题引擎</title><meta name="description" content="参考两篇文章的哈希表理论知识并作小结，基于霍纳法则完成简单的哈希函数以及哈希表封装、插入、修改、扩容。其中，扩容/缩容一个哈希表应保证容量恒为质数">
+    <link rel="modulepreload" href="/issues-engine/assets/app.0702af34.js"><link rel="modulepreload" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.28d49f6a.js"><link rel="modulepreload" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.6b596ec1.js"><link rel="prefetch" href="/issues-engine/assets/index.html.0aa8fa78.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.d7111f6b.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.524f0667.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.07655d45.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.92514416.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.9db14317.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.bb2e73e7.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.fc86c67e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.52cb4ae8.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.b9649331.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.05a7a10f.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.456b654e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.269028e1.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.7ca8f5a6.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.35638141.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.7e5b8603.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.701524b1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.8ed45c60.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.46d5c700.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.6d3b7251.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.621c9baa.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.234934ac.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.a0332d3e.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.0bb8d26c.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.e4014bd4.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.1c24b009.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.46a0a8b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.7b051d6e.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.03334d67.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.39822dda.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.f8fc5f30.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.fb531f0b.js"><link rel="prefetch" href="/issues-engine/assets/404.html.34ce071f.js"><link rel="prefetch" href="/issues-engine/assets/index.html.72de904a.js"><link rel="prefetch" href="/issues-engine/assets/index.html.c8a29f07.js"><link rel="prefetch" href="/issues-engine/assets/index.html.451ae1fc.js"><link rel="prefetch" href="/issues-engine/assets/index.html.da1ad6b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.8c042f83.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.cd3983a5.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.6f42bb75.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.fb6c5fd3.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.0f373aff.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.4b8dbcb0.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.f63b1e9a.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.62537066.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.73d4c34d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.c7360084.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.472eff52.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.3eeddf8c.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.d35fe93d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.b4d307f3.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.344c83f2.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.9b0ac2e9.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.a060da88.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.0f1ea1d7.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.b71b64ff.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.b00bd9ed.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.649ddd57.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.9240adc3.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.3d9e52ee.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.d7c53e39.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.0488e0f1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.70979456.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.bb212273.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.4ce8d141.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.b2589b01.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.4533d370.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.aaca1edc.js"><link rel="prefetch" href="/issues-engine/assets/404.html.93146c89.js"><link rel="prefetch" href="/issues-engine/assets/index.html.97f4289c.js"><link rel="prefetch" href="/issues-engine/assets/index.html.7c8b0471.js"><link rel="prefetch" href="/issues-engine/assets/index.html.71497e48.js"><link rel="prefetch" href="/issues-engine/assets/404.194390d5.js"><link rel="prefetch" href="/issues-engine/assets/Timeline.af9d2264.js"><link rel="prefetch" href="/issues-engine/assets/Comment.7ee3c986.js"><link rel="prefetch" href="/issues-engine/assets/Tags.0e52b73f.js"><link rel="prefetch" href="/issues-engine/assets/Favorites.9a6967ac.js"><link rel="prefetch" href="/issues-engine/assets/vanilla-tilt.es2015.23c0b18e.js"><link rel="prefetch" href="/issues-engine/assets/lightgallery.es5.a2f185c8.js">
+    <link rel="stylesheet" href="/issues-engine/assets/style.f947f55a.css">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="dog"><!--[--><!--[--><header class="header"><div class="header-main"><div class="logo">buuoltwo的博客</div><form class="search-box" role="search"><input type="search" autocomplete="off" spellcheck="false" value><!----></form><nav class="nav"><!--[--><a href="/issues-engine/" class="link" target="_self">Home</a><a href="/issues-engine/timeline" class="link" target="_self">Timeline</a><a href="/issues-engine/tag" class="link" target="_self">Tags</a><!--]--></nav></div></header><div class="header-mobile"><div class="logo">buuoltwo的博客</div><div class="menu-btn"><i class="iconfont icon-hanbaocaidan"></i></div></div><nav class="nav-mobile" style="display:none;"><!--[--><a href="/issues-engine/" class="link">Home</a><a href="/issues-engine/timeline" class="link">Timeline</a><a href="/issues-engine/tag" class="link">Tags</a><!--]--></nav><!--]--><!--]--><div class="body"><!--[--><!--[--><div class="sidebar-box"><div class="con"><aside class="dog-sidebar"><!--[--><!--]--><ul class="sidebar-items"><!--[--><li><p tabindex="0" class="sidebar-item sidebar-heading">哈希表概念与实现 <!----></p><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E5%93%88%E5%B8%8C%E8%A1%A8%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%AE%9E%E7%8E%B0.html#小结" class="router-link-active router-link-exact-active sidebar-item" aria-label="小结"><!--[--><!--]--> 小结 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E5%93%88%E5%B8%8C%E8%A1%A8%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%AE%9E%E7%8E%B0.html#哈希表的组成-含hashfunc" class="router-link-active router-link-exact-active sidebar-item" aria-label="哈希表的组成（含hashFunc）"><!--[--><!--]--> 哈希表的组成（含hashFunc） <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E5%93%88%E5%B8%8C%E8%A1%A8%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%AE%9E%E7%8E%B0.html#哈希表的插入和修改" class="router-link-active router-link-exact-active sidebar-item" aria-label="哈希表的插入和修改"><!--[--><!--]--> 哈希表的插入和修改 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E5%93%88%E5%B8%8C%E8%A1%A8%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%AE%9E%E7%8E%B0.html#其他方法" class="router-link-active router-link-exact-active sidebar-item" aria-label="其他方法"><!--[--><!--]--> 其他方法 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E5%93%88%E5%B8%8C%E8%A1%A8%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%AE%9E%E7%8E%B0.html#哈希表的扩容-含哈希表的删除" class="router-link-active router-link-exact-active sidebar-item" aria-label="哈希表的扩容(含哈希表的删除)"><!--[--><!--]--> 哈希表的扩容(含哈希表的删除) <!--[--><!--]--></a><!----></li><!--]--></ul><!--]--></li><!--]--></ul><!--[--><!--]--></aside></div></div><div class="md-body sino sino-kai"><div class="default-content"><!--[--><h1 id="哈希表理论" tabindex="-1"><a class="header-anchor" href="#哈希表理论">¶</a> <span class="prefix"></span><span class="content" id="哈希表理论"><a class="header-anchor" href="#哈希表理论" aria-hidden="true">#</a> 哈希表理论</span><span class="suffix"></span></h1><p><a href="https://zhuanlan.zhihu.com/p/144296454" target="_blank" rel="noopener noreferrer">图文并茂详解数据结构之哈希表<span><svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewbox="0 0 100 100" width="15" height="15"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg><span class="external-link-icon-sr-only">open in new window</span></span></a></p><p><a href="https://www.jianshu.com/p/6e88d63061f2" target="_blank" rel="noopener noreferrer">数据结构(九)之哈希表理论<span><svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewbox="0 0 100 100" width="15" height="15"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg><span class="external-link-icon-sr-only">open in new window</span></span></a></p><h2 id="小结" tabindex="-1"><a class="header-anchor" href="#小结">¶</a> <span class="prefix"></span><span class="content" id="小结"><a class="header-anchor" href="#小结" aria-hidden="true">#</a> 小结</span><span class="suffix"></span></h2><ol><li>哈希表是数组实现的，查找和插入都非常快</li><li>哈希化是说一种让字符串转数字的方法，键/关键字这种英文字符串能够转为数字作为数组下标。哈希化可能会造成冲突。因此，哈希表虽然是个数组，如果解决冲突的时候使用<strong>拉链法</strong>，它的元素是一个引用，也即数组或者链表（<code>bucket</code>，桶）。此外解决冲突的方法还有<strong>开放地址法</strong>。</li><li>哈希函数 是哈希化的手段，涉及霍纳法则。</li></ol><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 哈希函数</span>
+<span class="token keyword">function</span> <span class="token function">hashFunc</span><span class="token punctuation">(</span><span class="token parameter">str<span class="token punctuation">,</span> max</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 1.初始化hashCode的值</span>
+    <span class="token keyword">var</span> hashCode <span class="token operator">=</span> <span class="token number">0</span>
+
+    <span class="token comment">// 2.霍纳算法, 来计算hashCode的数值</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> str<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        hashCode <span class="token operator">=</span> <span class="token number">37</span> <span class="token operator">*</span> hashCode <span class="token operator">+</span> str<span class="token punctuation">.</span><span class="token function">charCodeAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 3.取模运算</span>
+    hashCode <span class="token operator">=</span> hashCode <span class="token operator">%</span> max
+    <span class="token keyword">return</span> hashCode
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432766-9468">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 哈希函数
+function hashFunc(str, max) {
+    // 1.初始化hashCode的值
+    var hashCode = 0
+
+    // 2.霍纳算法, 来计算hashCode的数值
+    for (var i = 0; i &lt; str.length; i++) {
+        hashCode = 37 * hashCode + str.charCodeAt(i)
+    }
+
+    // 3.取模运算
+    hashCode = hashCode % max
+    return hashCode
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432766-9468" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h1 id="哈希表实现" tabindex="-1"><a class="header-anchor" href="#哈希表实现">¶</a> <span class="prefix"></span><span class="content" id="哈希表实现"><a class="header-anchor" href="#哈希表实现" aria-hidden="true">#</a> 哈希表实现</span><span class="suffix"></span></h1><p>以数组bucket 为例，哈希表存储<code>[key,value]</code>的时候，根据key的哈希函数结果得到数组下标值找到bucket，首先根据key看看bucket有没有存储过，是修改就标记一下<code>flag = true</code>。是新增的话<code>bucket.push(Tuple [key,value])</code>,然后通过<code>!flag</code>改一下哈希表的count属性。</p><h2 id="哈希表的组成-含hashfunc" tabindex="-1"><a class="header-anchor" href="#哈希表的组成-含hashfunc">¶</a> <span class="prefix"></span><span class="content" id="哈希表的组成-含hashfunc"><a class="header-anchor" href="#哈希表的组成-含hashfunc" aria-hidden="true">#</a> 哈希表的组成（含hashFunc）</span><span class="suffix"></span></h2><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 创建HashTable构造函数</span>
+<span class="token keyword">function</span> <span class="token function">HashTable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 定义属性</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>storage <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>limit <span class="token operator">=</span> <span class="token number">8</span>
+
+    <span class="token comment">// 定义相关方法</span>
+    <span class="token comment">// 哈希函数</span>
+    <span class="token class-name">HashTable</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">hashFunc</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">str<span class="token punctuation">,</span> max</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 1.初始化hashCode的值</span>
+        <span class="token keyword">var</span> hashCode <span class="token operator">=</span> <span class="token number">0</span>
+
+        <span class="token comment">// 2.霍纳算法, 来计算hashCode的数值</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> str<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            hashCode <span class="token operator">=</span> <span class="token number">37</span> <span class="token operator">*</span> hashCode <span class="token operator">+</span> str<span class="token punctuation">.</span><span class="token function">charCodeAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+      
+        <span class="token comment">// 3.取模运算</span>
+        hashCode <span class="token operator">=</span> hashCode <span class="token operator">%</span> max
+        <span class="token keyword">return</span> hashCode
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432778-64131">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 创建HashTable构造函数
+function HashTable() {
+    // 定义属性
+    this.storage = []
+    this.count = 0
+    this.limit = 8
+
+    // 定义相关方法
+    // 哈希函数
+    HashTable.prototype.hashFunc = function(str, max) {
+        // 1.初始化hashCode的值
+        var hashCode = 0
+
+        // 2.霍纳算法, 来计算hashCode的数值
+        for (var i = 0; i &lt; str.length; i++) {
+            hashCode = 37 * hashCode + str.charCodeAt(i)
+        }
+      
+        // 3.取模运算
+        hashCode = hashCode % max
+        return hashCode
+    }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432778-64131" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div><h2 id="哈希表的插入和修改" tabindex="-1"><a class="header-anchor" href="#哈希表的插入和修改">¶</a> <span class="prefix"></span><span class="content" id="哈希表的插入和修改"><a class="header-anchor" href="#哈希表的插入和修改" aria-hidden="true">#</a> 哈希表的插入和修改</span><span class="suffix"></span></h2><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 插入数据方法</span>
+<span class="token class-name">HashTable</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">put</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">key<span class="token punctuation">,</span> value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 1.获取key对应的index</span>
+    <span class="token keyword">var</span> index <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">hashFunc</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>limit<span class="token punctuation">)</span>
+
+    <span class="token comment">// 2.取出数组(也可以使用链表)</span>
+    <span class="token keyword">var</span> bucket <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>storage<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+
+    <span class="token comment">// 3.判断这个数组是否存在</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bucket <span class="token operator">===</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 3.1创建桶</span>
+        bucket <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>storage<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> bucket
+    <span class="token punctuation">}</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span>bucket<span class="token punctuation">)</span>
+    
+    <span class="token comment">// 4.判断是新增还是修改原来的值.</span>
+    <span class="token keyword">var</span> override <span class="token operator">=</span> <span class="token boolean">false</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> bucket<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> tuple <span class="token operator">=</span> bucket<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>tuple<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">===</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            tuple<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> value
+            override <span class="token operator">=</span> <span class="token boolean">true</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">// 5.如果是新增, 前一步没有覆盖</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>override<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        bucket<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span>key<span class="token punctuation">,</span> value<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>count<span class="token operator">++</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432780-84860">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 插入数据方法
+HashTable.prototype.put = function (key, value) {
+    // 1.获取key对应的index
+    var index = this.hashFunc(key, this.limit)
+
+    // 2.取出数组(也可以使用链表)
+    var bucket = this.storage[index]
+
+    // 3.判断这个数组是否存在
+    if (bucket === undefined) {
+        // 3.1创建桶
+        bucket = []
+        this.storage[index] = bucket
+    }
+    alert(bucket)
+    
+    // 4.判断是新增还是修改原来的值.
+    var override = false
+    for (var i = 0; i &lt; bucket.length; i++) {
+        var tuple = bucket[i]
+        if (tuple[0] === key) {
+            tuple[1] = value
+            override = true
+        }
+    }
+    
+    // 5.如果是新增, 前一步没有覆盖
+    if (!override) {
+        bucket.push([key, value])
+        this.count++
+    }
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432780-84860" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br></div></div><h2 id="其他方法" tabindex="-1"><a class="header-anchor" href="#其他方法">¶</a> <span class="prefix"></span><span class="content" id="其他方法"><a class="header-anchor" href="#其他方法" aria-hidden="true">#</a> 其他方法</span><span class="suffix"></span></h2><p>https://www.jianshu.com/p/70c11dc8ec98</p><h2 id="哈希表的扩容-含哈希表的删除" tabindex="-1"><a class="header-anchor" href="#哈希表的扩容-含哈希表的删除">¶</a> <span class="prefix"></span><span class="content" id="哈希表的扩容-含哈希表的删除"><a class="header-anchor" href="#哈希表的扩容-含哈希表的删除" aria-hidden="true">#</a> 哈希表的扩容(含哈希表的删除)</span><span class="suffix"></span></h2><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 增删的时候需要哈希表扩容</span>
+<span class="token class-name">HashTable</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">resize</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">newLimit</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 1.保存旧的数组内容</span>
+    <span class="token keyword">var</span> oldStorage <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>storage
+
+    <span class="token comment">// 2.重置属性</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>limit <span class="token operator">=</span> newLimit
+    <span class="token keyword">this</span><span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>storage <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    <span class="token comment">// 3.遍历旧数组中的所有数据项, 并且重新插入到哈希表中</span>
+    oldStorage<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">bucket</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 1.bucket为null, 说明这里面没有数据</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>bucket <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// 2.bucket中有数据, 那么将里面的数据重新哈希化插入</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> bucket<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">var</span> tuple <span class="token operator">=</span> bucket<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>tuple<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> tuple<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432783-24607">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 增删的时候需要哈希表扩容
+HashTable.prototype.resize = function (newLimit) {
+    // 1.保存旧的数组内容
+    var oldStorage = this.storage
+
+    // 2.重置属性
+    this.limit = newLimit
+    this.count = 0
+    this.storage = []
+
+    // 3.遍历旧数组中的所有数据项, 并且重新插入到哈希表中
+    oldStorage.forEach(function (bucket) {
+        // 1.bucket为null, 说明这里面没有数据
+        if (bucket == null) {
+            return
+        }
+
+        // 2.bucket中有数据, 那么将里面的数据重新哈希化插入
+        for (var i = 0; i &lt; bucket.length; i++) {
+            var tuple = bucket[i]
+            this.put(tuple[0], tuple[1])
+        }
+    }).bind(this)
+}
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432783-24607" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div><p>缩容实际执行：</p><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">// 哈希表删除数据</span>
+<span class="token comment">// 根据对应的key, 删除对应的key/value</span>
+<span class="token class-name">HashTable</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">remove</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">key</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 1.获取key对应的index</span>
+    <span class="token keyword">var</span> index <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">hashFunc</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>limit<span class="token punctuation">)</span>
+
+    <span class="token comment">// 2.获取对应的bucket</span>
+    <span class="token keyword">var</span> bucket <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>storage<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+
+    <span class="token comment">// 3.判断同是否为null, 为null则说明没有对应的数据</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bucket <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">null</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 4.遍历bucket, 寻找对应的数据</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> bucket<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> tuple <span class="token operator">=</span> bucket<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>tuple<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">===</span> key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            bucket<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>count<span class="token operator">--</span>
+
+            <span class="token comment">// 缩小数组的容量</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>limit <span class="token operator">&gt;</span> <span class="token number">7</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>count <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>limit <span class="token operator">*</span> <span class="token number">0.25</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">var</span> primeNum <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getPrime</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>limit <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">resize</span><span class="token punctuation">(</span>primeNum<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> tuple<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 5.来到该位置, 说明没有对应的数据, 那么返回null</span>
+    <span class="token keyword">return</span> <span class="token keyword">null</span>
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432784-45309">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="// 哈希表删除数据
+// 根据对应的key, 删除对应的key/value
+HashTable.prototype.remove = function (key) {
+    // 1.获取key对应的index
+    var index = this.hashFunc(key, this.limit)
+
+    // 2.获取对应的bucket
+    var bucket = this.storage[index]
+
+    // 3.判断同是否为null, 为null则说明没有对应的数据
+    if (bucket == null) {
+        return null
+    }
+
+    // 4.遍历bucket, 寻找对应的数据
+    for (var i = 0; i &lt; bucket.length; i++) {
+        var tuple = bucket[i]
+        if (tuple[0] === key) {
+            bucket.splice(i, 1)
+            this.count--
+
+            // 缩小数组的容量
+            if (this.limit &gt; 7 &amp;&amp; this.count &lt; this.limit * 0.25) {
+                var primeNum = this.getPrime(Math.floor(this.limit / 2))
+                this.resize(primeNum)
+            }
+        }
+        return tuple[1]
+    }
+
+    // 5.来到该位置, 说明没有对应的数据, 那么返回null
+    return null
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432784-45309" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br></div></div><p>resize执行前需预操作。</p><p>1.判断一个数是质数:</p><p>①根据定义去写</p><p>②temp取开方取整，取模为0则不为质数（一个数的两个公因数必然一个小于temp,一个大于temp，根据temp循环足够。）</p><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">isPrime</span><span class="token punctuation">(</span><span class="token parameter">num</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 1.获取平方根</span>
+    <span class="token keyword">var</span> temp <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">sqrt</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// 2.循环判断</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> temp<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>num <span class="token operator">%</span> i <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// 获取质数</span>
+<span class="token class-name">HashTable</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function-variable function">getPrime</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">num</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isPrime</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        num<span class="token operator">++</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> num
+<span class="token punctuation">}</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432785-9072">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="function isPrime(num) {
+    // 1.获取平方根
+    var temp = parseInt(Math.sqrt(num))
+
+    // 2.循环判断
+    for (var i = 2; i &lt;= temp; i++) {
+        if (num % i == 0) {
+            return false
+        }
+    }
+    return true
+}
+// 获取质数
+HashTable.prototype.getPrime = function (num) {
+    while (!isPrime(num)) {
+        num++
+    }
+    return num
+}
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432785-9072" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><!--]--></div></div><!----><div class="bottom reading-progress" data-v-e132c114><div style="" class="progress" data-v-e132c114></div></div><!--]--><!--]--></div><!--[--><footer class="footer"> powered by <a target="_blank" href="https://github.com/artiely"> Artiely</a></footer><!--]--><div class="theme-box"><div class="theme-btn-box"><span class="active theme-btn">晓露</span><span class="theme-btn">寝安</span><span class="theme-btn">浅云</span><span class="theme-btn">逍遥</span><span class="theme-btn">十漾</span><span class="theme-btn">轻拟</span></div><div class="trigger"><i class="iconfont icon-pifu"></i></div></div></div><!----><!--]--></div>
+    <script type="module" src="/issues-engine/assets/app.0702af34.js" defer></script>
+  </body>
+</html>

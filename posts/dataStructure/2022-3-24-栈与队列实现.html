@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="VuePress 2.0.0-beta.35">
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+      html.dark {
+        --c-bg: #22272e;
+      }
+      html, body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme');
+			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+				document.documentElement.classList.toggle('dark', true);
+			}
+    </script>
+    <link rel="icon" href="/images/wand-magic-sparkles-solid.svg"><title>栈与队列实现 | 议题引擎</title><meta name="description" content="封装栈、队列和优先级队列数据结构，栈是FILO，队列是FIFO  ...">
+    <link rel="modulepreload" href="/issues-engine/assets/app.0702af34.js"><link rel="modulepreload" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.8c042f83.js"><link rel="modulepreload" href="/issues-engine/assets/2022-3-24-栈与队列实现.html.d7111f6b.js"><link rel="prefetch" href="/issues-engine/assets/index.html.0aa8fa78.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.6b596ec1.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.524f0667.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.07655d45.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.92514416.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.9db14317.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.bb2e73e7.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.fc86c67e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.52cb4ae8.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.b9649331.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.05a7a10f.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.456b654e.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.269028e1.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.7ca8f5a6.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.35638141.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.7e5b8603.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.701524b1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.8ed45c60.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.46d5c700.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.6d3b7251.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.621c9baa.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.234934ac.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.a0332d3e.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.0bb8d26c.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.e4014bd4.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.1c24b009.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.46a0a8b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.7b051d6e.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.03334d67.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.39822dda.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.f8fc5f30.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.fb531f0b.js"><link rel="prefetch" href="/issues-engine/assets/404.html.34ce071f.js"><link rel="prefetch" href="/issues-engine/assets/index.html.72de904a.js"><link rel="prefetch" href="/issues-engine/assets/index.html.c8a29f07.js"><link rel="prefetch" href="/issues-engine/assets/index.html.451ae1fc.js"><link rel="prefetch" href="/issues-engine/assets/index.html.da1ad6b2.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-哈希表概念与实现.html.28d49f6a.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-链表实现.html.cd3983a5.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-24-集合实现与数组api相似操作.html.6f42bb75.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-28-二叉树概念与二叉搜索树实现.html.fb6c5fd3.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-29-简单数据结构比较.html.0f373aff.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-27-frontend-css1.html.4b8dbcb0.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-28-frontend-css2.html.f63b1e9a.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js1.html.62537066.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js2.html.73d4c34d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-29-frontend-js3.html.c7360084.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower1.html.472eff52.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-30-frontend-brower2.html.3eeddf8c.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower3.html.d35fe93d.js"><link rel="prefetch" href="/issues-engine/assets/2020-8-31-frontend-brower4.html.b4d307f3.js"><link rel="prefetch" href="/issues-engine/assets/2021-2-23-proxy.html.344c83f2.js"><link rel="prefetch" href="/issues-engine/assets/2022-1-11md-test.html.9b0ac2e9.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-15-开发者工具.html.a060da88.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-22-开发者文档.html.0f1ea1d7.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-21-currying.html.b71b64ff.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-22-promise.html.b00bd9ed.js"><link rel="prefetch" href="/issues-engine/assets/2022-3-31-华为od机试题目.html.649ddd57.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-手写函数.html.9240adc3.js"><link rel="prefetch" href="/issues-engine/assets/2022-stars-Interview__Question.html.3d9e52ee.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-5-移动端总结1.html.d7c53e39.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-23-MySQL笔记.html.0488e0f1.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-React父子通信.html.70979456.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-25-React-Hooks逻辑复用-多种实现比较.html.bb212273.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-26-Adding-States-to-Components.html.4ce8d141.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-4-React.memo.html.b2589b01.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-8-stale-Closure-in-useEffect.html.4533d370.js"><link rel="prefetch" href="/issues-engine/assets/2022-4-21-Vue3基本实践-通信-指令-ref_reactive-setup.html.aaca1edc.js"><link rel="prefetch" href="/issues-engine/assets/404.html.93146c89.js"><link rel="prefetch" href="/issues-engine/assets/index.html.97f4289c.js"><link rel="prefetch" href="/issues-engine/assets/index.html.7c8b0471.js"><link rel="prefetch" href="/issues-engine/assets/index.html.71497e48.js"><link rel="prefetch" href="/issues-engine/assets/404.194390d5.js"><link rel="prefetch" href="/issues-engine/assets/Timeline.af9d2264.js"><link rel="prefetch" href="/issues-engine/assets/Comment.7ee3c986.js"><link rel="prefetch" href="/issues-engine/assets/Tags.0e52b73f.js"><link rel="prefetch" href="/issues-engine/assets/Favorites.9a6967ac.js"><link rel="prefetch" href="/issues-engine/assets/vanilla-tilt.es2015.23c0b18e.js"><link rel="prefetch" href="/issues-engine/assets/lightgallery.es5.a2f185c8.js">
+    <link rel="stylesheet" href="/issues-engine/assets/style.f947f55a.css">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="dog"><!--[--><!--[--><header class="header"><div class="header-main"><div class="logo">buuoltwo的博客</div><form class="search-box" role="search"><input type="search" autocomplete="off" spellcheck="false" value><!----></form><nav class="nav"><!--[--><a href="/issues-engine/" class="link" target="_self">Home</a><a href="/issues-engine/timeline" class="link" target="_self">Timeline</a><a href="/issues-engine/tag" class="link" target="_self">Tags</a><!--]--></nav></div></header><div class="header-mobile"><div class="logo">buuoltwo的博客</div><div class="menu-btn"><i class="iconfont icon-hanbaocaidan"></i></div></div><nav class="nav-mobile" style="display:none;"><!--[--><a href="/issues-engine/" class="link">Home</a><a href="/issues-engine/timeline" class="link">Timeline</a><a href="/issues-engine/tag" class="link">Tags</a><!--]--></nav><!--]--><!--]--><div class="body"><!--[--><!--[--><div class="sidebar-box"><div class="con"><aside class="dog-sidebar"><!--[--><!--]--><ul class="sidebar-items"><!--[--><li><p tabindex="0" class="sidebar-item sidebar-heading">栈与队列实现 <!----></p><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0.html#栈" class="router-link-active router-link-exact-active sidebar-item" aria-label="栈"><!--[--><!--]--> 栈 <!--[--><!--]--></a><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0.html#基于数组的实现" class="router-link-active router-link-exact-active sidebar-item" aria-label="基于数组的实现"><!--[--><!--]--> 基于数组的实现 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0.html#十进制转二进制-100-1100-100" class="router-link-active router-link-exact-active sidebar-item" aria-label="十进制转二进制 100 =&gt; 1100 100"><!--[--><!--]--> 十进制转二进制 100 =&gt; 1100 100 <!--[--><!--]--></a><!----></li><!--]--></ul><!--]--></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0.html#队列" class="router-link-active router-link-exact-active sidebar-item" aria-label="队列"><!--[--><!--]--> 队列 <!--[--><!--]--></a><!--[--><ul style="" class="sidebar-item-children"><!--[--><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0.html#队列-1" class="router-link-active router-link-exact-active sidebar-item" aria-label="队列"><!--[--><!--]--> 队列 <!--[--><!--]--></a><!----></li><li><a aria-current="page" href="/issues-engine/posts/dataStructure/2022-3-24-%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0.html#优先级队列" class="router-link-active router-link-exact-active sidebar-item" aria-label="优先级队列"><!--[--><!--]--> 优先级队列 <!--[--><!--]--></a><!----></li><!--]--></ul><!--]--></li><!--]--></ul><!--]--></li><!--]--></ul><!--[--><!--]--></aside></div></div><div class="md-body sino sino-kai"><div class="default-content"><!--[--><h2 id="栈" tabindex="-1"><a class="header-anchor" href="#栈">¶</a> <span class="prefix"></span><span class="content" id="栈"><a class="header-anchor" href="#栈" aria-hidden="true">#</a> 栈</span><span class="suffix"></span></h2><p><strong>自助餐的盘子，后进先出。</strong></p><h3 id="基于数组的实现" tabindex="-1"><a class="header-anchor" href="#基于数组的实现">¶</a> <span class="prefix"></span><span class="content" id="基于数组的实现"><a class="header-anchor" href="#基于数组的实现" aria-hidden="true">#</a> 基于数组的实现</span><span class="suffix"></span></h3><ol><li>选择题- 排除哪个不是栈推出来的结果</li><li>代码实现</li></ol><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">const</span> log <span class="token operator">=</span> console<span class="token punctuation">.</span>log
+
+<span class="token keyword">class</span> <span class="token class-name">Stack</span> <span class="token punctuation">{</span>
+  <span class="token comment">//栈中的属性</span>
+  items <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">push</span><span class="token punctuation">(</span><span class="token parameter">element</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">null</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  
+  <span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> undefin
+    <span class="token keyword">const</span> index <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span>length
+  <span class="token punctuation">}</span>
+
+  <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">栈底 -&gt; </span><span class="token template-punctuation string">`</span></span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">&#39; -&gt; &#39;</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432802-80044">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const log = console.log
+
+class Stack {
+  //栈中的属性
+  items = []
+  
+  constructor(){
+    log(this)
+  }
+
+  push(element) {
+    this.items.push(element)
+  }
+
+  pop() {
+    if(this.items.length === 0) return null
+    return this.items.pop()
+  }
+  
+  peek() {
+    if(this.items.length === 0) return undefin
+    const index = this.items.length - 1
+    return this.items[index]
+  }
+
+  isEmpty() {
+    return this.items.length === 0
+  }
+
+  size() {
+    return this.items.length
+  }
+
+  toString() {
+    return `栈底 -&gt; ` + this.items.join(&#39; -&gt; &#39;)
+  }
+}
+
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432802-80044" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br></div></div><h3 id="十进制转二进制-100-1100-100" tabindex="-1"><a class="header-anchor" href="#十进制转二进制-100-1100-100">¶</a> <span class="prefix"></span><span class="content" id="十进制转二进制-100-1100-100"><a class="header-anchor" href="#十进制转二进制-100-1100-100" aria-hidden="true">#</a> 十进制转二进制 <code>100 =&gt; 1100 100</code></span><span class="suffix"></span></h3><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token keyword">const</span> <span class="token function-variable function">toBin</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">number</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">while</span><span class="token punctuation">(</span>number <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>number <span class="token operator">%</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    number <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>number <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token comment">//   return stack.toString()</span>
+  <span class="token keyword">let</span> binaryString <span class="token operator">=</span> <span class="token string">&#39;&#39;</span>
+  <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    binaryString <span class="token operator">+=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> binaryString
+<span class="token punctuation">}</span>
+<span class="token function">log</span><span class="token punctuation">(</span><span class="token function">toBin</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432804-37475">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="const toBin = (number) =&gt; {
+  const stack = new Stack()
+
+  while(number &gt; 0) {
+    stack.push(number % 2)
+    number = Math.floor(number / 2)
+  }
+//   return stack.toString()
+  let binaryString = &#39;&#39;
+  while(!stack.isEmpty()) {
+    binaryString += stack.pop()
+  }
+  return binaryString
+}
+log(toBin(100))
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432804-37475" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><h2 id="队列" tabindex="-1"><a class="header-anchor" href="#队列">¶</a> <span class="prefix"></span><span class="content" id="队列"><a class="header-anchor" href="#队列" aria-hidden="true">#</a> 队列</span><span class="suffix"></span></h2><p><strong>排队上厕所，先进先出。</strong></p><p>实现类型：1.队列 2.优先级队列</p><h3 id="队列-1" tabindex="-1"><a class="header-anchor" href="#队列-1">¶</a> <span class="prefix"></span><span class="content" id="队列-1"><a class="header-anchor" href="#队列-1" aria-hidden="true">#</a> 队列</span><span class="suffix"></span></h3><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">//例子：击鼓传花</span>
+<span class="token comment">//队列</span>
+<span class="token keyword">const</span> log <span class="token operator">=</span> console<span class="token punctuation">.</span>log
+
+<span class="token keyword">class</span> <span class="token class-name">Queue</span> <span class="token punctuation">{</span>
+  items <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">前端</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">enqueue</span><span class="token punctuation">(</span><span class="token parameter">element</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">dequeue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span>length
+  <span class="token punctuation">}</span>
+  <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">前端 -&gt; </span><span class="token template-punctuation string">`</span></span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">&#39; -&gt; &#39;</span> <span class="token operator">+</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string"> -&gt; 后端</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">passGame</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">nameList<span class="token punctuation">,</span>targetNum</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Queue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  nameList<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">item</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    queue<span class="token punctuation">.</span><span class="token function">enqueue</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  
+  <span class="token keyword">while</span><span class="token punctuation">(</span>queue<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> targetNum <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      queue<span class="token punctuation">.</span><span class="token function">enqueue</span><span class="token punctuation">(</span>queue<span class="token punctuation">.</span><span class="token function">dequeue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    queue<span class="token punctuation">.</span><span class="token function">dequeue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  
+  <span class="token keyword">return</span> queue<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span>
+<span class="token comment">// log(passGame([&#39;Lily&#39;,&#39;lucy&#39;,&#39;tom&#39;,&#39;lilei&#39;,&#39;why&#39;],3))</span>
+<span class="token comment">// log(passGame([1,2,3,4,5],3))</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432805-54549">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="//例子：击鼓传花
+//队列
+const log = console.log
+
+class Queue {
+  items = []
+  
+  constructor(){
+    log(`前端`,this.items)
+  }
+
+  enqueue(element) {
+    this.items.push(element)
+  }
+  dequeue() {
+    return this.items.shift()
+  }
+  front() {
+    return this.items[0]
+  }
+  isEmpty() {
+    return this.items.length === 0
+  }
+  size() {
+    return this.items.length
+  }
+  toString() {
+    return `前端 -&gt; ` + this.items.join(&#39; -&gt; &#39; + ` -&gt; 后端`)
+  }
+}
+
+const passGame = (nameList,targetNum) =&gt; {
+  const queue = new Queue()
+  nameList.forEach(item =&gt; {
+    queue.enqueue(item)
+  })
+  
+  while(queue.size() &gt; 1){
+    for(let i = 0; i &lt; targetNum - 1; i++) {
+      queue.enqueue(queue.dequeue())
+    }
+    queue.dequeue()
+  }
+  
+  return queue.front()
+
+}
+// log(passGame([&#39;Lily&#39;,&#39;lucy&#39;,&#39;tom&#39;,&#39;lilei&#39;,&#39;why&#39;],3))
+// log(passGame([1,2,3,4,5],3))
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432805-54549" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br></div></div><h3 id="优先级队列" tabindex="-1"><a class="header-anchor" href="#优先级队列">¶</a> <span class="prefix"></span><span class="content" id="优先级队列"><a class="header-anchor" href="#优先级队列" aria-hidden="true">#</a> 优先级队列</span><span class="suffix"></span></h3><div class="language-javascript ext-js line-numbers-mode"><pre class="language-javascript"><code><span class="token comment">//优先级队列</span>
+
+<span class="token keyword">const</span> log <span class="token operator">=</span> console<span class="token punctuation">.</span>log
+
+<span class="token keyword">class</span> <span class="token class-name">QueueElement</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">element<span class="token punctuation">,</span> priority</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>element<span class="token operator">=</span>element
+    <span class="token keyword">this</span><span class="token punctuation">.</span>priority<span class="token operator">=</span>priority
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">PriorityQueue</span> <span class="token punctuation">{</span>
+  items <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  
+  <span class="token function-variable function">enqueue</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">element<span class="token punctuation">,</span>priority</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> obj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">QueueElement</span><span class="token punctuation">(</span>element<span class="token punctuation">,</span>priority<span class="token punctuation">)</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span>
+      <span class="token keyword">return</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">//变量</span>
+    <span class="token keyword">let</span> added <span class="token operator">=</span> <span class="token boolean">false</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span>priority <span class="token operator">&lt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>priority<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> obj<span class="token punctuation">)</span>
+        added <span class="token operator">=</span> <span class="token boolean">true</span>
+        <span class="token comment">//。。。。。。。。。。。</span>
+        <span class="token keyword">break</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>added<span class="token punctuation">)</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">dequeue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span>length <span class="token operator">===</span> <span class="token number">0</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span>length
+  <span class="token punctuation">}</span>
+  <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> result <span class="token operator">=</span> <span class="token string">&#39;&#39;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">item</span> <span class="token operator">=&gt;</span> result<span class="token operator">+=</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>item<span class="token punctuation">.</span>element<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">,优先级：</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>item<span class="token punctuation">.</span>priority<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> =&gt; </span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> result
+  <span class="token punctuation">}</span>
+  
+<span class="token punctuation">}</span>
+<span class="token keyword">let</span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PriorityQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+queue<span class="token punctuation">.</span><span class="token function">enqueue</span><span class="token punctuation">(</span><span class="token number">4399</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>
+queue<span class="token punctuation">.</span><span class="token function">enqueue</span><span class="token punctuation">(</span><span class="token number">439</span><span class="token punctuation">,</span><span class="token number">350</span><span class="token punctuation">)</span>
+queue<span class="token punctuation">.</span><span class="token function">enqueue</span><span class="token punctuation">(</span><span class="token number">49</span><span class="token punctuation">,</span><span class="token number">124</span><span class="token punctuation">)</span>
+queue<span class="token punctuation">.</span><span class="token function">enqueue</span><span class="token punctuation">(</span><span class="token number">99</span><span class="token punctuation">,</span><span class="token number">50</span><span class="token punctuation">)</span>
+<span class="token comment">// queue.enqueue(499,-1)</span>
+<span class="token function">log</span><span class="token punctuation">(</span>queue<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code><div class="m-mdic-copy-wrapper"><div class="u-mdic-copy-notify" id="j-notify-1651016432809-95423">复制成功</div><button class="u-mdic-copy-btn j-mdic-copy-btn" data-mdic-content="//优先级队列
+
+const log = console.log
+
+class QueueElement {
+  constructor(element, priority) {
+    this.element=element
+    this.priority=priority
+  }
+}
+
+class PriorityQueue {
+  items = []
+  
+  enqueue = (element,priority) =&gt; {
+    const obj = new QueueElement(element,priority)
+    if(this.size() === 0) {
+      this.items.push(obj)
+      return
+    }
+    //变量
+    let added = false
+    for(let i=0; i&lt;this.size(); i++) {
+      if(obj.priority &lt; this.items[i].priority) {
+        this.items.splice(i, 0, obj)
+        added = true
+        //。。。。。。。。。。。
+        break
+      }
+    }
+    if(!added) this.items.push(obj)
+  }
+  dequeue() {
+    return this.items.shift()
+  }
+  front() {
+    return this.items[0]
+  }
+  isEmpty() {
+    return this.items.length === 0
+  }
+  size() {
+    return this.items.length
+  }
+  toString() {
+    let result = &#39;&#39;
+    this.items.forEach(item =&gt; result+=`${item.element},优先级：${item.priority} =&gt; `)
+    return result
+  }
+  
+}
+let queue = new PriorityQueue()
+queue.enqueue(4399,0)
+queue.enqueue(439,350)
+queue.enqueue(49,124)
+queue.enqueue(99,50)
+// queue.enqueue(499,-1)
+log(queue.toString())
+" data-mdic-attach-content="" data-mdic-notify-id="j-notify-1651016432809-95423" data-mdic-notify-delay="1000" data-mdic-copy-fail-text="复制失败" onclick="!function(t){const e={copy:(t=&#39;&#39;,e=&#39;&#39;)=&gt;new Promise((c,o)=&gt;{const n=document.createElement(&#39;textarea&#39;),d=e?`\n\n${e}`:e;n.value=`${t}${d}`,document.body.appendChild(n),n.select();try{const t=document.execCommand(&#39;copy&#39;);document.body.removeChild(n),t?c():o()}catch(t){document.body.removeChild(n),o()}}),btnClick(t){const c=t&amp;&amp;t.dataset?t.dataset:{},o=c.mdicNotifyId,n=document.getElementById(o),d=c.mdicNotifyDelay,i=c.mdicCopyFailText;e.copy(c.mdicContent,c.mdicAttachContent).then(()=&gt;{n.style.display=&#39;block&#39;,setTimeout(()=&gt;{n.style.display=&#39;none&#39;},d)}).catch(()=&gt;{alert(i)})}};e.btnClick(t)}(this);">复制</button></div></pre><div class="line-numbers"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br></div></div><!--]--></div></div><!----><div class="bottom reading-progress" data-v-e132c114><div style="" class="progress" data-v-e132c114></div></div><!--]--><!--]--></div><!--[--><footer class="footer"> powered by <a target="_blank" href="https://github.com/artiely"> Artiely</a></footer><!--]--><div class="theme-box"><div class="theme-btn-box"><span class="active theme-btn">晓露</span><span class="theme-btn">寝安</span><span class="theme-btn">浅云</span><span class="theme-btn">逍遥</span><span class="theme-btn">十漾</span><span class="theme-btn">轻拟</span></div><div class="trigger"><i class="iconfont icon-pifu"></i></div></div></div><!----><!--]--></div>
+    <script type="module" src="/issues-engine/assets/app.0702af34.js" defer></script>
+  </body>
+</html>
